@@ -1,0 +1,49 @@
+\documentclass[a4paper, 10pt, oneside, openany,  bibliography=totocnumbered]{scrbook}
+% bibliography-totocnumbered: Adds bibliography to toc.
+\usepackage{styles/generalstyle}
+\addbibresource{references.bib}
+
+\begin{document}
+
+% informations for the titlepage
+\subject{Vorlesungsmitschrift}
+\title{Algorithmische Mathematik 1}
+\subtitle{
+  Jürgen Dölz \footnote{
+    Letzte Änderung: \texttt{\gitAuthorDate}
+    \hfill
+    Commit: \texttt{\gitAbbrevHash}
+  }
+  \\
+  Universität Bonn
+}
+\author{Fabian}
+\date{}
+\publishers{
+  Online aufrufbar auf \texttt{\url{https://ins.uni-bonn.de}.}
+  \\
+  Veränderungsvorschläge und Verbesserungen bitte an \texttt{\href{mailto:git-fabus@uni-bonn.de}{Git-Fabus}.}
+}
+
+\frontmatter
+\maketitle
+\include{sections/preface}
+\tableofcontents
+% TODO: Add general conventions.
+
+\mainmatter
+\include{sections/einführung}
+\include{sections/kapitel1}
+%\include{chapters/part_representations_of_groups}
+%\include{chapters/part_invariant_theory}
+%\include{chapters/part_semisimplicity}
+
+\appendix % still a part of mainmatter
+%\include{chapters/part_appendices}
+
+\backmatter
+% TODO: Add list of symbols.
+% TODO: Add an index.
+%\include{chapters/bibliography}
+
+\end{document}

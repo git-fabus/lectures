@@ -1,0 +1,384 @@
+% all the packages
+\RequirePackage{polyglossia}
+\setdefaultlanguage{german}
+\usepackage{gitinfo2}
+\usepackage{appendix}   % for the appendix
+\usepackage{amsmath, amssymb, amsthm, mathtools}      % general math stuff
+\usepackage{stmaryrd}   % \mapsfrom
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}           % better interplay with bm
+\usepackage{extarrows}  % \xlongequal
+\usepackage{fontspec}   % for font stuff
+\usepackage{hyperref}   % for internal (and external) links
+\usepackage[centertableaux,boxsize=1.2em]{ytableau}   % Young diagrams
+\usepackage{color}      % colors
+\usepackage{tikz-cd}    % commutative diagrams
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usepackage{enumitem}   % more control over enumerates
+\usepackage[automark, headsepline]{scrlayer-scrpage}  %for headers
+\usepackage{csquotes}   % for proper quotation marks
+\usepackage{microtype}  % for typography
+\usepackage[backend=biber,style=alphabetic]{biblatex} %for bibliography
+\usepackage{multirow}   % for multicolumn
+\usepackage{bm}         % for bold math symbols
+\usepackage[german,onelanguage,lined,algonl,boxed]{algorithm2e}
+
+\newcommand{\mytheoremstyle}{definition}
+\newcommand{\fancysep}{12pt}
+\newcommand{\fancyifelse}[2]{#2}
+\xdefinecolor{fancycolor}{rgb}{0,0,0}
+\DeclareOption{fancy}{
+	\renewcommand{\mytheoremstyle}{fancy}
+	\renewcommand{\fancyifelse}[2]{#1}
+	\xdefinecolor{fancycolor}{rgb}{0.65,0.04,0.07}
+}
+
+\ProcessOptions\relax
+
+
+% fonts for titlepage
+% \setkomafont{titlehead}{\ttfamily}
+% \setkomafont{subject}{\Large}
+% \setkomafont{author}{\Large}
+% \setkomafont{date}{\Large}
+\setkomafont{publishers}{\normalsize}
+
+
+% settings for scrlayer-scrpage
+\pagestyle{scrheadings}
+\automark{section}
+
+
+% table of contents
+\setcounter{tocdepth}{1}        % no subsections in the toc
+\renewcommand{\@pnumwidth}{2em} % more space for page numbers, default is 1.55
+
+
+% no unplaned surprises with \cite
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+
+% colours for young tableaux
+\definecolor{light-gray}{gray}{0.9}
+
+
+% colours for hyperref
+\hypersetup{
+    colorlinks,
+    linkcolor={green!35!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+
+% prevents breaking inline math around binary or relationship symbols
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+%%%%% THEOREM-LIKE ENVIRONMENTS CONFIGURATION %%%%%
+
+\newcounter{everything}[section]
+
+\newtheoremstyle{fancy}
+  {\topsep}   % abovespace
+  {\topsep}   % belowspace
+  {\upshape}  % bodyfont
+  {0pt}       % indent (empty value is the same as 0pt)
+	{\color{fancycolor}\bfseries} % headfont
+  {}          % headpunct
+  {0pt} % headspace
+	{%
+		\thmnumber{\makebox[0pt][r]{\textcolor{fancycolor}{#2}\hspace{\fancysep}}}%
+		\thmname{#1}%
+		\thmnote{\color{black}\mdseries\ (#3)}%
+		\thmname{.\hspace{5pt plus 1pt minus 1pt}}%
+	} % CUSTOM-HEAD-SPEC
+
+
+
+\theoremstyle{fancy}
+\newtheorem{construction}[everything]{\protect\constructionname}
+\newtheorem{convention}  [everything]{\protect\conventionname}
+\newtheorem{corollary}   [everything]{\protect\corollaryname}
+\newtheorem{definition}  [everything]{\protect\definitionname}
+\newtheorem{example}     [everything]{\protect\examplename}
+\newtheorem{fluff}       [everything]{}
+\newtheorem{lemma}       [everything]{\protect\lemmaname}
+\newtheorem{notation}    [everything]{\protect\notationname}
+\newtheorem{proposition} [everything]{\protect\propositionname}
+\newtheorem{question}    [everything]{\protect\questionname}
+\newtheorem{recall}      [everything]{\protect\recallname}
+\newtheorem{remark}      [everything]{\protect\remarkname}
+\newtheorem{theorem}     [everything]{\protect\theoremname}
+\newtheorem{warning}     [everything]{\protect\warningname}
+
+% default names
+\newcommand{\claimname}{Claim}
+\newcommand{\constructionname}{Construction}
+\newcommand{\conventionname}{Convention}
+\newcommand{\corollaryname}{Corollary}
+\newcommand{\definitionname}{Definition}
+\newcommand{\examplename}{Example}
+\newcommand{\lemmaname}{Lemma}
+\newcommand{\notationname}{Notation}
+\newcommand{\propositionname}{Proposition}
+\newcommand{\questionname}{Question}
+\newcommand{\recallname}{Recall}
+\newcommand{\remarkname}{Remark}
+\newcommand{\theoremname}{Theorem}
+\newcommand{\warningname}{Warning}
+
+\gappto\polyglossia@language@switched {
+	\gappto\captionsgerman{
+		\renewcommand{\claimname}{Behauptung}
+		\renewcommand{\constructionname}{Konstruktion}
+		\renewcommand{\conventionname}{Konvention}
+		\renewcommand{\corollaryname}{Korollar}
+		\renewcommand{\definitionname}{Definition}
+		\renewcommand{\examplename}{Beispiel}
+		\renewcommand{\lemmaname}{Lemma}
+		\renewcommand{\notationname}{Notation}
+		\renewcommand{\propositionname}{Proposition}
+		\renewcommand{\questionname}{Frage}
+		\renewcommand{\recallname}{Wiederholung}
+		\renewcommand{\remarkname}{Bemerkung}
+		\renewcommand{\theoremname}{Satz}
+		\renewcommand{\warningname}{Warnung}
+		\crefname{construction}{Konstruktion}{Konstruktionen}
+		\crefname{convention}{Konvention}{Konventionen}
+		\crefname{corollary}{Korollar}{Korollare}
+		\crefname{definition}{Definition}{Definitionen}
+		\crefname{example}{Beispiel}{Beispiele}
+		\crefname{lemma}{Lemma}{Lemmata}
+		\crefname{notation}{Notation}{Notationen}
+		\crefname{proposition}{Proposition}{Propositionen}
+		\crefname{question}{Frage}{Fragen}
+		\crefname{recall}{Wiederholung}{Wiederholungen}
+		\crefname{remark}{Bemerkung}{Bemerkungen}
+		\crefname{theorem}{Satz}{Sätze}
+		\crefname{warning}{Warnung}{Warnungen}
+	}
+}
+
+
+% the numbering for claims is local to the surrounding theorem-like environments;
+% to be used in proofs
+\newtheorem{claim}{\protect\claimname} % unnumbered version
+% unnumbered version of claim
+\newtheorem*{claim*}{\protect\claimname} % unnumbered version
+
+% printing of counters
+\renewcommand{\theeverything}{\thesection.\arabic{everything}}
+\renewcommand{\theclaim}{\arabic{claim}}
+
+
+
+
+% how counters are printed
+\renewcommand{\thepart}{\Roman{part}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\renewcommand{\theeverything}{\thesection.\arabic{everything}}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand*{\partformat}{\partname~\thepart}
+
+
+% settings for list like environments
+\setlist[enumerate, 1]{leftmargin=*, align=left, label=\alph*)}
+\setlist[enumerate, 2]{leftmargin=*, align=left, label=\arabic*)}
+\setlist[description, 1]{leftmargin=\labelwidth, font=\normalfont}
+\setlist[description, 2]{leftmargin=\labelwidth, font=\normalfont}
+\setlist[itemize, 1]{leftmargin=*}
+\setlist[itemize, 2]{leftmargin=*, label={\textopenbullet}}
+\setlist[itemize, 3]{leftmargin=*}
+
+
+% relations and binary operations
+\newcommand{\defined}{\coloneqq}
+\newcommand{\defines}{\eqqcolon}
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\groupleq}{\leq}
+\newcommand{\grouplneq}{\lneq}
+\newcommand{\ngroupleq}{\trianglelefteq}
+\newcommand{\ngrouplneq}{\mathrel{\ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}}}
+\newcommand{\idealleq}{\trianglelefteq}
+\newcommand{\ideallneq}{\mathrel{\ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}}}
+\newcommand{\idealgneq}{\mathrel{\ooalign{$\gneq$\cr\raise.22ex\hbox{$\rhd$}\cr}}}
+\newcommand{\idealnleq}{\ntrianglelefteq}
+\newcommand{\moduleleq}{\leq}
+\newcommand{\modulelneq}{\lneq}
+\newcommand{\modulegeq}{\geq}
+\newcommand{\modulegneq}{\gneq}
+\newcommand{\nmoduleleq}{\nleq}
+\newcommand{\tensor}{\mathbin{\otimes}}
+% \newcommand{\outertensor}{\mathbin{\raisebox{-0.9pt}{$\boxtimes$}}}
+\newcommand{\outertensor}{\mathbin{\boxtimes}}
+
+
+% categories
+\newcommand{\catname}[1]{\mathbf{#1}}
+\newcommand{\cGsets}[1]{\ensuremath{#1\text{-}\catname{Sets}}}
+\newcommand{\cMon}{\ensuremath{\catname{Mon}}}
+% next: first argument is the field k, the second the group G
+\newcommand{\cRep}[2]{\ensuremath{#1\text{-}#2\text{-}\catname{Rep}}}
+\newcommand{\cVect}[1]{\ensuremath{#1\text{-}\catname{Vect}}}
+\newcommand{\cvect}[1]{\ensuremath{#1\text{-}\catname{vect}}}
+\newcommand{\cMod}[1]{\ensuremath{#1\text{-}\catname{Mod}}}
+\newcommand{\cModR}[1]{\ensuremath{\catname{Mod}\text{-}#1}}
+\newcommand{\cModfd}[1]{\ensuremath{#1\text{-}\catname{Mod}_{\catname{fd}}}}
+\newcommand{\cModRfd}[1]{\ensuremath{\catname{Mod}_{\catname{fd}\text{-}#1}}}
+\newcommand{\cAlg}[1]{\ensuremath{#1\text{-}\catname{Alg}}}
+\newcommand{\cgrAlg}[1]{\ensuremath{#1\text{-}\catname{grAlg}}}
+\newcommand{\cfiltAlg}[1]{\ensuremath{#1\text{-}\catname{filtAlg}}}
+\newcommand{\cpol}[1]{\ensuremath{#1\text{-}\catname{pol}}}
+\newcommand{\cAff}[1]{\ensuremath{#1\text{-}\catname{Aff}}}
+
+% numbers and fields
+\newcommand{\Natural}{\mathbb{N}}
+\newcommand{\Integer}{\mathbb{Z}}
+\newcommand{\Rational}{\mathbb{Q}}
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Complex}{\mathbb{C}}
+\newcommand{\Finite}{\mathbb{F}}
+\newcommand{\Quaternion}{\mathbb{H}}
+
+% often used commands
+\newcommand{\mc}{\mathcal}
+\newcommand{\mf}{\mathfrak}
+
+% spaces
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Br}{Br}
+\newcommand{\preBr}{\widetilde{\operatorname{Br}}}
+\DeclareMathOperator{\CSA}{CSA}
+\DeclareMathOperator{\CDA}{CDA}
+\DeclareMathOperator{\Maps}{Maps}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Pol}{Pol}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Mat}{M}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\sllie}{\mathfrak{sl}}
+\DeclareMathOperator{\Par}{Par}
+\newcommand{\rad}[1]{\sqrt{#1}}
+\DeclareMathOperator{\Irr}{Irr}
+\DeclareMathOperator{\irr}{irr}
+\DeclareMathOperator{\centralizer}{Z}
+\DeclareMathOperator{\ringcenter}{Z}
+\DeclareMathOperator{\groupcenter}{Z}
+\DeclareMathOperator{\soc}{soc}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\vspan}{span}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\weyl}{\mathcal{A}}
+\newcommand{\triv}{\operatorname{triv}}
+\newcommand{\freealg}[2]{#1\langle #2 \rangle}
+
+% functions
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\can}{can}
+\DeclareMathOperator{\init}{init}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\ringchar}{char}
+\DeclareMathOperator{\diag}{diag}
+
+
+% decorations
+\newcommand{\cf}{{\operatorname{cf}}}
+\newcommand{\rf}{{\operatorname{rf}}}
+\newcommand{\op}{{\operatorname{op}}}
+\newcommand{\ind}{{\operatorname{ind}}}
+
+
+% misc. shortcuts
+\NewDocumentCommand{\suchthat}{s}{
+  \IfBooleanTF{#1}
+    {\,\middle|\,}
+    {\,|\,}       
+}
+\newcommand{\del}{\partial}
+\newcommand{\longto}{\longrightarrow}
+\newcommand{\inclusion}{\hookrightarrow}
+\newcommand{\projection}{\twoheadrightarrow}
+
+
+% constructors
+\newcommand{\class}[1]{\overline{#1}}
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\dblbrack}[1]{\left[\!\left[#1\right]\!\right]}
+% \newcommand{\bil}[2]{\langle #1, #2 \rangle}
+\newcommand{\innerp}[1]{\langle #1 \rangle}
+\newcommand{\mindex}[1]{\bm{#1}}
+\newcommand{\vect}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\gen}[1]{\left\langle #1 \right\rangle}
+\NewDocumentCommand{\restrict}{smmO{}}{
+  \IfBooleanTF{#1}
+    {\left. {#2} \middle|_{#3}^{#4} \right.}
+    {{#2}|_{#3}^{#4}}
+}
+
+
+% dotcup for disjoint unions
+\newcommand{\dotcup}{\ensuremath{\mathrel{\mathaccent\cdot\cup}}}
+\newcommand{\bigdotcup}{\charfusion[\mathop]{\bigcup}{\cdot}}
+
+
+% technical stuff for \bigdotcup
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+
+% copied from https://tex.stackexchange.com/questions/198771/align-in-substack
+\makeatletter
+\newcommand{\subalign}[1]{%
+  \vcenter{%
+    \Let@ \restore@math@cr \default@tag
+    \baselineskip\fontdimen10 \scriptfont\tw@
+    \advance\baselineskip\fontdimen12 \scriptfont\tw@
+    \lineskip\thr@@\fontdimen8 \scriptfont\thr@@
+    \lineskiplimit\lineskip
+    \ialign{\hfil$\m@th\scriptstyle##$&$\m@th\scriptstyle{}##$\crcr
+      #1\crcr
+    }%
+  }
+}
+\makeatother
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+% referencing and hyperlinking
+% load hyperref after everything else
+% except for cleveref
+\RequirePackage{hyperref}
+\RequirePackage[
+	capitalise,
+	noabbrev,
+	nameinlink
+]{cleveref}
+
+

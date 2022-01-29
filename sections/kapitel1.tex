@@ -1,0 +1,190 @@
+\section{Zahlendarstellung am Computer}
+\subsection{Zahlensystem}
+Die Darstellung von Zahlen basiert auf sogenannten \emph{Zahlensystemen}.
+Diese Zahlensysteme unterscheiden sich in der Wahl des zugrundeliegendes Alphabets.
+Unsere Zahl entspricht dann einem Wort, bestehend aus Elementen des Alphabets.\\
+
+
+\begin{definition}[Alphabet]
+Es sei $\N = \{ 1,2,3\ldots \}$ und $b \in  \N$. \\
+Wir bezeichnen mit $\sum_{b}$ das Alphabet des \emph{b-adischen Zahlensystems}
+\end{definition}
+
+\begin{example}
+Verschiedene Zahlensysteme
+\begin{enumerate}
+	\item Dezimalsystem: $\sum_{10}= \{0,1,\ldots,9\}$ \\ wie $(384)_10$
+	\item Dual bzw. Binärsystem $\sum_2 = \{0,1\}$ \\ wie $(42)_10 = (101010)_2$
+	\item \ldots
+\end{enumerate}
+\end{example}
+Um die Zahlendarstellung sinnvoll zu nutzen Ergibt sich folgendes:
+\begin{theorem}[]
+Seien $b,n \in  \N, b>1 $. \\
+Dann ist jede ganze, nicht-negative Zahl $z$ mit $0\le z \le b^{n}-1$ \emph{eindeutig} als Wort der Länge $n$ über $\sum_b$ darstellbar durch:
+\[
+z=\sum_{i=0}^{n-1}z_ib^{i}
+\]
+mit $z_i \in \sum_b$ für alle $i=0,1,\ldots,n-1$. \\
+Wir schreiben vereinfachend: 
+\[
+z=(z_{n-1},\ldots, z_0)_b
+\]
+\end{theorem}
+\begin{proof}
+
+Beweis durch vollständige Induktion.\\
+\paragraph{IV} \underline{$z<b$} hat die eindeutige Darstellung $z_0=z$ und $z_i=0$ sonst.
+\paragraph{IS} \underline{$z-1 \to z\ge b$} \\
+Betrachte
+\[
+z= \left\lfloor{\frac{z}{b}}\right\rfloor \cdot b + (z \mod b)
+\]
+Da $\hat{z}<z$ besitzt die eindeutige Darstellung
+\[
+\hat{z}= (\hat{z_{n-1}},\ldots, \hat{z_0})_b
+\]
+Bemerke $\hat{z_{n-1}}=0$, da 
+\[
+\left( \hat{z_{n-1}}b^{n-1} \right)b \le z \le b^{n}-1
+\]
+Also ist $z_b$ eine n-stellige Darstellung von z in b-adischen Zahlensystem
+\paragraph{Eindeutigkeit} Durch Widerspruch \\
+\emph{Angenommen:} Es gibt zwei verschiedene Darstellungen
+\[
+z=\left( z_{n-1}^{(2)},\ldots, z_0^{(2)} \right)_b = \left(z_{n-1}^{(1)},\ldots,z_0^{(1)} \right)_b
+\]
+Sei $m \in  \N$ der größte Index mit $z_m^{(1)} \neq z_m^{(2)}$, \\
+Ohne Beschränkung der Allgemeinheit kann gesagt werden $z_m^{(1)>z_m^{(2)}}$. \\
+Dann müssten die Stellen $0,1,\ldots,m-1$ den niedrigeren Wert von $z_m^{(2)}$ kompensieren. Die größte mit diesen Stellen darstellbare Zahl ist aber:
+\[
+\sum_{i=0}^{m-1}(b-1)b^{i}= (b-1)\sum_{i=0}^{m-1}b^{i}= b^{m}-1 \text{.}
+\]
+Da $b^{m}$ der kleinstmögliche Wert der fehlende Stelle m ist, kann diese aber nicht kompensiert werden. Dies ist ein Widerspruch.
+\end{proof}%
+Durch den Beweis ergibt sich sofort ein Algorithmus zur Umwandlung einer Zahl in ein anderes Zahlensystem:
+\begin{example}
+Umwandlung von $(1364)_{10}$ in das Oktalsystem.
+\begin{itemize}
+	\item $1364 = 170 \cdot 8 +4$
+	\item $170 = 21 \cdot 8 +2$
+	\item \ldots
+	\item $0 \cdot 8 + 2$
+\end{itemize}
+$\implies (2524)_8$
+\end{example}
+
+\begin{algorithm}[H]
+ \caption{Bestimmung der b-adischen Darstellung}
+ \KwData{Dezimalzahl $z \in \N_0$, Basis $b \in \N$}
+ \KwResult{b-adische Darstellung $(z_{n-1},\ldots, z_0)_b $}
+ Initialisiere $i=0$ \\
+ \While{$z>0$}{
+  $z_i = z \mod b $\\
+  $z= \left\lfloor \frac{z}{b} \right\rfloor$ \\
+  $i=i+1$
+ }
+ \end{algorithm}
+
+\paragraph{Beobachtung}
+Wir sehen, dass das Honor-Schmea nur eine Schleife, Additionen und Multiplikationen benötigt. 
+Diese Operationen können wir am Computer durchführen. 
+Im Gegensatz dazu steht die Potenz $b^{i}$ in modernen Programmiersprachen zwar zur Verfügung, wird aber im Hintergrund oft auf Multiplikationen zurückgeführt.
+Man überprüft leicht, dass das Honor-Schema weniger Multiplikationen benötigt und somit schnellt ist.
+\subsection{Vorzeichen-Betrag-Darstellung}
+Um auch Zahlen mit Vorzeichen am Computer darstellen zu können, betrachten wir im Folgenden die Vorzeichen-Betrag-Darstellung für Binärzahlen.
+Das Binäralphabet besteht nur aus $0$ und $1$, welche wir auch als \emph{Bits} bezeichnen.
+Bei einer Wortlänge von n Bits wir das erste Bit als Vorzeichen verwendet, die restlichen $n-1$-Bits für den Betrag der Zahl. Da die 0 die Darstellung $+0$ und $-O$ besitzt, können wir insgesamt $2^{n}-1$ Zahlen darstellen.
+
+\begin{example}
+Für $n=3$\\
+
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{c c}
+		Bitmuster & Dezimaldarstellung \\
+		$000$ & $+0$ \\
+		$001$ & $+1$ \\
+		$\ldots$ & $\ldots$ \\
+		$100$ & $-0$ \\
+		$\ldots$ & $\ldots$ \\
+		$111$ & $-3$
+	\end{tabular}
+\end{table}
+\end{example}
+
+\paragraph{Aber:} Diese Darstellung am Computer ist unpraktisch, da die vier Grundrechenarten auf Hardwareebene typischerweise mit Hilfe von Addition und Zusatz-Logik umgesetzt werden.
+\paragraph{Lösung:} Komplementdarstellung
+
+\subsection{Komplementdarstellung}
+
+\begin{definition}[(b-1)-Komplement]
+Sei $z=(z_{n-1}\ldots z_1 z_0)_b$ eine n-stellige b-adische Zahl. Das \emph{(b-1)-Komplement} $K_{b-1}(z)$ ist definiert als:
+\[
+K_{b-1} = (b-1-z_{n-q},\ldots, b-1-z_0)_b
+\]
+\end{definition}
+Geben wir hierzu direkt ein paar Beispiele an
+\begin{example} Komplemente \\
+\begin{itemize}
+	\item $K_9((325)_{10})= (674)_{10}$  (9er-Komplement im 10-er System)
+	\item $K_1((10110)_2)=(01001)_2$ (1er-Komplement im 2er System)
+\end{itemize}
+\end{example}
+\begin{definition}[b-Komplement]
+Das b-Komplement einer b-adischen Zahl $z\neq 0$ ist definiert als \[
+K_b(z)=K_{b-1}(z) +(1)_b
+\]
+\end{definition}
+\begin{example}
+\begin{itemize}
+	\item $K_{10}((325)_{10}) = (674)_{10} + (1)_{10} = (675)_{10}$
+\end{itemize}
+\end{example}
+\begin{lemma}[]
+Für jede n-stellige b-adische Zahl $z$ gilt:
+\begin{itemize}
+	
+	\item i) $z+K_{b-1}(z)=(b-1,\ldots,b-1)_b = b^{n}-1$
+	\item ii) $K_{b-1}\left( K_{b-1}(z) \right)=z$
+\end{itemize}
+Ist außerdem $z\neq 0$ so gilt:
+\begin{itemize}
+	
+	\item iii) $z+K_b(z)=b^{n}$
+	\item iv) $K_b(K_b(z))=z$
+\end{itemize}
+\end{lemma}
+\begin{proof}
+Durch nachrechnen
+\[
+\text{Beweis kommt noch}
+\]
+\end{proof}
+
+\begin{remark} Modifikation 
+\begin{itemize}
+	\item Die 3. Aussage gilt auch für $z=0$, falls man dann bei der Addition von 1 die Anzahl der Stellen erweitert.
+	\item die 4. Aussage gilt für $z=0$, falls überall im Beweis modulo $b^{n}$ gerechnet wird.
+\end{itemize}
+\end{remark}
+Außerdem impliziert die 3. Aussage des Lemmas, dass 
+\begin{equation}
+	K_b(z)=b^{n}-z \text{.}
+\end{equation}
+Dies können wir geschickt zum Darstellen der $b^{n}$ verschiedenen ganzen Zahlen $z$ mit 
+\[
+-\left\lfloor \frac{b^{n}}{2}\right\rfloor \le z \le \left\lceil \frac{b^{n}}{2}\right\rceil -1
+\]
+nutzen. Diesen Bereich nennt man darstellbaren Bereich.
+\begin{definition}[b-Komplement-Darstellung]
+	Die b-Komplement-Darstellung $(z)_{K_b} = (z_{n-1} \ldots z_0)_b$ einer Zahl $z \in  \Z$ im darstellbaren Bereich ist definiert als:
+	\[
+		(z)_{K_b}= \begin{cases}
+			(z)_b & \text{falls } z \ge 0 \\
+			\left( K_b(|z|) \right)_b & \text{falls } z<0
+		\end{cases}
+	\]
+\end{definition}
+
+
