@@ -5,3 +5,6 @@ chapters/
 *.xdv
 *.gz
 *.b*
+*.f*
+*.toc
+*.run.xml
