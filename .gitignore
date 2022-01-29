@@ -1,2 +1,7 @@
 *.log
 *.aux
+*.out
+chapters/
+*.xdv
+*.gz
+*.b*
