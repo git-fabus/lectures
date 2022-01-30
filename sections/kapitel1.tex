@@ -33,9 +33,15 @@ z=(z_{n-1},\ldots, z_0)_b
 \end{theorem}
 \begin{proof}
 
-Beweis durch vollständige Induktion.\\
-\paragraph{IV} \underline{$z<b$} hat die eindeutige Darstellung $z_0=z$ und $z_i=0$ sonst.
-\paragraph{IS} \underline{$z-1 \to z\ge b$} \\
+\begin{itemize}
+\item Induktion \medskip
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+\item \emph{Induktionsanfang}: \underline{$z<b$} hat die eindeutige Darstellung $z_0=z$ und $z_i=0$ sonst.
+
+
+
+\item \emph{Induktionsschritt}: \underline{$z-1 \to z\ge b$} \\   
+
 Betrachte
 \[
 z= \left\lfloor{\frac{z}{b}}\right\rfloor \cdot b + (z \mod b)
@@ -49,7 +55,10 @@ Bemerke $\hat{z_{n-1}}=0$, da
 \left( \hat{z_{n-1}}b^{n-1} \right)b \le z \le b^{n}-1
 \]
 Also ist $z_b$ eine n-stellige Darstellung von z in b-adischen Zahlensystem
-\paragraph{Eindeutigkeit} Durch Widerspruch \\
+
+\end{itemize}
+
+\item Eindeutigkeit wird durch Widerspruch gezeigt. \\
 \emph{Angenommen:} Es gibt zwei verschiedene Darstellungen
 \[
 z=\left( z_{n-1}^{(2)},\ldots, z_0^{(2)} \right)_b = \left(z_{n-1}^{(1)},\ldots,z_0^{(1)} \right)_b
@@ -61,6 +70,7 @@ Dann müssten die Stellen $0,1,\ldots,m-1$ den niedrigeren Wert von $z_m^{(2)}$ 
 \sum_{i=0}^{m-1}(b-1)b^{i}= (b-1)\sum_{i=0}^{m-1}b^{i}= b^{m}-1 \text{.}
 \]
 Da $b^{m}$ der kleinstmögliche Wert der fehlende Stelle m ist, kann diese aber nicht kompensiert werden. Dies ist ein Widerspruch.
+\end{itemize}
 \end{proof}%
 Durch den Beweis ergibt sich sofort ein Algorithmus zur Umwandlung einer Zahl in ein anderes Zahlensystem:
 \begin{example}
@@ -156,10 +166,30 @@ Ist außerdem $z\neq 0$ so gilt:
 \end{itemize}
 \end{lemma}
 \begin{proof}
-Durch nachrechnen
-\[
-\text{Beweis kommt noch}
-\]
+\begin{itemize}Hilfssatz \\
+	\item (i) Durch nachrechnen:
+		\begin{align*}
+		z+K_{b-1}(z)
+		&=(z_{n-1} \ldots z_0)_b +(b-1-z_{n-1}, \ldots, b-1-z_0)_b \\
+		&=\sum_{i=0}^{n-1}z_ib^{i}+ \sum_{i=0}^{n-1}(b-1-z_i)b^{i}\\
+		&= \sum_{i=0}^{n-1}(b-1)b^{i} = (b-1, \ldots, b-1)_b \\
+		&= (b-1)\sum_{i=0}^{n-1}b^{i} \\
+		&=(b-1)\left( \frac{b^{n}-1}{b-1} \right) \\
+		&= b^{n}-1
+		\end{align*}
+	\item (ii) per Definition
+	\item (iii) Nachrechnen:
+	\begin{align*}
+		z+K_b(z) = z+K_{b-1} + 1 = b^{n}-1+1=b^{n}
+	\end{align*}
+	\item Definiere $\hat{z} = K_b\left( z \right)= K_{b-1}(z) + (1)_b > 0$ und rechne
+		\[
+		z+K_b(z)=b^{n}=\hat{z} +K_b{\hat{z}}+ K_b\left( K_b(z) \right) \implies \text{Behauptung.}
+		\]
+\end{itemize}
+
+
+
 \end{proof}
 
 \begin{remark} Modifikation 
@@ -245,18 +275,30 @@ Wir betrachten dazu mehrere Fälle.
 \begin{itemize}
 	\item Fall $x,y \ge 0$: \\
 \begin{align*}
-    \lim_
-    {
-    x\to 0
-    }\frac{\ln\sin
-    \left( \pi x \right)}
-    {{\ln\sin\left(x\right) 
-    }}
-    &= \lim_{x \to 0} \frac{\pi \frac{\cos(\pi x)}{\sin\left(\pi x\right)}}{\frac{\cos\left( x\right)}{\sin\left(x\right)}} \\
-    &= \lim_{x \to 0} \frac{\pi \tan\left(x\right)}{\tan\left(\pi x\right)} \\
-    &= \lim_{x \to 0} \frac{\pi / \cos^2\left(x\right)}{\pi / \cos^2\left(\pi x\right)} \\
-    &= \lim_{x \to 0} \frac{\cos^2\left(\pi x\right)}{\cos^2\left(x\right)} \\
-    &= 1
-\end{align*}	
+(x)_{K_b} \oplus (y)_{K_b}
+    &\overset{\text{Def.}}{=}\left( (x)_b + (y)_b \right) \mod b^{n} \\
+    &\overset{\text{Def.}}{=} (x+y) \mod b^{n} \\
+    &\overset{\text{Def.}}{=} (x+y)_{K_b} \\
+\end{align*}
+Der letzte Schritt ist möglich, da $(x+y)_{K_b}$ im darstellbaren Bereich sind.
+\item Fall $x,y <0$
+\begin{align*}
+(x)_{K_b} \oplus (y)_{K_b}
+&\overset{Def.}{=} \left( \left( K_b(|x|) \right)_b + \left( K_b(|y|) \right)_b \right) \mod b^{n} \\
+&\overset{   }{=}\left( (K_b(|x|)) +\left( K_b\left( |x| \right) \right)\right) \mod b^{n} \\
+&= (b^{n}-|x| + b^{n}-|y|) \mod b^{n} \\
+&= (x+y) \mod b^{n} \\
+&= (x+y)_{K_b}
+\end{align*}
+\item Fall $x\ge 0, y<0$: \\
+\begin{align*}
+(x)_{K_b} \oplus (y)_{K_b}
+&\overset{Def.}{=} ((x)_b + (K_b(|y|))_b) \mod b^{n} \\
+&=(x+K_b(|y|)) \mod b^{n} \\
+&=(x+b^{n}-|y|) \mod b^{n} \\
+&=(x+y) \mod b^{n} \\
+&= (x+y)_{K_b}
+\end{align*}
+\item Fall $x<0, y\ge 0$: Analog
 \end{itemize}
 \end{proof}
