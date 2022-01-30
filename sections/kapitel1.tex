@@ -242,5 +242,21 @@ Dann gilt:
 \end{theorem}
 \begin{proof}
 Wir betrachten dazu mehrere Fälle.
-
+\begin{itemize}
+	\item Fall $x,y \ge 0$: \\
+\begin{align*}
+    \lim_
+    {
+    x\to 0
+    }\frac{\ln\sin
+    \left( \pi x \right)}
+    {{\ln\sin\left(x\right) 
+    }}
+    &= \lim_{x \to 0} \frac{\pi \frac{\cos(\pi x)}{\sin\left(\pi x\right)}}{\frac{\cos\left( x\right)}{\sin\left(x\right)}} \\
+    &= \lim_{x \to 0} \frac{\pi \tan\left(x\right)}{\tan\left(\pi x\right)} \\
+    &= \lim_{x \to 0} \frac{\pi / \cos^2\left(x\right)}{\pi / \cos^2\left(\pi x\right)} \\
+    &= \lim_{x \to 0} \frac{\cos^2\left(\pi x\right)}{\cos^2\left(x\right)} \\
+    &= 1
+\end{align*}	
+\end{itemize}
 \end{proof}
