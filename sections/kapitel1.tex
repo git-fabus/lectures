@@ -169,7 +169,7 @@ Durch nachrechnen
 \end{itemize}
 \end{remark}
 Außerdem impliziert die 3. Aussage des Lemmas, dass 
-\begin{equation}
+\begin{equation}\label{eqn:komplement}
 	K_b(z)=b^{n}-z \text{.}
 \end{equation}
 Dies können wir geschickt zum Darstellen der $b^{n}$ verschiedenen ganzen Zahlen $z$ mit 
@@ -187,4 +187,60 @@ nutzen. Diesen Bereich nennt man darstellbaren Bereich.
 	\]
 \end{definition}
 
+\begin{example} Der darstellbare Bereich.
+\begin{itemize}
+	\item Sei $b = 10$, $n=2$. \\ 
+Dann impliziert \eqref{eqn:komplement}, dass
+\[
+K_{10}(50)= 10^2-50=50
+\]
+\[
+K_{10}(49)= 100 -49=51 \text{.}
+\]
+Der darstellbare Bereich ist nun 
+\[
+-50 \le z \le 49
+\]
+und hat konkrete Darstellungen:
 
+\begin{center}
+\begin{tabular}{ c c }
+ Darstellung & Zahl   \\
+ $0$ & $+0$  \\
+ $1$ & $+1$ \\
+ \ldots & \ldots \\
+ $49$ & $+49$ \\
+ $50$ & $-50$ \\
+ \ldots & \ldots \\
+ $99$ & $-1$
+\end{tabular}
+\end{center}
+
+\item Sei $b=2$, $n=3$ Der darstellbare Bereich ist $-4 \le  z \le 3$. \\
+\begin{center}
+\begin{tabular}{ c c }
+ Bitmuster & Dezimaldarstellung  \\ 
+ $000$ & $0$   \\  
+ $001$ & $1$  \\
+ \ldots & \ldots \\
+ $100$ & $-4$ \\
+ \ldots & \ldots \\
+ $111$ & $-1$
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{example}%
+Wir betrachten nun Addition und Subtraktion zweier Zahlen in b-Komplement-Darstellung. 
+Hierzu bezeichne $(x)_{K_b} \oplus (y)_{K_b}$ die ziffernweise Addition der Darstellungen von x und y mit Übertrag ("schriftlich rechnen"), 
+wobei ein eventueller Überlauf auf die $(n+1)$-te Stelle vernachlässigt wird (wir rechen also immer mit modulo $b^{n}$.
+\begin{theorem}[Addition in b-Komplement-Darstelllung]
+	Seien x und y zwei n-stellige, b-adische Zahlen und x,y und $x+y$ im darstellbaren Bereich.
+Dann gilt:
+\[
+(x+y)_{K_b} = (x)_{K_b} \oplus (y)_{K_b}
+\]
+\end{theorem}
+\begin{proof}
+Wir betrachten dazu mehrere Fälle.
+
+\end{proof}
