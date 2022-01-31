@@ -1,0 +1,32 @@
+\section{Fehleranalyse}
+\subsection{Rechnerarithmetik}
+\begin{example}
+Betrachte $F=F(10,5,-4,5)$ und Maschinenzahlen
+\begin{align*}
+x=2.5684 \cdot 10^{0}= 2.56840000 \\
+y=3.2791 \cdot 10^{-3} = 0.0032791
+\end{align*}
+Es gilt:\\
+\begin{center}
+$\begin{rcases}
+	x+y= 2.5716792 \\
+	x-y= 2.5651209 \\
+	x \cdot y= 0.00842204044 \\
+	\frac{x}{y}= 783.2637004
+\end{rcases} \not\in F$
+\end{center}
+\end{example}
+\begin{remark}
+Die Menge $F(b,t,e_{min},e_{max})$ ist nicht abgeschlossen bezüglich der Grundrechenarten und können somit im Allgemeinen nicht im Computer implementiert werden.
+\end{remark}
+\paragraph{Lösung}
+Wir runden das Ergebnis und implementieren so eine Pseudoarithmetik.
+Das bedeutet wir ersetzen $o \in \{+,-,\cdot,/\} $ durch \boxed{o}, definiert durch x \boxed{o} y $\coloneqq rd(x \circ )y$. 
+%Dieser Abschnitt muss noch verbessert werden dringlichst
+\begin{equation}\label{eqn:rundung}
+s=t
+\end{equation}
+Auf Hardwareebene wird üblicherweise mit einer längeren Matisse gearbeitet und dann normalisiert und gerundet. Dies entspricht dem IEEE 754 Standard.
+\begin{remark}
+	Für $|x|,|y|, |x \circ y| \in [z_{min},z_{max}]$ impliziert \eqref{eqn:rundung}, dass
+\end{remark}
