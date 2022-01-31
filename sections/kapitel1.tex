@@ -302,3 +302,168 @@ Der letzte Schritt ist möglich, da $(x+y)_{K_b}$ im darstellbaren Bereich sind.
 \item Fall $x<0, y\ge 0$: Analog
 \end{itemize}
 \end{proof}
+\begin{theorem}[Subtraktion in b-Komplement-Darstellung]
+	Seien x und y n-stellige b-adische Zahlen und x,y und x-y im darstellbaren Bereich.
+	Dann gilt:
+	\[
+	(x-y)_{K_b} = (x)_{K_b} \oplus \left( K_b(y) \right)_{K_b}
+	\]
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item Fall $y=0$ nichts zu zeigen.
+	\item $y \neq 0$: \eqref{eqn:komplement} impliziert:
+		\[
+		-y=K_b(y) -b^{n}
+		\]
+	mit modulo $b^{n}$-rechnen folgt, dass
+	\[
+		(-y)_{K_b}= (K_b(y))_{K_b}
+	\]
+	ist und somit:
+	\begin{align*}
+		(x-y)_{K_b}
+		&= (x+(-y))_{K_b} \\
+		&= (x)_{K_b} \oplus (-y)_{K_b} \\
+		&= (x)_{K_b} \oplus (K_b(y))_{K_b}	
+	\end{align*}
+\end{itemize}
+\end{proof}
+\begin{example}
+Für $b=10$ und $n=2$ ist der darstellbare Bereich $-50 \le  z \le 49$
+\begin{itemize}
+	\item $(20+7)_{K_{10}} = (20)_{K_{10}} \oplus (7)_{K_{10}} =(27)_{K_{10}}=27$
+	\item $28-5 = 28+ (-5)= (28)_{K_{10}} \oplus (95)_{K_{10}} = (23)_{K_{10}} =23 $
+	\item $-18-20= (-18)+(-20) = \ldots = -28$
+\end{itemize}
+\end{example}
+Die darstellbaren Zahlen kann man sich beim $K_b$-Komplement als Zahlenrad vorstellen.
+
+%Hier muss eine coole Uhr eingefügt werden.
+
+\paragraph{Achtung} Ein eventueller Überlauf bzw. Unterlauf wird im Allgemeinen nicht aufgefangen.
+\begin{example}
+In n-stelliger Binärarithmetik ist die größte darstellbare Zahl $x_{max} = (011\ldots 1)_{K_2}$ gleich  $2^{n-1}-1$. Hingegen ist $x_{max}+1=(100\ldots 0)_{K_2}$ und wir als $-2^{n-1}$ interpretiert.
+\end{example}
+\subsection{Fest-Komma-Darstellung}
+\begin{definition}
+	Bei der Festkommadarstellung einer n-stelligen Zahl werden k Vorkomma und n-k Nachkommastellen definiert:
+	\[
+	z=+-(z_{k-1} \ldots z_0.z_{-1} \ldots z_{k-n})_b = +- \sum_{i=k-n}^{k-1}z_i b^{i}
+	\]
+
+\end{definition}
+\begin{example}
+Im Zehner System wie gehabt.\\
+Im Binärsystem ergibt sich folgendes: $(101.01)_2= 2^{2}+ 2^{0}+ 2^{-2}=5.25$
+\end{example}
+\paragraph{Achtung} Im Gegensatz zur Darstellung ganzer Zahlen können bereits bei der Konvertierung von Dezimalzahlen in das b-adische Zahlensystem Rundungsfehler auftreten.
+\begin{example}
+	$(0.8)_{10}=(0.110\overline{1100})_2$
+\end{example}
+Das größte Problem der Festkommadarstellung ist alllerdings, dass der darstellbare Bereich stark eingeschränkt ist und schlecht aufgelöst ist, da der Abstand zwischen zweier Zahlen immer gleich ist.
+\begin{example}
+Die kleinste darstellbare Zahl in Fixkommadarstellung ist \[
+z_1=(0 \ldots 0.0 \ldots 0 1)_b
+\]
+Die zweitkleinste Zahl ist $z_2=2z_1$. Wir wollen $x=\frac{z_1+z_2}{2}$ in Fixkommadarstellung darstellen, müssen wir entweder zu $z_1$ abrunden oder zu $z_2$ aufrunden.
+\end{example}
+\begin{fluff}
+Der relative Fehler dieses Runden ist:
+\[
+\frac{|x-z_1|}{|x|}=\frac{1}{3}
+\]
+Analog für $z_2$. \\
+Solche Fehler machen jede Rechnung unbrauchbar.
+\end{fluff}
+\subsection{Gleitkommadarstellung}
+\begin{definition}[Gleitkommadarstellung]
+	Die Gleitkommastellung einer Zahl $z \in  \R$ ist gegeben durch:
+	\[
+	z=+-m\cdot b^{e}
+	\]
+mit einer \underline{Matisse} m, dem \underline{Exponenten} e und der \underline{Basis} b.
+\end{definition}
+Der Einfachheit halber nehmen wir an, dass die Basis für alle Zahlen gleich ist, obwohl sie prinzipiell verschieden sein könnte.
+\begin{example}
+Die Gleitkommadarstellungen von:
+\begin{itemize}
+	\item $(-384.753)_{10}= -3.84753 \cdot 10^2$
+	\item $(0.00042)_{10}=4.2 \cdot 10^{-4d}$
+	\item $(1010.101)_2= (1.010101)_2 \cdot 2^{3}$
+\end{itemize}
+\end{example}
+\paragraph{Achtung:} Die Gleitkommadarstellung ist \underline{nicht} eindeutig!
+
+\begin{definition}
+Die Matisse m heißt \underline{normalisiert}, falls $m=m_1.m_2m_3 \ldots m_t$ mit $1\le m_1 \le b$.
+\end{definition}
+Um die eindeutige, normalisierte Gleitkommadarstellung im Computer zu speichern, müssen wir festlegen, wie viele Stellen für Matisse und Exponent zur Verfügung gestellt werden. Dies resultiert in der Menge 
+\[
+F=F(b,t,e_{min}, e_{max}) = \{z= +-m_1.m_2m_3\ldots m_t \cdot b^{e} | e_{min} \le e \le e_{max} \} 
+\]
+Da 0 nicht in dieser Form dargestellt werden kann, reserviert man dafür eine spezielle Ziffernfolge in Matisse und Exponent.
+%Hier fehlt wieder ein schöne Grafik
+\begin{remark}
+Das Hidden Bit ist hilfreich
+\begin{itemize}
+	\item Für $b=2$ kann die erste Ziffer $m_1$ der Matisse weggelassen werden (Hidden Bit)
+	\item Um den Exponenten besser vergleichen zu können, verwendet man oft die Exzess- oder Bias-Darstellung. Durch Addition der Exzesser $|e_{min}|+1$ wird der Exponetn auf den Bereich $1,2,\ldots, |e_{min}|+e_{max} +1 $ transformiert.
+\end{itemize}
+\end{remark}
+\begin{example}[IEEE 754 Standard]
+	Betrachte binäre Gleitkommazhalen mit 64 Bit auf dem Computer. 
+	\begin{itemize}
+		\item 52 Bit für die Matisse in Hidden Bit Darstellung
+		\item 11 Bit für den Exponenten mit $e_{min} = -1022$ und $e_{max} =1023$ gespeichert in Exzessdarstellung.
+		\item 1 Bit als Vorzeichen.
+	\end{itemize}
+Weiter Fälle können Online nachgelesen werden.
+\end{example}
+
+\subsubsection{Genauigkeit der Gleitkommadarstellung}
+Da die Menge aller Zahlen in $F=F(b,t,e_{min},e_{max})$ endlich ist, müssen wir Zahlen in $\R \setminus  F$ geeignet annähern.
+
+\begin{definition}
+Die Rundung ist eine Abbildung $rd\colon \R \to F $ mit 
+\begin{itemize}
+	\item $rd(a)=a$, $a \in F$
+	\item $rd(z)$, $z \in  \R$ ist gegeben so, dass $|z-rd(z)|=\underset{a \in F}{\min}(z-a)$ für alle $z \in  \R$.
+\end{itemize}
+\end{definition}
+\begin{definition}[Maschinengenauigkeit]
+Den maximalen relativen Rundungsfehler $\varepsilon_{mach}$ für $z_{min} \le |z| \le z_{max}$ nennt man Maschinengenauigkeit.
+Die Stellen der Mantisse heißen \underline{signfikante Stellen}.
+Wenn die Mantisse t-stellig ist, spricht man von \underline{t-stelliger Arithmetik}.
+\end{definition}
+\begin{theorem}[Maschinengenauigkeit von F]
+	Die Maschinengenauigkeit $\varepsilon_{mach}$ für $F=F(b,t,e_{min},e_{max})$ ist:
+	\[
+	\varepsilon_{mach} = \frac{1}{2} b^{1-t} \text{.}
+	\]
+\end{theorem}
+\begin{proof}
+Betrachte relativen Rundungsfehler $\varepsilon$, der vom Abscheiden nicht signifikanten Stellen herrüht. Sei $z_{min} < x < z_{max}$ und $\tilde{x}$ die durch Abschneiden entstehende Zahl.
+Dann gilt:
+\begin{align*}
+	\varepsilon
+	&= \frac{|x-\tilde{x}|}{|x|} \\
+	&= \frac{|x_1.x_2x_3 \ldots x_t x_{t+1}\ldots \cdot b^{e}-x_1x_2x_3\ldots x_t \cdot b^{e}}{|x|} \\
+	&=\frac{|0.x_{t+1}\ldots| \cdot |b^{e+1-t}|}{|x|}
+\end{align*}
+Da $|0.x_{t+1}\ldots|<1$ und $b^{e}\le |x|$ gilt:
+\[
+\varepsilon <\frac{b^{e+1-t}}{b^{e}}=b^{1-t}
+\]
+Da der Rundungsfehler $\varepsilon_{mach}$ höchsten halb so groß ist wie der Abschneidefehler folgt die Behauptung.
+\end{proof}
+Die Maschinengenauigkeit $\varepsilon_{mach}$ ist die wichtigste Größe zur Beurteilung der Genauigkeit von Gleitkommarechnungen am Computer. Sie gibt Aufschluss zur Anzahl signifikanter Stellen zur Basis $b$.
+Die zugehörige Anzahl $s$ Stellen im Dezimalsystem erhält man durch das Auflösen von:
+\[
+\varepsilon_{mach} = \frac{1}{2}b^{1-t}=\frac{1}{2}10^{1-s}
+\]
+nach s. Es folgt daher:
+\[
+s= \lfloor 1+(t-1)\log_{10}(b) \rfloor
+\]
+Für den IEEE 754 Standard mit $b=2, t=53$ erhält man $s=16$ signifikante Stellen.
