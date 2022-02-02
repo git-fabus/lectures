@@ -21,12 +21,63 @@ Die Menge $F(b,t,e_{min},e_{max})$ ist nicht abgeschlossen bezüglich der Grundr
 \end{remark}
 \paragraph{Lösung}
 Wir runden das Ergebnis und implementieren so eine Pseudoarithmetik.
-Das bedeutet wir ersetzen $o \in \{+,-,\cdot,/\} $ durch \boxed{o}, definiert durch x \boxed{o} y $\coloneqq rd(x \circ )y$. 
-%Dieser Abschnitt muss noch verbessert werden dringlichst
+Das bedeutet, wir ersetzen $\circ \in  \{+,-,\cdot, \div\}$ durch $\boxcircle \in \{\boxplus, \boxminus, \boxdot, \boxslash\}$ definiert durch:
 \begin{equation}\label{eqn:rundung}
-s=t
+x \boxcircle y \coloneqq rd (x \circ y)
 \end{equation}
 Auf Hardwareebene wird üblicherweise mit einer längeren Matisse gearbeitet und dann normalisiert und gerundet. Dies entspricht dem IEEE 754 Standard.
 \begin{remark}
-	Für $|x|,|y|, |x \circ y| \in [z_{min},z_{max}]$ impliziert \eqref{eqn:rundung}, dass
+Für $|x|,|y|, |x \circ y| \in [z_{min},z_{max}]$ impliziert \eqref{eqn:rundung}, dass
+\[
+	\frac{|x \boxcircle y - x \circ y|}{|x \circ y|}= \frac{rd(x \circ y - x \circ y}{|x \circ y} \le \varepsilon_{mach}
+\]
+
+Das bedeutet, dass $\boxcircle$ im Computer bestmöglich umgesetzt ist.
 \end{remark}
+\begin{example}
+Betrachte $F=F(10,5,-4,5)$ \\
+\begin{itemize}
+	\item Setze:
+\begin{itemize}
+	\item $a=0.98765$
+	\item $b=0.012424$
+	\item $c=-0.0065432$
+\end{itemize}
+Dann gilt:
+\[
+	(a+b)+c=a+(b+c)=0.9925208
+\]
+Numerisch gilt:
+\[
+(0.98765 \boxplus 0.012424)\boxminus 0.0065432= rd(0.9935568)=0.99356
+\]
+und
+\[
+0.98765 \boxplus (0.012424\boxminus 0.0065432)=rd(0.9935308)=0.99353
+\]
+\item Setze
+	\begin{itemize}
+		\item $a=4.2832$
+		\item $b=-4.2821$
+		\item $5.7632$
+	\end{itemize}
+Dann gilt
+\[
+(a+b)\cdot c = a \cdot c + b \cdot c = 0.006339520000001
+\]
+Numerisch gilt:
+\end{itemize}
+\end{example}
+\begin{remark}
+Mathematisch äquivalente Algorithmen auf Fließkommazahlen können je nach Implementierung zu wesentlich unterschiedlichen Ergebnissen führen, selbst wenn die Eingangszahlen exakt dargestellt werden.
+\end{remark}
+\subsection{Auslöschung}
+Unglücklicherweise pflanzen sich numerische Fehler, zum Beispiel durch Rundung im Verlauf eines Algorithmus fort.
+
+%Hier fehlt etwas
+
+\paragraph{Achtung:} Ist $|x+-y|$ wesentlich kleiner als $|x|$ oder $|y|$, kann der relative Fehler massiv verstärkt werden. 
+Dieses Phänomen heißt Auslöschung.\\
+Bei der Konstruktion von Algorithmen sollte Auslöschung möglichst vermieden werden.
+
+
