@@ -45,7 +45,8 @@ $p_k=a_kp_{k-1}+b_kp_{k-2}+c_k$
     }
  \end{algorithm}
  \begin{example}
- Betrachte: $p_0=1m p_1=\sqrt[2]{2}-1, p_k= -2p_{k-1}+p_{k-2}$, $k=2,3,\ldots$ \\
+	 \label{eg:rekursion}
+ Betrachte: $p_0=1, p_1=\sqrt[2]{2}-1, p_k= -2p_{k-1}+p_{k-2}$, $k=2,3,\ldots$ \\
  Algorithmus \ref{alg:rekursion} liefert:
 
  %Nice Grafik
@@ -110,5 +111,120 @@ $\begin{bmatrix}
 p_1 \\
 p_0
 \end{bmatrix} \in \R^2$ ab.
+Im Falle unseres Beispiels gilt: $a_k=a=-2$, $b_k=b=1$. Das bedeutet, es gilt:
+\[
+B_k= A^{k-1}, A= \begin{bmatrix}
+	a & b \\
+	1 & 0
+\end{bmatrix} = \begin{bmatrix}
+	-2 & 1 \\
+	1 & 0
+\end{bmatrix}
+\]
+Aus den Eigenwerten $\lambda_1, \lambda_2$ der Matrix A kann man die Lösungen der homogenen Dreitermrekursion direkt angeben.
+\begin{theorem}
+	\label{thm:nst-polynom}
+	Seien $\lambda_1, \lambda_2$ die Nullstellen des \emph{charakteristischen Polynoms}
+	\begin{equation}
+	\label{eqn:charpolynom}
+	q(\lambda) = \lambda^2 -a \lambda -b
+	\end{equation}
+Dann ist die Lösung der homogenen Dreitermrekursion:
+\[
+p_k=ap_{k-1} +bp_{k-2}, k=2,3,\ldots
+\]
+gegeben durch:
+\[
+p_k= \alpha \lambda_1^{k}+\beta \lambda_2^{k}, k=2,3,\ldots
+\]
+mit $\alpha, \beta \in \R$ Lösungen des linearen Gleichungssystems.
+\[
+\alpha + \beta =p_0
+\]
+\[
+\alpha \lambda_1 + \beta \lambda_2 =p_1
+\]
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item Induktion über k\medskip
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+\item Induktionsanfang: \underline{$k=0$}: 
+	$p_0=\alpha+\beta = \alpha \lambda_1^{0}+\beta \lambda_2^{0}$
+\item Induktionsschritt: \underline{$k \to k+1$}:
+	\begin{align*}
+	p_{k+1}
+	&=ap_k +bp_{k-1} \\
+	&= a(\alpha \lambda_1^{k}+ \beta \lambda_2^{k}) + b(\alpha \lambda_1^{k-1}+\beta \lambda_2^{k-1}) \\
+	&= \alpha (a \lambda_1^{k}+ b\lambda_1^{k-1})+ \beta (a \lambda_2^{k}+ b \lambda_2^{k-1}) \\
+	&= \alpha \lambda_1^{k-1}(a\lambda_1+b) + \beta \lambda_2^{k-1}(a\lambda_2 +b)\\
+	&= \alpha \lambda_1^{k+1} + \beta \lambda_2^{k+1}
+	\end{align*}
+\end{itemize}
+Da nach \eqref{eqn:charpolynom} $\lambda_1^2$ und $\lambda_2^2$ Nullstellen sind.
+\end{itemize}
+\end{proof}
+Wende \ref{thm:nst-polynom} auf das Beispiel \ref{eg:rekursion} an: Mit $a=-2, b=1$ hat das charakteristische Polynom \eqref{eqn:charpolynom} die Nullstellen:
+\[
+\lambda_1= \sqrt[2]{2}-1, \lambda_2= -\sqrt[2]{2}-1 
+\]
+Aus
+\[
+\alpha + \beta =p_0 =1
+\]
+\[
+\alpha \lambda_1 + \beta \lambda_2= p_1 = \sqrt[2]{2}-1
+\]
+folgt $\alpha = 1, \beta = 0$. Der Satz \label{thm:nst-polynom} impliziert:
+\[
+p_k= \lambda_1^{k}> 0, k=0,1,2,\ldots
+\]
+in Beispiel \ref{eg:rekursion}\\
+\begin{algorithm}[H]
+\label{alg:rekursion}
+ \caption{verbesserte Dreitermrekursion}
+ \KwData{Koeffizienten a,b, Startwerte $p_0,p_1$}
+ \KwResult{Werte $\{p_k\}_{k=2}^{n}$}
+Initialisiere:
+\begin{itemize}
+	\item $\lambda_1 = \frac{a}{2}+\sqrt[2]{\frac{a^2}{4}+b}$
+	\item $\lambda_2= \frac{a}{2}-\sqrt[2]{\frac{a^2}{4}+b}$
+	\item $\beta= \frac{p_1-\lambda_1p_0}{\lambda_2-\lambda_2}$
+	\item $\alpha = p_0-\beta$
+\end{itemize}
+\For{$k \gets 2$ \KwTo $n$}{
+$p_k=\alpha \lambda_1^{k}+\beta \lambda_2^{k}$
+}
+\end{algorithm}
+Dieser Algorithmus liefert für Beispiel \ref{eg:rekursion} folgende Grafik:
+
+%Muss noch erstellt werden.
 
 
+Dies ist in diesem Fall das richtige Ergebnis, da
+\[
+p_k=\lambda_1^{k}=(\sqrt[2]{2}-1)^{k} \ll 1 
+\]
+Was geht schief in dem vorherigen Algorithmus \ref{alg:rekursion}? \\
+Betrachten wir unser Problem $f \colon \R^2 \to \R$, $f(p_0,p_1)=p_k$ mit gestörten Eingangsdaten: $\hat{p_0}= 1(1+\varepsilon_0)$, $\hat{p_1}= \lambda_1(1+\varepsilon_1)$, $|\varepsilon_0|, |\varepsilon_1|\le \varepsilon_{mach}$.\\
+Dies ergibt:
+\[
+\tilde{\beta} = \frac{\lambda_1(1+\varepsilon_1)-\lambda_1(1+\varepsilon_0)}{\lambda_2-\lambda_1}= (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1}
+\]
+\[
+\tilde{\alpha} = 1+ \varepsilon_0 \frac{\lambda_2-\lambda_1}{\lambda_2-\lambda_1}-(\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1}= 1+\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1}- \varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1}
+\]
+und somit
+\begin{align*}
+\tilde{p_k} 
+&= \tilde{\alpha} \lambda_1^{k}+ \tilde{\beta} \lambda_2^{k}\\
+&=(1+\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1}-\varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1})\lambda_1^{k}+(\varepsilon_1 -\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \lambda_2^{k}
+\end{align*}
+Der relative Fehler von $\tilde{p_k}$ zu $p_k= \lambda_1$ ist somit :
+\begin{align*}
+	|\frac{\tilde{p_k}-p_k}{p_k}
+	&= |\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1} -\varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1} + (\varepsilon_1-\varepsilon_1) \frac{\lambda_1}{\lambda_2-\lambda_1}(\frac{\lambda_2}{\lambda_1})^{k}| \\
+	&= | \varepsilon_0 + (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \left( \left( \frac{\lambda_2}{\lambda_1}^{k} \right)-1 \right)|
+\end{align*}
+\paragraph{Beobachte:}Falls $\frac{\lambda_2}{\lambda_1}>1$ explodiert der relative Fehler für wachsende k. Dies war in Beispiel \ref{eg:rekursion} der Fall. \\
+Falls wir den Begriff der Konditionszahl aus der Definition \ref{def:konditionszahl} geeignet für Funktion $\R^2 \to \R$ erweitern, sehen wir, dass das Problem schlecht konditioniert ist.
