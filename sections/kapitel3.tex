@@ -1,2 +1,114 @@
 \section{Dreitermrekursion}
 \subsection{Theoretische Grundlagen}
+\begin{definition}
+Für gegebene $p_0$ und $p_1$ heißt eine Rekursion der Form
+\begin{equation}
+	\label{eqn:dreitermrekursion}
+	p_k=a_kp_{k-1}+b_kp_{k-2}+c_k\text{, } k=2,3,\ldots
+\end{equation}
+mit $b_k\neq 0$ eine \emph{Dreitermrekursion}. Die zugehörige \emph{Rückwärtsrekursion} ist
+\begin{equation}
+	\label{eqn:rrekursion}
+p_{k-2}= -\frac{a_k}{b_k}p_{k-1}+\frac{1}{b_k}p_k-\frac{c_k}{b_k}\text{, } k=n,n-1,\ldots
+\end{equation}
+Ist $b_k=1$, das heißt \eqref{eqn:dreitermrekursion} und \eqref{eqn:rrekursion} gehen durch vertauschen von $p_{k-2}$ und $p_k$ auseinander hervor, so heißt die Rekursion \underline{symmetrisch}. Gilt $c_k=0$ für alle $k$, so heißt die Rekursion \underline{homogen}.
+\end{definition}
+\begin{example}
+Die Fibonacci-Zahlen sind rekursiv definiert durch:
+\[
+p_k=p_{k-1}+p_{k-2}
+\]
+mit $p_0=0, p_1=1$. Es gilt $a_k=b_k=1$. \\
+Sei
+\[
+p_k(x)= 2\cos(x)p_{k-1}(x) -1 \cdot p_{k-2}(x)
+\]
+mit $p_0=1$ und $p_1=\cos(x)$. Man kann zeigen, dass
+\[
+p_k(x)=2\cos(kx)
+\]
+ist. \\
+Die Chebychev-Polynome $T_k$ erfüllen 
+\[
+T_k(x)=2x T_{k-1} -T_{k-2}(x)
+\]
+mit $T_0(x)=1$ und $T_1(x)=x$
+\end{example}
+
+\begin{algorithm}[H]
+\label{alg:rekursion}
+ \caption{Dreitermrekursion}
+ \KwData{Koeffizienten von $\{a_k\}_{k=2}^{n}$, $\{b_k\}_{k=2}^n$,$\{c_k\}_{k=2}^n$, Startwerte $p_0,p_1$}
+ \KwResult{Werte von $\{p_k\}_{k=2}^n$}
+\For{$k\gets 2$ \KwTo $n$}{
+$p_k=a_kp_{k-1}+b_kp_{k-2}+c_k$
+    }
+ \end{algorithm}
+ \begin{example}
+ Betrachte: $p_0=1m p_1=\sqrt[2]{2}-1, p_k= -2p_{k-1}+p_{k-2}$, $k=2,3,\ldots$ \\
+ Algorithmus \ref{alg:rekursion} liefert:
+
+ %Nice Grafik
+
+Die Oszillationen für höhere k sollten uns misstrauische machen und uns motivieren das Problem genauer anzuschauen.
+ \end{example}
+Wir können homogene Dreitermrekursion schreiben als:
+\[
+\begin{bmatrix}
+	p_k \\
+	p_{k-1}
+\end{bmatrix}= \begin{bmatrix}
+a_kp_{k-1} + b_kp_{k-2} \\
+p_{k-1}
+\end{bmatrix} \eqqcolon \begin{bmatrix}
+a_k & b_k \\
+1 & 0
+\end{bmatrix} \cdot \begin{bmatrix}
+p_{k-1} \\
+p_{k-2}
+\end{bmatrix} = A_k \begin{bmatrix}
+p_{k-1} \\
+p_{k-2}
+\end{bmatrix}
+\]
+Rekursiv folgt:
+\[
+\begin{bmatrix}
+p_k \\
+p_{k-1}\end{bmatrix} = A_k \begin{bmatrix}
+p_{k-1} \\
+p_{k-2}
+\end{bmatrix}= A_k A_{k-1} \begin{bmatrix}
+p_{k-2} \\
+p_{k-3}
+\end{bmatrix}= \ldots = A_k \ldots A_2 \begin{bmatrix}
+p_1 \\
+p_0
+\end{bmatrix}
+\]
+Offensichtlich gilt für alle $\alpha, \beta \in \R$ und Startwerte $p_0,p_1,q_0,q_1$ und $B_k \coloneqq A_k \ldots A_2$, dass
+\[
+B_k \begin{bmatrix}
+\alpha p_1 + \beta q_1 \\
+\alpha p_0 + \beta q_0
+\end{bmatrix} = \alpha B_k \begin{bmatrix}
+p_1 \\
+p_0
+\end{bmatrix} + \beta B_k \begin{bmatrix}
+q_1 \\
+q_0
+\end{bmatrix}= \alpha \begin{bmatrix}
+p_k \\
+p_{k-1}
+\end{bmatrix} + \beta \begin{bmatrix}
+q_k \\
+q_{k-1}
+\end{bmatrix}
+\]
+Das heißt, die Lösungsfolge $\{p_k\}$ hängt \emph{linear} von den Startwerten
+$\begin{bmatrix}
+p_1 \\
+p_0
+\end{bmatrix} \in \R^2$ ab.
+
+
