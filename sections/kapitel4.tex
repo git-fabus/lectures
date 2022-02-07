@@ -3,7 +3,34 @@
 \paragraph{Gesucht} Permutation $\pi_1,\ldots,\pi_n$, so dass $z_{\pi_1} < \ldots < z_{\pi_n}$
 \begin{definition}[Permutation]
 Eine Permutation $\pi$ von $\{1,2,\ldots, n\}$ ist eine bijektive Abbildung von $\{1,2,\ldots,n\} $ auf sich selbst. Wir schreiben $\pi(k)=\pi_k$ für $k=1,\ldots,n$
-
 \end{definition}
-
-
+\begin{remark}
+Da wir die Zahlen $z_1,\ldots,z_n$als verschieden annehmen ist das Sortierproblem eindeutig lösbar.
+\end{remark}
+\begin{algorithm}
+\label{alg:bruteforce}
+\caption{Brute-Force}
+Probiere so lange alle möglichen Permutationen durch, bis die gewünschte Sortierung vorliegt
+\end{algorithm}
+\begin{theorem}
+Es gibt $n! = n(n-1)\ldots 2 \cdot 1$ Permutationen der Menge $\{1,2,\ldots,n\} $
+\end{theorem}
+\begin{proof}
+Wir haben 
+\begin{itemize}
+	\item $n$ Möglichkeiten die erste Zahl auszuwählen
+	\item $n-1$ Möglichkeiten die zweite Zahl auszuwählen
+	\item \ldots
+	\item 1 Möglichkeit die letzte Zahl auszuwählen
+\end{itemize}
+woraus die Behauptung folgt.
+\end{proof}
+Im schlimmsten Fall (worst case) muss der Algorithmus \ref{alg:bruteforce} also
+\[
+	(n-1)\cdot n!
+\]
+Vergleiche durchführen. Da dies extrem aufwändig sein kann, betrachten wir im Folgenden einem Algorithmus, der die transitive Struktur
+\[
+x<y \text{ und } y<z \implies x<z
+\]
+der Ordnungsrelation ausnutzt.
