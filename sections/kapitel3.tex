@@ -228,3 +228,104 @@ Der relative Fehler von $\tilde{p_k}$ zu $p_k= \lambda_1$ ist somit :
 \end{align*}
 \paragraph{Beobachte:}Falls $\frac{\lambda_2}{\lambda_1}>1$ explodiert der relative Fehler für wachsende k. Dies war in Beispiel \ref{eg:rekursion} der Fall. \\
 Falls wir den Begriff der Konditionszahl aus der Definition \ref{def:konditionszahl} geeignet für Funktion $\R^2 \to \R$ erweitern, sehen wir, dass das Problem schlecht konditioniert ist.
+
+\begin{definition}[Minimallösung]
+Die Lösung $\{p_k\}$ der Dreiterm-Rekursion \eqref{eqn:dreitermrekursion} zu den Startwerten $p_0$ und $p_1$ heißt \emph{Minimallösung}, falls für jede Lösung $\{p_k\}$ zu den von $p_0,p_1$ linear unabhängigen Startwerten $q_0,q_1$ gilt, dass:
+\[
+\lim_{k \to \infty} \frac{p_k}{q_k}=0
+\]
+Die Lösung $\{p_k\}$ wird dominante Lösung genannt.
+\end{definition}
+\begin{example}
+In Beispiel \ref{eg:rekursion} ist $\{p_k\}$ Minimallösung genau dann, wenn $\beta=0$.
+\end{example}
+Die Minimallösung ist nur bis auf einen skalaren Faktor eindeutig. Deshalb \underline{normieren} wir sie mit der zusätzlichen Bedingung: $p_0^2+p_1^2=1$.
+\paragraph{Frage:} Wie können wir eine normierte Minimallösung berechnen, obwohl das Problem schlecht konditioniert ist?
+\subsubsection{Miller-Algorithmus}
+Betrachte die Rückwärtsrekursion zu
+\[
+q_k=a_kq_{k-1} + b_k q_{k-2} , k=2,3,\ldots
+\]
+d.h.
+\[
+q_{k-2}= -\frac{a_k}{b_k}q_{k-1} + \frac{1}{b_k}q_k , k=n,n-1,\ldots,2
+\]
+mit Startwerten $q_n=0, q_{n-1}=1$. Für $a_k=a, b_k=b$ besitzt das charakteristische Polynom
+\[
+q(\mu)=\mu^2+ \frac{a}{b}\mu -\frac{1}{b}
+\]
+Die Nullstellen:
+\[
+\mu_{1,2}=\frac{-a\pm\sqrt[2]{a^2+4b}}{2b}=\frac{1}{\lambda_{1,2}}
+\]
+\paragraph{Idee:} Wende Satz \ref{thm:nst-polynom} "rückwärts" an. \\
+Lösen wir
+\[
+\alpha + \beta = 0
+\]
+und
+\[
+\alpha\mu_1+\beta\mu_2=q_{n-1}=1
+\]
+ergibt sich:
+\[
+\alpha= \frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1} \neq 0
+\]
+\[
+\beta = -\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\neq 0
+\]
+und
+\[
+q_k= \alpha \mu_1^{n-k}+ \beta \mu_2^{n-k}= \frac{\alpha}{\lambda_1^{n-k}}+\frac{\beta}{\lambda_2^{n-k}}
+\]
+Für $|\lambda_1| < |\lambda_2|$ folgt, dass
+\begin{align*}
+	p_k^{\left( n \right)}
+	&\coloneqq \frac{q_k}{q_0} \\
+	&= \frac{\frac{\alpha}{\lambda_1^{n-k}}+\frac{\beta}{\lambda_2^{n-k}}}{\frac{\alpha}{\lambda_1^{n}}+\frac{\beta}{\lambda_2^{n}}} \\
+	&=\frac{\lambda_1^{k}+\frac{\beta}{\alpha}\lambda_2^{k}\left( \frac{\lambda_1}{\lambda_2} \right)^{n}}{1+\frac{\beta}{\alpha}\left( \frac{\lambda_1}{\lambda_2} \right)^{n}}\\
+	&\to \lambda_1^{k}=p_k
+\end{align*}
+\paragraph{Beobachtung:} Für großes n approximiert $p_k^{(n)}$ die Minimallösung.\\
+\begin{algorithm}[H]
+\caption{Miller-Algorithmus}
+ \KwData{n genügend groß $\{a_k\}_{k=2}^{n}, \{b_k\}_{k=2}^{n} $}
+ \KwResult{Approximation von $\{p_k^{(n)}\}_{k=0}^{n}$ um eine normierte Minimallösung}
+ Setze $\hat{p_n}=0, \hat{p_{n-1}} =1$\\
+ \For{$k \gets n$ \KwTo $2$}{
+$\hat{p_{k-2}}=-\frac{a_k}{b_k}\hat{p_{k-1}}+\frac{1}{b_k}\hat{p_k}$
+ }
+\For{$k \gets 0$ \KwTo $n$}{
+$p_k^{\left( n \right)}=\frac{\hat{p_n}}{\sqrt[]{\hat{p_0^2}+\hat{p_n^2}}}$
+}
+\end{algorithm}
+\begin{theorem}[Miller-Algorithmus]
+Sei $\{p_k\}_{k=0}^{\infty}$ Minimallösung der normierten, homogenen Dreitermrekursion. %Vielleicht noch Reflin einfügen
+Dann gilt für die Lösung des Miller-Algorithmus:
+\[
+\lim_{n \to \infty} p_k^{(n)}=p_k , k=0,1,2,\ldots
+\]
+\end{theorem}
+\begin{proof}
+Wir bemerken, dass sich jede Lösung der Dreitermrekursion als Linearkombination einer Minimallösung und einer dominanten Lösung schreiben lässt (Übung). Mit den richtigen $\alpha$ und $\beta$ folgt (Übung):
+\begin{align*}
+\hat{p_k} 
+&= \alpha p_k + \beta q_k \\
+&= \frac{p_kq_n-q_kp_n}{p_{n-1}q_n-q_{n-1}p_n}
+&= \frac{q_n}{p_{n-1}q_n-q_{n-1}p_n}\left( p_k-\frac{p_n}{q_n}q_k \right)
+\end{align*}
+Aus (Normierungs-Konstante)
+\begin{align*}
+\hat{p_0^2}+\hat{p_1^2}
+&= \frac{q_n^2}{\left( p_{n-1} q_n- q_{n-1} p_n \right)^2}\left( p_0^2+p_1^2 -2 \frac{p_n}{q_n}(p_0q_0+p_1q_1) + \frac{p_n^2}{q_n^2}(q_0^2 +q_1^2) \right) \\
+&= \frac{q_n^2}{(p_{n-1}q_n-q_{n-1}p_n)^2}\left( 1- 2 \frac{p_n}{q_n}+\frac{p_n^2}{q_n^2} \right)
+\end{align*}
+folgt:
+\begin{align*}
+p_k^{(n)}
+&= \frac{\hat{p_k}}{\sqrt{\hat{p_0^2}+ \hat{p_1^2}}} \\
+&= \frac{p_k-\frac{p_n}{q_n}q_k}{\sqrt{1-2 \frac{p_n}{q_n}+ \frac{p_n^2}{q_n^2}}}
+&\to p_k
+\end{align*}
+\end{proof}
+Wir können also auch für schlecht konditionierte Probleme stabile Algorithmen finden.
