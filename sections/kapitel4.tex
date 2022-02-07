@@ -1,4 +1,5 @@
-\section{Das Sortierproblem}
+\section{Sortieren}
+\subsection{Das Sortierproblem}
 \paragraph{Gegeben} $n \in \N$ verschiedene Zahlen $z_1,\ldots,z_n \in \R$.
 \paragraph{Gesucht} Permutation $\pi_1,\ldots,\pi_n$, so dass $z_{\pi_1} < \ldots < z_{\pi_n}$
 \begin{definition}[Permutation]
@@ -33,4 +34,183 @@ Vergleiche durchführen. Da dies extrem aufwändig sein kann, betrachten wir im 
 \[
 x<y \text{ und } y<z \implies x<z
 \]
-der Ordnungsrelation ausnutzt.
+der Ordnungsrelation ausnutzt. \\
+\begin{algorithm}[H]
+\caption{Bubblesort}
+\label{alg:bubblesort}
+\KwData{Menge $S_n=\{z_1,\ldots,z_n\}$}
+\KwResult{Sortierte Menge $S^{\pi}=\{z_{\pi_1},\ldots,z_{\pi_n}\} $}
+\For{$k \gets n$ \KwTo $1$}{
+$z_{\pi_k}=\max( S_k)$\\
+$S_{k-1}=S_k \setminus \{z_{\pi_k}\}$
+}
+\end{algorithm}
+\begin{example}
+Die zu sortierende Menge ist: $\{4,1,2\}$.
+\begin{itemize}
+	\item $S_3=\{4,1,2\}$, $k=3$, $z_{\pi_3}=4$
+	\item $S_2=\{1,2\}$, $k=2$, $z_{\pi_2}=2$
+	\item $S_1=\{1\}$, $k=1$, $z_{\pi_1}=1$
+\end{itemize}
+Die sortierte Liste ist: $\{1,2,4\}$.
+\end{example}
+Um den Aufwand von Algorithmen zu untersuchen, beschränken wir uns auf das asymptotische Verhalten für große n.
+\begin{definition}[Landau-Notation]
+Wir schreiben
+\begin{itemize}
+	\item $f(x)= \mathcal{O}(g(x))$, falls Zahlen $C>0, x_0>0$ existieren, so dass: $|f(x)|\le Cg(x), \forall_{x>x_0}$.
+	\item $f(x)=\Omega(g(x))$, falls Zahlen $C>0, x_0>0$ existieren, so dass $|f(x)|\ge Cg(x) \forall_{x>x_0}$.
+	\item $f(x)=o(g(x))$, falls für jedes $c>0$ ein $x_0>0$ existiert, so dass 
+		$|f(x)|\le cg(x), \forall_{x>x_0}$.
+	\item $f(x)= \Theta(g(x))$, falls $f(x)=\mathcal{O}(g(x))$, $g(x)= \mathcal{O}(f(x))$
+\end{itemize}
+\end{definition}
+\begin{remark}
+Genau dann wenn Beziehung der Landau-Notation
+\begin{itemize}
+	\item $f(x)=\mathcal{O}(g(x)) \iff \limsup_{x \to \infty} |\frac{f(x)}{g(x)}|\le C<\infty$
+	\item $f(x)= \Omega(g(x)) \iff \liminf_{x \to \infty} |\frac{f(x)}{g(x)}|>0$
+	\item $f(x)= o(g(x)) \iff \lim_{x \to \infty} |\frac{f(x)}{g(x)}| =0$
+	\item $f(x)= \Theta(g(x)) \iff f(x)= \mathcal{O}(g(x)), f(x)= \Omega(g(x))$
+\end{itemize}
+\end{remark}
+\begin{example}
+Es gilt $\sin(x) = \mathcal{O}(1)$, da $|\sin(x)|\le 1$ für alle $x \in  \R$. Bei Polynomen gilt die Laufzeit ist die höchste Potenz, sofern $ x\ge 1$.
+\end{example}
+\begin{definition}
+Der Aufwand eines Algorithmus ist die kleinste obere Schranke für das betrachtete Aufwandsmaß
+\end{definition}
+Für uns ist der Speicherbedarf irrelevant und benutzen als Aufwandsmaß für den Rechen die Anzahl der benötigten Vergleiche. \\
+In der k-ten Iteration des Bubblesort-Algortihmus \ref{alg:bubblesort} müssen k Vergleiche ausgeführt werden. Das heißt, der Gesamtaufwand des Algorithmus ist:
+\[
+\sum_{k=1}^{n-1}k=\frac{n(n-1)}{2}= \mathcal{O}(n^2)
+\]
+Dies ist eine drastische Verbesserung im Vergleich zu $\mathcal{O}(n(n!))$ von Algorithmus \ref{alg:bruteforce}
+\subsection{Mergesort}
+Zu erst wollen wir folgendes beobachten:
+\begin{lemma}
+	Gegeben seien zwei sortiere Mengen
+	\begin{itemize}
+		\item $S_x=\{x_1<\ldots<x_m\}$
+		\item $S_y=\{y_1<-\ldots<y_n\}$
+	\end{itemize}
+Dann lässt sich die Menge $S=S_x \cup S_y$ mit linearem Aufwand sortieren. Genauer werden $m+n-1$ Vergleiche benötigt.			
+\end{lemma}
+\begin{proof}
+Konstruktiv, durch den entsprechenden Algorithmus.
+\end{proof}
+\begin{algorithm}[H]
+\label{alg:merge}
+\caption{Merge}
+\KwData{Sortierte Mengen $S_x$ und $S_y$}
+\KwResult{Sortierte Menge $S= S_x \cup S_y$}
+Initialisiere $i=j=k=1$ \\
+\While{$i\le m$ und $j\le n$}{
+\If{$x_i < y_j$}{
+
+$z_k=x_{i}$ \\
+$i=i+1$
+}
+\Else{
+$z_k=y_j$ \\
+$j=j+1$
+
+}
+$k=k+1$
+}
+\For{$l \gets 0$ \KwTo $m-i$}{
+$z_{k+l}=x_{k+l}$
+}
+\For{$l \gets 0$ \KwTo $n-j$}{
+$z_{k+l}=y_{k+l}$
+}
+\end{algorithm}
+Basierend auf dieser Beobachtung können wir eine divide-and-conquer Strategie angeben um Mengen der Länge $n=2^{m}, m \in  \N$ zu sortieren. \\
+\begin{algorithm}[H]
+	\label{alg:mergesort}
+	\caption{Mergesort}
+	\KwData{Menge $S= \{z_1,\ldots,z_n\}$}
+	\KwResult{Sortierte Menge $S^{\pi}= \{z_{\pi_1} < \ldots < z_{\pi_n}\} $}
+	\If{$n=1$}{
+	$S^{\pi}=S$
+	}
+	\Else{
+		\begin{itemize}
+			\item Sortiere \\
+	$L=\{z_1,\ldots, z_{\frac{n}{2}}\}$ \\
+	$R= \{z_{\frac{n}{2}+1},\ldots, z_n\}$
+	mittels Mergesort zu $L^{\pi}$ und $R^{\pi}$ \\
+	\item Sortiere $L^{\pi} \cup R^{\pi}$ mittels Merge-Algorithmus \ref{alg:merge} zu $S^{\pi}$
+	\end{itemize}
+	}
+\end{algorithm}
+\begin{example}
+Mergesort der Menge $\{20,7,84,31,71,42,18,10\} $
+\end{example}
+\begin{remark}
+Da Mergesort sich selbst aufruft, sprechen wir von einem \emph{rekursiven Algorithmus}. Im Allgemeinem ist es schwierig zu beurteilen, ob solche Algorithmen terminieren. Im Fall von Mergesort ist der Fall jedoch klar, da die Rekursion im Fall $n=1$ abgebrochen wird.
+\end{remark}
+\begin{theorem}
+	\label{thm:mergesort}
+	Der Aufwand von Mergesort ist $\mathcal{O}(n \log n)$
+\end{theorem}
+\begin{proof}
+Bezeichne A(n) den Aufwand für das Sortieren einer $n=2^{m}$ elementigen Menge mittels Mergesort. Dann gilt:
+\begin{align*}
+	A(1)&=0 \\
+	A(n)&=n-1 + 2A(\frac{n}{2})
+\end{align*}
+Auflösen der Rekursion ergibt:
+\begin{align*}
+	A(n)
+	&=n-1+2A(\frac{n}{2})\\
+	&=2n-1-2+4A(\frac{n}{4})\\
+	&=\ldots \\
+	&=mn-\sum_{i=0}^{m-1}2^{i} \\
+	&= mn- \frac{1-2^{m}}{1-2} \\
+	&= (m-1)n+1
+\end{align*}
+$m=\log_2(n)=\frac{\log(n)}{\log(2)}$ impliziert die Behauptung
+\end{proof}
+$\log n \ll n$, also ist die Verbesserung von $\mathcal{O}(n^2)$ nach $\mathcal{O}(n\log(n)$ signifikant.
+Man nennt das Wachstum auch beinahe linear.
+
+\begin{remark}
+Die Implementierung von Mergesort als in-place-Algorithmus ist je nach Datenstrukturen trickreich. Deshalb wird oft nicht in-place implementiert, weshalb für jeden "divide"-Schritt zusätzlicher Speicherplatz implementiert werden muss.
+\end{remark}
+\subsection{Quicksort}
+\paragraph{Idee:} Divide-and-Conquer Strategie basierend auf dem Inhalt der zu sortierenden Liste.
+\begin{algorithm}
+\label{alg:quicksort}
+\caption{Quicksort}
+\KwData{Menge $S=\{z_1,\ldots, z_n\}$}
+\KwResult{Sortierte Menge $S^{\pi}=\{z_{\pi_1},\ldots,z_{\pi_n}\}$}
+	Wähle ein Pivot-Element $x \in S$ \\
+	Bestimme eine Permutation $\pi$, so dass $x=z_{m_{\pi}}$\\
+	\If{$L=\{z_{\pi_1},\ldots,z_{\pi_{m-1}} \neq \emptyset$\}}
+	{
+	Sortiere $L$ zu $L^{\pi}$ mittels Quicksort
+	}
+
+	\If{ $R=\{z_{\pi_{m+1}},\ldots,z_{\pi_n}\} \neq \emptyset$}{
+		Sortiere $R$ zu $R^{\pi}$ mittels Quicksort}
+	Vereinige $S^{\pi}= R^{\pi} \cup \{x\} \cup L^{\pi}$
+\end{algorithm}
+\begin{example}
+Beispiel anhand der gleichen Menge von Mergesort.
+\end{example}
+\begin{lemma}
+Im schlimmsten Fall ist der Aufwand von Quicksort $\mathcal{O}(n^2)$
+\end{lemma}
+\begin{proof}
+$A(n)$ aus \ref{thm:mergesort} wird umso größer, je unterschiedlicher die Größe der beiden Teilprobleme $A(m-1)$ und $A(n-m)$ ist.
+$A(n)$ ist also maximal für $m=1$ oder $m=n$, also wenn das Pivot-Element das größte oder kleinste Element ist. Dann gilt:
+\[
+A(n)=n-1+A(n-1)
+\]
+Der Rest erfolgt Analog zu der Aufwandserklärung von Bubblesort \ref{alg:bubblesort}:
+\[
+A(n)=\frac{n(n-1)}{2}= \mathcal{O}(n^2)
+\]
+Damit ist der Aufwand gezeigt.
+\end{proof}
