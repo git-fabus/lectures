@@ -2,6 +2,17 @@
 % bibliography-totocnumbered: Adds bibliography to toc.
 \usepackage{styles/generalstyle}
 \addbibresource{references.bib}
+\usetikzlibrary{arrows}
+
+\tikzset{
+  treenode/.style = {align=center, inner sep=5pt, text centered,
+    font=\sffamily},
+  arn_n/.style = {treenode,  text width=1.5em},
+  arn_r/.style = {treenode,  
+    text width=1.5em},
+  arn_x/.style = {treenode,
+    minimum width=0.5em, minimum height=0.5em}
+}
 
 \begin{document}
 

@@ -214,3 +214,140 @@ A(n)=\frac{n(n-1)}{2}= \mathcal{O}(n^2)
 \]
 Damit ist der Aufwand gezeigt.
 \end{proof}
+\begin{theorem}
+	Alle Permutationen der Zahlen $\{1,2,\ldots,n\}$ seien gleich wahrscheinlich. Dann benötigt Quicksort im Durchschnitt $\mathcal{O}(n\log(n)$ Vergleiche zum sortieren von Zahlen.
+\end{theorem}
+\begin{proof}
+Sie $\Pi$ die Menge aller Permutationen von $\{1,2,\ldots,n\}$ und sei $A(\pi), \pi \in \Pi$ die Anzahl Vergleiche um eine Permutation $\pi$ mittels Quicksort zu sortieren. Der durchschnittliche Aufwand ist:
+\[
+\overline{A}(n)=\frac{1}{n!} \sum_{\pi \in \Pi}A(\pi)
+\]
+O.B.d.A: Sei das erste Element das Pivotelement. Definiere:
+\[
+\Pi_k = \{\pi \in  \Pi | \pi_1=k \}, k=1,\ldots,n 
+\]
+mit
+\[
+|\Pi_k| =(n-1)!, k=1,\ldots,n
+\]
+Für $k$ fix und $\pi \in \Pi_k$ teilt Quicksort im ersten Aufruf in zwei Mengen
+\begin{align*}
+	\pi_< &= \{\text{Permutationen von } 1,2,3\ldots,k-1\} \\
+	\pi_> &= \{\text{Permutationen von } k+1,\ldots,n\}  
+\end{align*}
+Analog zu \ref{thm:mergesort} folgt
+\[
+A(\pi) = n-1+ A(\pi_<) + A(\pi_>)
+\]
+und
+\begin{equation}
+	\label{eqn:quicksort1}
+\sum_{\pi \in  \pi_k} A(\pi) = (n-1)! (n-1) + \sum_{\pi \in  \Pi_k} A(\pi_<)+ \sum_{\pi \in \Pi_k}A(\pi_>)
+\end{equation}
+Wenn $\pi$ alle Permutationen aus $\Pi_k$ durchläuft, entstehen für $\Pi_<$ alle Permutationen von $\{1,2,\ldots,k-1\}$. 
+Dabei tritt jede Permutation genau $\frac{(n-1)!}{(k-1)!}= \frac{|\Pi_k|}{\Pi_<}$ mal auf.
+\begin{equation}
+\label{eqn:quicksort2}
+\implies \sum_{\pi \in \Pi_k} A(\pi_<) = \frac{(n-1)!}{(k-1)!} \sum_{\pi \in \Pi_k}A(\pi_<) = 
+(n-1)!  \overline{A}(k-1)
+\end{equation}
+Analog:
+\begin{equation}
+\label{eqn:quicksort3}
+\sum_{\pi \in \Pi_k}A(\pi_>)= (n-1)! \overline{A}(n-k)
+\end{equation}
+\end{proof}
+Zusammensetzen: 
+\begin{align*}
+\overline{A}(n)
+&= \frac{1}{n!}\sum_{\pi \in  \Pi}A(\pi) \\
+&= \frac{1}{n!}\sum_{k=1}^{n}\sum_{\pi \in \Pi_k}
+\end{align*}
+Unter Verwendung der Gleichungen \ref{eqn:quicksort1}, \ref{eqn:quicksort2}, \ref{eqn:quicksort3} folgt weiter:
+\begin{align*}
+&=\frac{1}{n!}\sum_{k=1}^{n}(n-1)! (n-1 + \overline{A}(k-1) +\overline{A}(n-k) \\
+&= n-1+\frac{1}{n}\sum_{k=1}^{n}\overline{A}(k-1) +\overline{A}(n-k) \\
+&= n-1 + \frac{2}{n}\sum_{k=0}^{n-1}\overline{A}(k)
+\end{align*}
+mit Startwerten $\overline{A}(0)=\overline{A}(1)=0$. \\
+Per Induktion folgt:
+\begin{align*}
+\overline{A}(n) 
+&= 2(n+1) \sum_{i=1}^{n}\frac{1}{i}-4n \\
+&\le 2(n+1) (1+ \int_{1}^{n} \frac{1}{x}dx -4n \\
+&= 2(n+1) (1+\log(n)) -4n \\
+&= 2(n+1) \log(n) -2(n-1) \\
+&= \mathcal{O}(n\log(n))
+\end{align*}
+\subsection{Untere Schranke für das Sortierproblem}
+\paragraph{Frage:} Gibt es einen Sortieralgorithmus, der schneller ist als $\mathcal{O}(n\log(n))$?
+
+\begin{theorem}
+	\label{thm:sortierverfahren}
+Jedes deterministische Sortierverfahren, das auf paarweisen Vergleichen basiert und keine Vorkenntnisse über die zu sortierende Menge hat, benötigt im schlimmsten Fall mindestens $\log_2(n!)$ Vergleiche zum Sortieren von $n$ verschiedenen Zahlen.
+\end{theorem}
+Bevor wir den Beweis machen gibt es noch einige Hinweise, die wir für den Beweis benötigen.
+\begin{remark}
+	Es gilt:
+	\begin{itemize}
+		\item  $\log_2(n!) = \Theta(n\log(n)$
+		\item $\log_2(n) \le \log_2(n^{n}) = n\log_2(n) = \frac{1}{\log(2)}n \log n$
+		\item $\log(n!) \ge \log(\frac{n}{2}\ldots \frac{n}{2}) \ge \log((\frac{n}{2})^{\frac{n}{2}}= \frac{n}{2}\log(\frac{n}{2}) = \frac{n}{2}\log(n) - n\log(2)$
+	\end{itemize}
+\end{remark}
+Zum Beweis benötigen wir einen Entscheidungsbaum. Dieser kann jedem Sortieralgorithmus mit paarweisen Vergleichen zugeordnet werden, und illustriert das Verhalten des Algorithmus:
+\begin{itemize}
+	\item Innere Knoten des Entscheidungsbaums sind Vergleiche im Algorithmus.
+	\item Ein Weg von der Wurzel zu einem Blatt entspricht der zeitlichen Abfolge der Vergleiche. Ein Weitergeben nach rechts illustriert einen richtigen Vergleich, nach links einen falschen.
+	\item Die $n!$ Blätter des Baumes stellen die Permutationen der zu sortierenden Menge dar, die jeweils zur Abfolge der Vergleiche gehört.
+\end{itemize}
+\begin{example}
+Baum für $\{z_1,z_2,z_3\}$: \\
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+  level distance = 1.5cm}]
+  \node [arn_n] {$z_1<z_2$}
+    child{ node [arn_r] {$z_1<z_3$}
+            child{ node [arn_n] {$z_2<z_3$}
+            	child{ node [arn_r] {$\{z_3,z_2,z_1\} $} edge from parent node[above left]
+                         {nein}} %for a named pointer
+							child{ node [arn_x] {$\{z_2,z_3,z_1\} $}}
+            }
+            child{ node [arn_n] {$\{z_2,z_1,z_3\} $}}
+    }
+    child{ node [arn_r] {47}
+            child{ node [arn_n] {38}
+							child{ node [arn_r] {36}}
+							child{ node [arn_r] {39}}
+            }
+            child{ node [arn_n] {51}
+							child{ node [arn_r] {49}}
+							child{ node [arn_x] {}}
+            }
+		}
+;
+\end{tikzpicture}
+\end{center}
+\end{example}
+\begin{proof}
+\ref{thm:sortierverfahren} \\
+\underline{Idee:} Finde eine untere Schranke für die Tiefe des Baumes. Dies ist die Mindestanzahl der im schlimmsten Fall mötigen Vergleiche.
+Im besten Fall ist ein Baum ausbalanciert, d.h. alle Blätter haben die gleiche Tiefe $m$ und wir haben $2^{m}$ Blätter. Da wir $n!$ Permutationen haben (also Blätter), muss $2^{m}=n!$ gelten. Es folgt $m \log_2(n!)$
+\end{proof}
+Satz \ref{thm:sortierverfahren} sagt, dass Mergesort in der asymptotischen Laufzeit optimal ist. 
+\paragraph{Frage:} Können wir etwas Ähnliches für Quicksort zeigen?
+
+\begin{theorem}Alle Permutationen der Zahlen $z_1,\ldots,z_n$ seien gleich wahrscheinlich. Dann benötigen Sortierverfahren wie in Satz \ref{thm:sortierverfahren} im Mittel $\log_2(n!)$ Vergleiche.
+\end{theorem}
+\begin{proof}
+Die mittlere Höhe $\overline{H}(z)$ des Entscheidungsbaums $\tau$ ist gegeben als der Mittelwert der Tiefen $t_{\tau}$ aller seiner Blätter $v$.
+Sei $B(\tau)$ die Menge der Blätter und $\beta(\tau) = |B(\tau)|$ Dann gilt:
+\[
+\overline{H}(\overline{c})=\frac{1}{\beta(\overline{c})}\sum_{y=B(\overline{c}} t\overline{c}(v)
+\]
+Zu zeigen ist, dass:
+\[
+\overline{H}(\overline{c}) \ge \log_2(\beta(\overline{c}))
+\]
+Vollständige Induktion über die Höhe des Entscheidungsbaums $\overline{c}$.
+\end{proof}
