@@ -256,7 +256,6 @@ Analog:
 \label{eqn:quicksort3}
 \sum_{\pi \in \Pi_k}A(\pi_>)= (n-1)! \overline{A}(n-k)
 \end{equation}
-\end{proof}
 Zusammensetzen: 
 \begin{align*}
 \overline{A}(n)
@@ -279,6 +278,7 @@ Per Induktion folgt:
 &= 2(n+1) \log(n) -2(n-1) \\
 &= \mathcal{O}(n\log(n))
 \end{align*}
+\end{proof}
 \subsection{Untere Schranke für das Sortierproblem}
 \paragraph{Frage:} Gibt es einen Sortieralgorithmus, der schneller ist als $\mathcal{O}(n\log(n))$?
 
@@ -350,4 +350,52 @@ Zu zeigen ist, dass:
 \overline{H}(\overline{c}) \ge \log_2(\beta(\overline{c}))
 \]
 Vollständige Induktion über die Höhe des Entscheidungsbaums $\overline{c}$.
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item Induktionsverankerung:$H(\overline{c})=0$ \\
+		$\overline{c}$ besteht nur aus seiner Wurzel. $\implies \overline{H}(c)= \frac{1}{1}\sum_{y \in B(\tau)} t_{\tau}(v)=0= \log_2(1)$
+	\item Induktionsschritt: $H(\overline{c})\le h-1 \implies H(\overline{c})=h$ \\
+		Seien $\tau_l , \tau_r$ die Wurzeln des linken bzw. rechten Teilbaums zum Wurzelknoten von c:
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+  level distance = 1.5cm}]
+  \node [arn_n] {$\overline{c}$}
+    child{ node [arn_r] {$\tau_l$}
+    }
+    child{ node [arn_r] {$\tau_r$}
+    };
+\end{tikzpicture}
+\end{center}
+\paragraph{Beobachte:}
+\begin{itemize}
+	\item $H(\tau_l), H(\tau_r) <h$
+	\item $B(\tau)= B(\tau_l) \cup B(\tau_r)$
+	\item $B(\tau_l) \cap B(\tau_r) = \emptyset$
+	\item $\beta(\overline{c})= \beta(\tau_l) + \beta(\tau_r)$
+	\item $\beta(\tau_l), \beta(\tau_r) \ge 1$
+	\item $t_{\tau}(v)= t_{\tau_l}(v)+1$
+	\item $t_{\tau}(v)= t_{\tau_r}(v)+1$
+\end{itemize}
+Rechne:
+\begin{align*}
+\overline{H}(\tau) 
+&= \frac{1}{\beta(\tau)}\sum_{v \in B(\tau)} t_{\tau}(v) \\
+&= \ldots \\
+&\ge 1+\frac{1}{b} \min_{x \in [0,b] (x \log_2(x) + (b-x) \log_2(b-x))
+\end{align*}
+Da
+\begin{align*}
+f'(x)
+&= \log_2(x) -\log_2(b-x) \\
+&= \log_2(\frac{x}{b-x}) &=0
+\end{align*}
+genau dann, wenn $x=\frac{b}{2}$, ist dies die einzige Möglichkeit, wo das Minimum in $(0,b)$ angenommen werden kann. Die anderen Möglichkeiten sind die Intervallrandpunkte, was ausgeschlossen ist.
+Also gilt:
+\begin{align*}
+	\overline{H}(\tau) 
+	&\ge 1+ \log_2(\frac{b}{2}) \\
+	&= 1+ \log_2(\beta(\tau)) -1 \\
+	&= \log_2(\beta(\tau))
+\end{align*}
+\end{itemize}
 \end{proof}
+
