@@ -303,31 +303,31 @@ Zum Beweis benötigen wir einen Entscheidungsbaum. Dieser kann jedem Sortieralgo
 \end{itemize}
 \begin{example}
 Baum für $\{z_1,z_2,z_3\}$: \\
-\begin{center}
-\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
-  level distance = 1.5cm}]
-  \node [arn_n] {$z_1<z_2$}
-    child{ node [arn_r] {$z_1<z_3$}
-            child{ node [arn_n] {$z_2<z_3$}
-            	child{ node [arn_r] {$\{z_3,z_2,z_1\} $} edge from parent node[above left]
-                         {nein}} %for a named pointer
-							child{ node [arn_x] {$\{z_2,z_3,z_1\} $}}
-            }
-            child{ node [arn_n] {$\{z_2,z_1,z_3\} $}}
-    }
-    child{ node [arn_r] {47}
-            child{ node [arn_n] {38}
-							child{ node [arn_r] {36}}
-							child{ node [arn_r] {39}}
-            }
-            child{ node [arn_n] {51}
-							child{ node [arn_r] {49}}
-							child{ node [arn_x] {}}
-            }
-		}
-;
-\end{tikzpicture}
-\end{center}
+%\begin{center}
+%\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+% level distance = 1.5cm}]
+%\node [arn_n] {$z_1<z_2$}
+%child{ node [arn_r] {$z_1<z_3$}
+%         child{ node [arn_n] {$z_2<z_3$}
+%          	child{ node [arn_r] {$\{z_3,z_2,z_1\} $} edge from parent node[above left]
+%                        {nein}} %for a named pointer
+%							child{ node [arn_x] {$\{z_2,z_3,z_1\} $}}
+%       }
+%        child{ node [arn_n] {$\{z_2,z_1,z_3\} $}}
+% }
+%  child{ node [arn_r] {47}
+%           child{ node [arn_n] {38}
+%							child{ node [arn_r] {36}}
+%							child{ node [arn_r] {39}}
+%            }
+%            child{ node [arn_n] {51}
+%							child{ node [arn_r] {49}}
+%							child{ node [arn_x] {}}
+%            }
+%		}
+%;
+%\end{tikzpicture}
+%\end{center}
 \end{example}
 \begin{proof}
 \ref{thm:sortierverfahren} \\
@@ -356,14 +356,9 @@ Vollständige Induktion über die Höhe des Entscheidungsbaums $\overline{c}$.
 	\item Induktionsschritt: $H(\overline{c})\le h-1 \implies H(\overline{c})=h$ \\
 		Seien $\tau_l , \tau_r$ die Wurzeln des linken bzw. rechten Teilbaums zum Wurzelknoten von c:
 \begin{center}
-\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
-  level distance = 1.5cm}]
-  \node [arn_n] {$\overline{c}$}
-    child{ node [arn_r] {$\tau_l$}
-    }
-    child{ node [arn_r] {$\tau_r$}
-    };
-\end{tikzpicture}
+
+	%Graph missing
+
 \end{center}
 \paragraph{Beobachte:}
 \begin{itemize}
