@@ -1,0 +1,102 @@
+\section{Zahlensystem}
+Die Darstellung von Zahlen basiert auf sogenannten \emph{Zahlensystemen}.
+Diese Zahlensysteme unterscheiden sich in der Wahl des zugrundeliegendes Alphabets.
+Unsere Zahl entspricht dann einem Wort, bestehend aus Elementen des Alphabets.\\
+
+
+\begin{definition}[Alphabet]
+Es sei $\N = \{ 1,2,3\ldots \}$ und $b \in  \N$. \\
+Wir bezeichnen mit $\sum_{b}$ das Alphabet des \emph{b-adischen Zahlensystems}
+\end{definition}
+
+\begin{example}
+Verschiedene Zahlensysteme
+\begin{enumerate}
+	\item Dezimalsystem: $\sum_{10}= \{0,1,\ldots,9\}$ \\ wie $(384)_10$
+	\item Dual bzw. Binärsystem $\sum_2 = \{0,1\}$ \\ wie $(42)_10 = (101010)_2$
+	\item \ldots
+\end{enumerate}
+\end{example}
+Um die Zahlendarstellung sinnvoll zu nutzen Ergibt sich folgendes:
+\begin{theorem}[]
+Seien $b,n \in  \N, b>1 $. \\
+Dann ist jede ganze, nicht-negative Zahl $z$ mit $0\le z \le b^{n}-1$ \emph{eindeutig} als Wort der Länge $n$ über $\sum_b$ darstellbar durch:
+\[
+z=\sum_{i=0}^{n-1}z_ib^{i}
+\]
+mit $z_i \in \sum_b$ für alle $i=0,1,\ldots,n-1$. \\
+Wir schreiben vereinfachend: 
+\[
+z=(z_{n-1},\ldots, z_0)_b
+\]
+\end{theorem}
+\begin{proof}
+
+\begin{itemize}
+\item Induktion \medskip
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+\item \emph{Induktionsanfang}: \underline{$z<b$} hat die eindeutige Darstellung $z_0=z$ und $z_i=0$ sonst.
+
+
+
+\item \emph{Induktionsschritt}: \underline{$z-1 \to z\ge b$} \\   
+
+Betrachte
+\[
+z= \left\lfloor{\frac{z}{b}}\right\rfloor \cdot b + (z \mod b)
+\]
+Da $\hat{z}<z$ besitzt die eindeutige Darstellung
+\[
+\hat{z}= (\hat{z_{n-1}},\ldots, \hat{z_0})_b
+\]
+Bemerke $\hat{z_{n-1}}=0$, da 
+\[
+\left( \hat{z_{n-1}}b^{n-1} \right)b \le z \le b^{n}-1
+\]
+Also ist $z_b$ eine n-stellige Darstellung von z in b-adischen Zahlensystem
+
+\end{itemize}
+
+\item Eindeutigkeit wird durch Widerspruch gezeigt. \\
+\emph{Angenommen:} Es gibt zwei verschiedene Darstellungen
+\[
+z=\left( z_{n-1}^{(2)},\ldots, z_0^{(2)} \right)_b = \left(z_{n-1}^{(1)},\ldots,z_0^{(1)} \right)_b
+\]
+Sei $m \in  \N$ der größte Index mit $z_m^{(1)} \neq z_m^{(2)}$, \\
+Ohne Beschränkung der Allgemeinheit kann gesagt werden $z_m^{(1)>z_m^{(2)}}$. \\
+Dann müssten die Stellen $0,1,\ldots,m-1$ den niedrigeren Wert von $z_m^{(2)}$ kompensieren. Die größte mit diesen Stellen darstellbare Zahl ist aber:
+\[
+\sum_{i=0}^{m-1}(b-1)b^{i}= (b-1)\sum_{i=0}^{m-1}b^{i}= b^{m}-1 \text{.}
+\]
+Da $b^{m}$ der kleinstmögliche Wert der fehlende Stelle m ist, kann diese aber nicht kompensiert werden. Dies ist ein Widerspruch.
+\end{itemize}
+\end{proof}%
+Durch den Beweis ergibt sich sofort ein Algorithmus zur Umwandlung einer Zahl in ein anderes Zahlensystem:
+\begin{example}
+Umwandlung von $(1364)_{10}$ in das Oktalsystem.
+\begin{itemize}
+	\item $1364 = 170 \cdot 8 +4$
+	\item $170 = 21 \cdot 8 +2$
+	\item \ldots
+	\item $0 \cdot 8 + 2$
+\end{itemize}
+$\implies (2524)_8$
+\end{example}
+
+\begin{algorithm}[H]
+ \caption{Bestimmung der b-adischen Darstellung}
+ \KwData{Dezimalzahl $z \in \N_0$, Basis $b \in \N$}
+ \KwResult{b-adische Darstellung $(z_{n-1},\ldots, z_0)_b $}
+ Initialisiere $i=0$ \\
+ \While{$z>0$}{
+  $z_i = z \mod b $\\
+  $z= \left\lfloor \frac{z}{b} \right\rfloor$ \\
+  $i=i+1$
+ }
+ \end{algorithm}
+
+\paragraph{Beobachtung}
+Wir sehen, dass das Honor-Schmea nur eine Schleife, Additionen und Multiplikationen benötigt. 
+Diese Operationen können wir am Computer durchführen. 
+Im Gegensatz dazu steht die Potenz $b^{i}$ in modernen Programmiersprachen zwar zur Verfügung, wird aber im Hintergrund oft auf Multiplikationen zurückgeführt.
+Man überprüft leicht, dass das Honor-Schema weniger Multiplikationen benötigt und somit schnellt ist.

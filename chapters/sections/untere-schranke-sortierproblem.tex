@@ -1,0 +1,109 @@
+\section{Untere Schranke für das Sortierproblem}
+\paragraph{Frage:} Gibt es einen Sortieralgorithmus, der schneller ist als $\mathcal{O}(n\log(n))$?
+
+\begin{theorem}
+	\label{thm:sortierverfahren}
+Jedes deterministische Sortierverfahren, das auf paarweisen Vergleichen basiert und keine Vorkenntnisse über die zu sortierende Menge hat, benötigt im schlimmsten Fall mindestens $\log_2(n!)$ Vergleiche zum Sortieren von $n$ verschiedenen Zahlen.
+\end{theorem}
+Bevor wir den Beweis machen gibt es noch einige Hinweise, die wir für den Beweis benötigen.
+\begin{remark}
+	Es gilt:
+	\begin{itemize}
+		\item  $\log_2(n!) = \Theta(n\log(n)$
+		\item $\log_2(n) \le \log_2(n^{n}) = n\log_2(n) = \frac{1}{\log(2)}n \log n$
+		\item $\log(n!) \ge \log(\frac{n}{2}\ldots \frac{n}{2}) \ge \log((\frac{n}{2})^{\frac{n}{2}}= \frac{n}{2}\log(\frac{n}{2}) = \frac{n}{2}\log(n) - n\log(2)$
+	\end{itemize}
+\end{remark}
+Zum Beweis benötigen wir einen Entscheidungsbaum. Dieser kann jedem Sortieralgorithmus mit paarweisen Vergleichen zugeordnet werden, und illustriert das Verhalten des Algorithmus:
+\begin{itemize}
+	\item Innere Knoten des Entscheidungsbaums sind Vergleiche im Algorithmus.
+	\item Ein Weg von der Wurzel zu einem Blatt entspricht der zeitlichen Abfolge der Vergleiche. Ein Weitergeben nach rechts illustriert einen richtigen Vergleich, nach links einen falschen.
+	\item Die $n!$ Blätter des Baumes stellen die Permutationen der zu sortierenden Menge dar, die jeweils zur Abfolge der Vergleiche gehört.
+\end{itemize}
+\begin{example}
+Baum für $\{z_1,z_2,z_3\}$: \\
+%\begin{center}
+%\begin{tikzpicture}
+%
+%
+%
+%
+%
+%\end{tikzpicture}
+%\end{center}
+\end{example}
+\begin{proof}
+\ref{thm:sortierverfahren} \\
+\underline{Idee:} Finde eine untere Schranke für die Tiefe des Baumes. Dies ist die Mindestanzahl der im schlimmsten Fall mötigen Vergleiche.
+Im besten Fall ist ein Baum ausbalanciert, d.h. alle Blätter haben die gleiche Tiefe $m$ und wir haben $2^{m}$ Blätter. Da wir $n!$ Permutationen haben (also Blätter), muss $2^{m}=n!$ gelten. Es folgt $m \log_2(n!)$
+\end{proof}
+Satz \ref{thm:sortierverfahren} sagt, dass Mergesort in der asymptotischen Laufzeit optimal ist. 
+\paragraph{Frage:} Können wir etwas Ähnliches für Quicksort zeigen?
+
+\begin{theorem}Alle Permutationen der Zahlen $z_1,\ldots,z_n$ seien gleich wahrscheinlich. Dann benötigen Sortierverfahren wie in Satz \ref{thm:sortierverfahren} im Mittel $\log_2(n!)$ Vergleiche.
+\end{theorem}
+\begin{proof}
+Die mittlere Höhe $\overline{H}(z)$ des Entscheidungsbaums $\tau$ ist gegeben als der Mittelwert der Tiefen $t_{\tau}$ aller seiner Blätter $v$.
+Sei $B(\tau)$ die Menge der Blätter und $\beta(\tau) = |B(\tau)|$ Dann gilt:
+\[
+\overline{H}(\overline{c})=\frac{1}{\beta(\overline{c})}\sum_{y=B(\overline{c}} t\overline{c}(v)
+\]
+Zu zeigen ist, dass:
+\[
+\overline{H}(\overline{c}) \ge \log_2(\beta(\overline{c}))
+\]
+Vollständige Induktion über die Höhe des Entscheidungsbaums $\overline{c}$.
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item Induktionsverankerung:$H(\overline{c})=0$ \\
+		$\overline{c}$ besteht nur aus seiner Wurzel. $\implies \overline{H}(c)= \frac{1}{1}\sum_{y \in B(\tau)} t_{\tau}(v)=0= \log_2(1)$
+	\item Induktionsschritt: $H(\overline{c})\le h-1 \implies H(\overline{c})=h$ \\
+		Seien $\tau_l , \tau_r$ die Wurzeln des linken bzw. rechten Teilbaums zum Wurzelknoten von c:
+
+	\begin{center}
+	\begin{tikzpicture}
+		\node(c) at (0,0) {c};
+		\node(l) at (-1,-1) {$\tau_l$};
+		\node(r) at (1,-1) {$\tau_r$};
+		\node(1) at (-1.5,-2) {};
+		\node(2) at (-0.5,-2) {};
+
+		\path [-](c) edge node {} (l);
+		\path [-](c) edge node {} (r);
+		\path [-](l) edge node {} (1);
+		\path [-](l) edge node {} (2);
+		\path [-](1) edge node {} (2);
+	\end{tikzpicture}
+	\end{center}
+\paragraph{Beobachte:}
+\begin{itemize}
+	\item $H(\tau_l), H(\tau_r) <h$
+	\item $B(\tau)= B(\tau_l) \cup B(\tau_r)$
+	\item $B(\tau_l) \cap B(\tau_r) = \emptyset$
+	\item $\beta(\overline{c})= \beta(\tau_l) + \beta(\tau_r)$
+	\item $\beta(\tau_l), \beta(\tau_r) \ge 1$
+	\item $t_{\tau}(v)= t_{\tau_l}(v)+1$
+	\item $t_{\tau}(v)= t_{\tau_r}(v)+1$
+\end{itemize}
+Rechne:
+\begin{align*}
+\overline{H}(\tau) 
+&= \frac{1}{\beta(\tau)}\sum_{v \in B(\tau)} t_{\tau}(v) \\
+&= \ldots \\
+&\ge 1+\frac{1}{b} \min_{x \in [0,b]} (x \log_2(x) + (b-x) \log_2(b-x))
+\end{align*}
+Da
+\begin{align*}
+f'(x)
+&= \log_2(x) -\log_2(b-x) \\
+&= \log_2(\frac{x}{b-x}) &=0
+\end{align*}
+genau dann, wenn $x=\frac{b}{2}$, ist dies die einzige Möglichkeit, wo das Minimum in $(0,b)$ angenommen werden kann. Die anderen Möglichkeiten sind die Intervallrandpunkte, was ausgeschlossen ist.
+Also gilt:
+\begin{align*}
+	\overline{H}(\tau) 
+	&\ge 1+ \log_2(\frac{b}{2}) \\
+	&= 1+ \log_2(\beta(\tau)) -1 \\
+	&= \log_2(\beta(\tau))
+\end{align*}
+\end{itemize}
+\end{proof}

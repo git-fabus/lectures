@@ -1,0 +1,51 @@
+\section{Vorwärts- und Rückwertsanalyse}
+Abstrakt gesehen entspricht das Lösen eines Problems dem Auswerten einer Funktion $f$.
+Beim numerischen Auswerten von $f$ können verschiedene Fehler passieren:
+%Hier muss noch das Diagramm von Vorlesung 5 hin.
+
+\begin{definition}[Fehlerarten]
+Sei $D \subset \R$ eine Menge von Eingangsdaten und $W \subset \R$ die Menge der möglichen Ergebnisse. Wir unterscheiden folgende Fehlerarten bei der Auswertung von $f \colon D \to W$.
+\begin{itemize}
+\item \underline{Datenfehler} Typischerweise sind die Eingangsdaten $x \in D$ nicht exakt,
+sondern mit einem Datenfehler $\Delta x$ behaftet. Die gestörten Eingangsdaten $\tilde{x}=x+ \Delta x$ produzieren einen Fehler $f(x+\Delta x)-f(x)$.
+\item \underline{Verfahrensfehler} Exakte Verfahren enden bei exakter Rechnung nach endlich vielen Operationen mit dem exakten Ergebnis.
+Näherungsverfahren enden in Abhängigkeit bestimmter Kriterien mit einer Näherung $\tilde{y}$ für die Lösung $y \in W$.
+\item \underline{Rundungsfehler} Verursacht durch Maschinenzahlen und Rundungen während der Arithmetik.
+\end{itemize}
+\end{definition}
+Ein Teilgebiet der Numerik versucht diese Fehler durch eine Fehleranalyse zu quantifizieren.
+Hierzu verfolgt man die Auswirkungen von allen Fehlern, die in den einzelnen Schritten vorkommen können.
+\begin{definition}[Analysearten]
+Bei der \emph{Vorwärtsanalyse} wird der Fehler von Schritt zu Schritt verfolgt und der akkumulierte Fehler für jedes Teil-Ergebnis abgeschätzt. \\
+Bei der \emph{Rückwertsanalyse} geschieht die Verfolgung des Fehlers hingegen so, dass jedes Zwischenergebnis als exakt berechnetes Ergebnis zu gestörten Daten interpretiert wird, d.h , der akkumulierte Fehler wird als Datenfehler interpretiert.
+\end{definition}
+\begin{example}
+Betrachte $f(x,y)=x+y$ \\
+\begin{itemize}
+	\item Vorwärtsanalyse: $\boxed{f} = x \boxplus y= (x+y)(1+\varepsilon)$
+	\item Rückwärtsanalyse: $x \boxplus y= x(1+\varepsilon)+y(1+\varepsilon)= f(x(1+\varepsilon), y(1+\varepsilon)$
+\end{itemize}
+mit $|\varepsilon|\le \varepsilon_{mach}$
+\end{example}
+In der Praxis ist die Vorwärtsanalyse kaum durchführbar. 
+Für die meisten Algorithmen ist, wenn überhaupt, nur eine Rückwärtsanalyse bekannt.
+\begin{example}
+\label{eg:rückwärtsanalyse}
+Fortsetzung von Beispiel \ref{eg:pq} \\
+Führe Rückwärtsanalyse durch zu Algorithmus \ref{alg:nst1} für die Betrags-kleinere Nullstelle $x_2$ durch:
+Dann ist
+\[
+f(p,q)=p-\sqrt[2]{p^2-q}
+\]
+mit $p>0$. 
+Für $|\varepsilon_i|\le \varepsilon_{mach}, i=1,2,3,4$ betrachten wir:
+\begin{align*}
+\left( p-\sqrt[2]{(p^2(1+\varepsilon_1)-q)(1+\varepsilon_2)} (1+\varepsilon_3) \right)(1+\varepsilon_4)
+&= p(1+\varepsilon_4)-\sqrt[2]{(p^2(1+\varepsilon_1)-q)(1+\varepsilon_2)(1+\varepsilon_3)^2(1+\varepsilon_4)^2}\\
+&= p^2(1+\varepsilon_1)(1+\varepsilon_3)^2(1+\varepsilon_4)^2-q(1+\varepsilon_2)(1+\varepsilon_3)^2(1+\varepsilon_4)^2 \\
+&= \ldots \\
+&= p(1+\varepsilon_4)-\sqrt[2]{p^2(1+\varepsilon_4)^2-q(1+\varepsilon_7)} \\
+&= f(p(1+\varepsilon_4),q(1+\varepsilon_7))
+\end{align*}
+Die Abschätzung für $\varepsilon_7$ explodiert, falls $0<|q| \ll 1 < p$. Dies war in Beispiel \ref{eg:pq} der Fall.
+\end{example}

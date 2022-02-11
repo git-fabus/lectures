@@ -1,0 +1,24 @@
+\section{Vorzeichen-Betrag-Darstellung}
+Um auch Zahlen mit Vorzeichen am Computer darstellen zu können, betrachten wir im Folgenden die Vorzeichen-Betrag-Darstellung für Binärzahlen.
+Das Binäralphabet besteht nur aus $0$ und $1$, welche wir auch als \emph{Bits} bezeichnen.
+Bei einer Wortlänge von n Bits wir das erste Bit als Vorzeichen verwendet, die restlichen $n-1$-Bits für den Betrag der Zahl. Da die 0 die Darstellung $+0$ und $-O$ besitzt, können wir insgesamt $2^{n}-1$ Zahlen darstellen.
+
+\begin{example}
+Für $n=3$\\
+
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{c c}
+		Bitmuster & Dezimaldarstellung \\
+		$000$ & $+0$ \\
+		$001$ & $+1$ \\
+		$\ldots$ & $\ldots$ \\
+		$100$ & $-0$ \\
+		$\ldots$ & $\ldots$ \\
+		$111$ & $-3$
+	\end{tabular}
+\end{table}
+\end{example}
+
+\paragraph{Aber:} Diese Darstellung am Computer ist unpraktisch, da die vier Grundrechenarten auf Hardwareebene typischerweise mit Hilfe von Addition und Zusatz-Logik umgesetzt werden.
+\paragraph{Lösung:} Komplementdarstellung

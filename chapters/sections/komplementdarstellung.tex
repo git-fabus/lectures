@@ -1,0 +1,219 @@
+\section{Komplementdarstellung}
+
+\begin{definition}[(b-1)-Komplement]
+Sei $z=(z_{n-1}\ldots z_1 z_0)_b$ eine n-stellige b-adische Zahl. Das \emph{(b-1)-Komplement} $K_{b-1}(z)$ ist definiert als:
+\[
+K_{b-1} = (b-1-z_{n-q},\ldots, b-1-z_0)_b
+\]
+\end{definition}
+Geben wir hierzu direkt ein paar Beispiele an
+\begin{example} Komplemente \\
+\begin{itemize}
+	\item $K_9((325)_{10})= (674)_{10}$  (9er-Komplement im 10-er System)
+	\item $K_1((10110)_2)=(01001)_2$ (1er-Komplement im 2er System)
+\end{itemize}
+\end{example}
+\begin{definition}[b-Komplement]
+Das b-Komplement einer b-adischen Zahl $z\neq 0$ ist definiert als \[
+K_b(z)=K_{b-1}(z) +(1)_b
+\]
+\end{definition}
+\begin{example}
+\begin{itemize}
+	\item $K_{10}((325)_{10}) = (674)_{10} + (1)_{10} = (675)_{10}$
+\end{itemize}
+\end{example}
+\begin{lemma}[]
+Für jede n-stellige b-adische Zahl $z$ gilt:
+\begin{itemize}
+	
+	\item i) $z+K_{b-1}(z)=(b-1,\ldots,b-1)_b = b^{n}-1$
+	\item ii) $K_{b-1}\left( K_{b-1}(z) \right)=z$
+\end{itemize}
+Ist außerdem $z\neq 0$ so gilt:
+\begin{itemize}
+	
+	\item iii) $z+K_b(z)=b^{n}$
+	\item iv) $K_b(K_b(z))=z$
+\end{itemize}
+\end{lemma}
+\begin{proof}
+\begin{itemize}Hilfssatz \\
+	\item (i) Durch nachrechnen:
+		\begin{align*}
+		z+K_{b-1}(z)
+		&=(z_{n-1} \ldots z_0)_b +(b-1-z_{n-1}, \ldots, b-1-z_0)_b \\
+		&=\sum_{i=0}^{n-1}z_ib^{i}+ \sum_{i=0}^{n-1}(b-1-z_i)b^{i}\\
+		&= \sum_{i=0}^{n-1}(b-1)b^{i} = (b-1, \ldots, b-1)_b \\
+		&= (b-1)\sum_{i=0}^{n-1}b^{i} \\
+		&=(b-1)\left( \frac{b^{n}-1}{b-1} \right) \\
+		&= b^{n}-1
+		\end{align*}
+	\item (ii) per Definition
+	\item (iii) Nachrechnen:
+	\begin{align*}
+		z+K_b(z) = z+K_{b-1} + 1 = b^{n}-1+1=b^{n}
+	\end{align*}
+	\item Definiere $\hat{z} = K_b\left( z \right)= K_{b-1}(z) + (1)_b > 0$ und rechne
+		\[
+		z+K_b(z)=b^{n}=\hat{z} +K_b{\hat{z}}+ K_b\left( K_b(z) \right) \implies \text{Behauptung.}
+		\]
+\end{itemize}
+
+
+
+\end{proof}
+
+\begin{remark} Modifikation 
+\begin{itemize}
+	\item Die 3. Aussage gilt auch für $z=0$, falls man dann bei der Addition von 1 die Anzahl der Stellen erweitert.
+	\item die 4. Aussage gilt für $z=0$, falls überall im Beweis modulo $b^{n}$ gerechnet wird.
+\end{itemize}
+\end{remark}
+Außerdem impliziert die 3. Aussage des Lemmas, dass 
+\begin{equation}\label{eqn:komplement}
+	K_b(z)=b^{n}-z \text{.}
+\end{equation}
+Dies können wir geschickt zum Darstellen der $b^{n}$ verschiedenen ganzen Zahlen $z$ mit 
+\[
+-\left\lfloor \frac{b^{n}}{2}\right\rfloor \le z \le \left\lceil \frac{b^{n}}{2}\right\rceil -1
+\]
+nutzen. Diesen Bereich nennt man darstellbaren Bereich.
+\begin{definition}[b-Komplement-Darstellung]
+	Die b-Komplement-Darstellung $(z)_{K_b} = (z_{n-1} \ldots z_0)_b$ einer Zahl $z \in  \Z$ im darstellbaren Bereich ist definiert als:
+	\[
+		(z)_{K_b}= \begin{cases}
+			(z)_b & \text{falls } z \ge 0 \\
+			\left( K_b(|z|) \right)_b & \text{falls } z<0
+		\end{cases}
+	\]
+\end{definition}
+
+\begin{example} Der darstellbare Bereich.
+\begin{itemize}
+	\item Sei $b = 10$, $n=2$. \\ 
+Dann impliziert \eqref{eqn:komplement}, dass
+\[
+K_{10}(50)= 10^2-50=50
+\]
+\[
+K_{10}(49)= 100 -49=51 \text{.}
+\]
+Der darstellbare Bereich ist nun 
+\[
+-50 \le z \le 49
+\]
+und hat konkrete Darstellungen:
+
+\begin{center}
+\begin{tabular}{ c c }
+ Darstellung & Zahl   \\
+ $0$ & $+0$  \\
+ $1$ & $+1$ \\
+ \ldots & \ldots \\
+ $49$ & $+49$ \\
+ $50$ & $-50$ \\
+ \ldots & \ldots \\
+ $99$ & $-1$
+\end{tabular}
+\end{center}
+
+\item Sei $b=2$, $n=3$ Der darstellbare Bereich ist $-4 \le  z \le 3$. \\
+\begin{center}
+\begin{tabular}{ c c }
+ Bitmuster & Dezimaldarstellung  \\ 
+ $000$ & $0$   \\  
+ $001$ & $1$  \\
+ \ldots & \ldots \\
+ $100$ & $-4$ \\
+ \ldots & \ldots \\
+ $111$ & $-1$
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{example}%
+Wir betrachten nun Addition und Subtraktion zweier Zahlen in b-Komplement-Darstellung. 
+Hierzu bezeichne $(x)_{K_b} \oplus (y)_{K_b}$ die ziffernweise Addition der Darstellungen von x und y mit Übertrag ("schriftlich rechnen"), 
+wobei ein eventueller Überlauf auf die $(n+1)$-te Stelle vernachlässigt wird (wir rechen also immer mit modulo $b^{n}$.
+\begin{theorem}[Addition in b-Komplement-Darstelllung]
+	Seien x und y zwei n-stellige, b-adische Zahlen und x,y und $x+y$ im darstellbaren Bereich.
+Dann gilt:
+\[
+(x+y)_{K_b} = (x)_{K_b} \oplus (y)_{K_b}
+\]
+\end{theorem}
+\begin{proof}
+Wir betrachten dazu mehrere Fälle.
+\begin{itemize}
+	\item Fall $x,y \ge 0$: \\
+\begin{align*}
+(x)_{K_b} \oplus (y)_{K_b}
+    &\overset{\text{Def.}}{=}\left( (x)_b + (y)_b \right) \mod b^{n} \\
+    &\overset{\text{Def.}}{=} (x+y) \mod b^{n} \\
+    &\overset{\text{Def.}}{=} (x+y)_{K_b} \\
+\end{align*}
+Der letzte Schritt ist möglich, da $(x+y)_{K_b}$ im darstellbaren Bereich sind.
+\item Fall $x,y <0$
+\begin{align*}
+(x)_{K_b} \oplus (y)_{K_b}
+&\overset{Def.}{=} \left( \left( K_b(|x|) \right)_b + \left( K_b(|y|) \right)_b \right) \mod b^{n} \\
+&\overset{   }{=}\left( (K_b(|x|)) +\left( K_b\left( |x| \right) \right)\right) \mod b^{n} \\
+&= (b^{n}-|x| + b^{n}-|y|) \mod b^{n} \\
+&= (x+y) \mod b^{n} \\
+&= (x+y)_{K_b}
+\end{align*}
+\item Fall $x\ge 0, y<0$: \\
+\begin{align*}
+(x)_{K_b} \oplus (y)_{K_b}
+&\overset{Def.}{=} ((x)_b + (K_b(|y|))_b) \mod b^{n} \\
+&=(x+K_b(|y|)) \mod b^{n} \\
+&=(x+b^{n}-|y|) \mod b^{n} \\
+&=(x+y) \mod b^{n} \\
+&= (x+y)_{K_b}
+\end{align*}
+\item Fall $x<0, y\ge 0$: Analog
+\end{itemize}
+\end{proof}
+\begin{theorem}[Subtraktion in b-Komplement-Darstellung]
+	Seien x und y n-stellige b-adische Zahlen und x,y und x-y im darstellbaren Bereich.
+	Dann gilt:
+	\[
+	(x-y)_{K_b} = (x)_{K_b} \oplus \left( K_b(y) \right)_{K_b}
+	\]
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item Fall $y=0$ nichts zu zeigen.
+	\item $y \neq 0$: \eqref{eqn:komplement} impliziert:
+		\[
+		-y=K_b(y) -b^{n}
+		\]
+	mit modulo $b^{n}$-rechnen folgt, dass
+	\[
+		(-y)_{K_b}= (K_b(y))_{K_b}
+	\]
+	ist und somit:
+	\begin{align*}
+		(x-y)_{K_b}
+		&= (x+(-y))_{K_b} \\
+		&= (x)_{K_b} \oplus (-y)_{K_b} \\
+		&= (x)_{K_b} \oplus (K_b(y))_{K_b}	
+	\end{align*}
+\end{itemize}
+\end{proof}
+\begin{example}
+Für $b=10$ und $n=2$ ist der darstellbare Bereich $-50 \le  z \le 49$
+\begin{itemize}
+	\item $(20+7)_{K_{10}} = (20)_{K_{10}} \oplus (7)_{K_{10}} =(27)_{K_{10}}=27$
+	\item $28-5 = 28+ (-5)= (28)_{K_{10}} \oplus (95)_{K_{10}} = (23)_{K_{10}} =23 $
+	\item $-18-20= (-18)+(-20) = \ldots = -28$
+\end{itemize}
+\end{example}
+Die darstellbaren Zahlen kann man sich beim $K_b$-Komplement als Zahlenrad vorstellen.
+
+%Hier muss eine coole Uhr eingefügt werden.
+
+\paragraph{Achtung} Ein eventueller Überlauf bzw. Unterlauf wird im Allgemeinen nicht aufgefangen.
+\begin{example}
+In n-stelliger Binärarithmetik ist die größte darstellbare Zahl $x_{max} = (011\ldots 1)_{K_2}$ gleich  $2^{n-1}-1$. Hingegen ist $x_{max}+1=(100\ldots 0)_{K_2}$ und wir als $-2^{n-1}$ interpretiert.
+\end{example}

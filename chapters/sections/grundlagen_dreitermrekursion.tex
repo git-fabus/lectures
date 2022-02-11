@@ -1,0 +1,242 @@
+\section{Theoretische Grundlagen}
+\begin{definition}
+Für gegebene $p_0$ und $p_1$ heißt eine Rekursion der Form
+\begin{equation}
+	\label{eqn:dreitermrekursion}
+	p_k=a_kp_{k-1}+b_kp_{k-2}+c_k\text{, } k=2,3,\ldots
+\end{equation}
+mit $b_k\neq 0$ eine \emph{Dreitermrekursion}. Die zugehörige \emph{Rückwärtsrekursion} ist
+\begin{equation}
+	\label{eqn:rrekursion}
+p_{k-2}= -\frac{a_k}{b_k}p_{k-1}+\frac{1}{b_k}p_k-\frac{c_k}{b_k}\text{, } k=n,n-1,\ldots
+\end{equation}
+Ist $b_k=1$, das heißt \eqref{eqn:dreitermrekursion} und \eqref{eqn:rrekursion} gehen durch vertauschen von $p_{k-2}$ und $p_k$ auseinander hervor, so heißt die Rekursion \underline{symmetrisch}. Gilt $c_k=0$ für alle $k$, so heißt die Rekursion \underline{homogen}.
+\end{definition}
+\begin{example}
+Die Fibonacci-Zahlen sind rekursiv definiert durch:
+\[
+p_k=p_{k-1}+p_{k-2}
+\]
+mit $p_0=0, p_1=1$. Es gilt $a_k=b_k=1$. \\
+Sei
+\[
+p_k(x)= 2\cos(x)p_{k-1}(x) -1 \cdot p_{k-2}(x)
+\]
+mit $p_0=1$ und $p_1=\cos(x)$. Man kann zeigen, dass
+\[
+p_k(x)=2\cos(kx)
+\]
+ist. \\
+Die Chebychev-Polynome $T_k$ erfüllen 
+\[
+T_k(x)=2x T_{k-1} -T_{k-2}(x)
+\]
+mit $T_0(x)=1$ und $T_1(x)=x$
+\end{example}
+
+\begin{algorithm}[H]
+\label{alg:rekursion}
+ \caption{Dreitermrekursion}
+ \KwData{Koeffizienten von $\{a_k\}_{k=2}^{n}$, $\{b_k\}_{k=2}^n$,$\{c_k\}_{k=2}^n$, Startwerte $p_0,p_1$}
+ \KwResult{Werte von $\{p_k\}_{k=2}^n$}
+\For{$k\gets 2$ \KwTo $n$}{
+$p_k=a_kp_{k-1}+b_kp_{k-2}+c_k$
+    }
+ \end{algorithm}
+ \begin{example}
+	 \label{eg:rekursion}
+ Betrachte: $p_0=1, p_1=\sqrt[2]{2}-1, p_k= -2p_{k-1}+p_{k-2}$, $k=2,3,\ldots$ \\
+ Algorithmus \ref{alg:rekursion} liefert:
+
+ %Nice Grafik
+
+Die Oszillationen für höhere k sollten uns misstrauische machen und uns motivieren das Problem genauer anzuschauen.
+ \end{example}
+Wir können homogene Dreitermrekursion schreiben als:
+\[
+\begin{bmatrix}
+	p_k \\
+	p_{k-1}
+\end{bmatrix}= \begin{bmatrix}
+a_kp_{k-1} + b_kp_{k-2} \\
+p_{k-1}
+\end{bmatrix} \eqqcolon \begin{bmatrix}
+a_k & b_k \\
+1 & 0
+\end{bmatrix} \cdot \begin{bmatrix}
+p_{k-1} \\
+p_{k-2}
+\end{bmatrix} = A_k \begin{bmatrix}
+p_{k-1} \\
+p_{k-2}
+\end{bmatrix}
+\]
+Rekursiv folgt:
+\[
+\begin{bmatrix}
+p_k \\
+p_{k-1}\end{bmatrix} = A_k \begin{bmatrix}
+p_{k-1} \\
+p_{k-2}
+\end{bmatrix}= A_k A_{k-1} \begin{bmatrix}
+p_{k-2} \\
+p_{k-3}
+\end{bmatrix}= \ldots = A_k \ldots A_2 \begin{bmatrix}
+p_1 \\
+p_0
+\end{bmatrix}
+\]
+Offensichtlich gilt für alle $\alpha, \beta \in \R$ und Startwerte $p_0,p_1,q_0,q_1$ und $B_k \coloneqq A_k \ldots A_2$, dass
+\[
+B_k \begin{bmatrix}
+\alpha p_1 + \beta q_1 \\
+\alpha p_0 + \beta q_0
+\end{bmatrix} = \alpha B_k \begin{bmatrix}
+p_1 \\
+p_0
+\end{bmatrix} + \beta B_k \begin{bmatrix}
+q_1 \\
+q_0
+\end{bmatrix}= \alpha \begin{bmatrix}
+p_k \\
+p_{k-1}
+\end{bmatrix} + \beta \begin{bmatrix}
+q_k \\
+q_{k-1}
+\end{bmatrix}
+\]
+Das heißt, die Lösungsfolge $\{p_k\}$ hängt \emph{linear} von den Startwerten
+$\begin{bmatrix}
+p_1 \\
+p_0
+\end{bmatrix} \in \R^2$ ab.
+Im Falle unseres Beispiels gilt: $a_k=a=-2$, $b_k=b=1$. Das bedeutet, es gilt:
+\[
+B_k= A^{k-1}, A= \begin{bmatrix}
+	a & b \\
+	1 & 0
+\end{bmatrix} = \begin{bmatrix}
+	-2 & 1 \\
+	1 & 0
+\end{bmatrix}
+\]
+Aus den Eigenwerten $\lambda_1, \lambda_2$ der Matrix A kann man die Lösungen der homogenen Dreitermrekursion direkt angeben.
+\begin{theorem}
+	\label{thm:nst-polynom}
+	Seien $\lambda_1, \lambda_2$ die Nullstellen des \emph{charakteristischen Polynoms}
+	\begin{equation}
+	\label{eqn:charpolynom}
+	q(\lambda) = \lambda^2 -a \lambda -b
+	\end{equation}
+Dann ist die Lösung der homogenen Dreitermrekursion:
+\[
+p_k=ap_{k-1} +bp_{k-2}, k=2,3,\ldots
+\]
+gegeben durch:
+\[
+p_k= \alpha \lambda_1^{k}+\beta \lambda_2^{k}, k=2,3,\ldots
+\]
+mit $\alpha, \beta \in \R$ Lösungen des linearen Gleichungssystems.
+\[
+\alpha + \beta =p_0
+\]
+\[
+\alpha \lambda_1 + \beta \lambda_2 =p_1
+\]
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item Induktion über k\medskip
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+\item Induktionsanfang: \underline{$k=0$}: 
+	$p_0=\alpha+\beta = \alpha \lambda_1^{0}+\beta \lambda_2^{0}$
+\item Induktionsschritt: \underline{$k \to k+1$}:
+	\begin{align*}
+	p_{k+1}
+	&=ap_k +bp_{k-1} \\
+	&= a(\alpha \lambda_1^{k}+ \beta \lambda_2^{k}) + b(\alpha \lambda_1^{k-1}+\beta \lambda_2^{k-1}) \\
+	&= \alpha (a \lambda_1^{k}+ b\lambda_1^{k-1})+ \beta (a \lambda_2^{k}+ b \lambda_2^{k-1}) \\
+	&= \alpha \lambda_1^{k-1}(a\lambda_1+b) + \beta \lambda_2^{k-1}(a\lambda_2 +b)\\
+	&= \alpha \lambda_1^{k+1} + \beta \lambda_2^{k+1}
+	\end{align*}
+\end{itemize}
+Da nach \eqref{eqn:charpolynom} $\lambda_1^2$ und $\lambda_2^2$ Nullstellen sind.
+\end{itemize}
+\end{proof}
+Wende \ref{thm:nst-polynom} auf das Beispiel \ref{eg:rekursion} an: Mit $a=-2, b=1$ hat das charakteristische Polynom \eqref{eqn:charpolynom} die Nullstellen:
+\[
+\lambda_1= \sqrt[2]{2}-1, \lambda_2= -\sqrt[2]{2}-1 
+\]
+Aus
+\[
+\alpha + \beta =p_0 =1
+\]
+\[
+\alpha \lambda_1 + \beta \lambda_2= p_1 = \sqrt[2]{2}-1
+\]
+folgt $\alpha = 1, \beta = 0$. Der Satz \ref{thm:nst-polynom} impliziert:
+\[
+p_k= \lambda_1^{k}> 0, k=0,1,2,\ldots
+\]
+in Beispiel \ref{eg:rekursion}\\
+\begin{algorithm}[H]
+\label{alg:rekursion}
+ \caption{verbesserte Dreitermrekursion}
+ \KwData{Koeffizienten a,b, Startwerte $p_0,p_1$}
+ \KwResult{Werte $\{p_k\}_{k=2}^{n}$}
+Initialisiere:
+\begin{itemize}
+	\item $\lambda_1 = \frac{a}{2}+\sqrt[2]{\frac{a^2}{4}+b}$
+	\item $\lambda_2= \frac{a}{2}-\sqrt[2]{\frac{a^2}{4}+b}$
+	\item $\beta= \frac{p_1-\lambda_1p_0}{\lambda_2-\lambda_2}$
+	\item $\alpha = p_0-\beta$
+\end{itemize}
+\For{$k \gets 2$ \KwTo $n$}{
+$p_k=\alpha \lambda_1^{k}+\beta \lambda_2^{k}$
+}
+\end{algorithm}
+Dieser Algorithmus liefert für Beispiel \ref{eg:rekursion} folgende Grafik:
+
+%Muss noch erstellt werden.
+
+
+Dies ist in diesem Fall das richtige Ergebnis, da
+\[
+p_k=\lambda_1^{k}=(\sqrt[2]{2}-1)^{k} \ll 1 
+\]
+Was geht schief in dem vorherigen Algorithmus \ref{alg:rekursion}? \\
+Betrachten wir unser Problem $f \colon \R^2 \to \R$, $f(p_0,p_1)=p_k$ mit gestörten Eingangsdaten: $\hat{p_0}= 1(1+\varepsilon_0)$, $\hat{p_1}= \lambda_1(1+\varepsilon_1)$, $|\varepsilon_0|, |\varepsilon_1|\le \varepsilon_{mach}$.\\
+Dies ergibt:
+\[
+\tilde{\beta} = \frac{\lambda_1(1+\varepsilon_1)-\lambda_1(1+\varepsilon_0)}{\lambda_2-\lambda_1}= (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1}
+\]
+\[
+\tilde{\alpha} = 1+ \varepsilon_0 \frac{\lambda_2-\lambda_1}{\lambda_2-\lambda_1}-(\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1}= 1+\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1}- \varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1}
+\]
+und somit
+\begin{align*}
+\tilde{p_k} 
+&= \tilde{\alpha} \lambda_1^{k}+ \tilde{\beta} \lambda_2^{k}\\
+&=(1+\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1}-\varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1})\lambda_1^{k}+(\varepsilon_1 -\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \lambda_2^{k}
+\end{align*}
+Der relative Fehler von $\tilde{p_k}$ zu $p_k= \lambda_1$ ist somit :
+\begin{align*}
+	|\frac{\tilde{p_k}-p_k}{p_k}
+	&= |\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1} -\varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1} + (\varepsilon_1-\varepsilon_1) \frac{\lambda_1}{\lambda_2-\lambda_1}(\frac{\lambda_2}{\lambda_1})^{k}| \\
+	&= | \varepsilon_0 + (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \left( \left( \frac{\lambda_2}{\lambda_1}^{k} \right)-1 \right)|
+\end{align*}
+\paragraph{Beobachte:}Falls $\frac{\lambda_2}{\lambda_1}>1$ explodiert der relative Fehler für wachsende k. Dies war in Beispiel \ref{eg:rekursion} der Fall. \\
+Falls wir den Begriff der Konditionszahl aus der Definition \ref{def:konditionszahl} geeignet für Funktion $\R^2 \to \R$ erweitern, sehen wir, dass das Problem schlecht konditioniert ist.
+
+\begin{definition}[Minimallösung]
+Die Lösung $\{p_k\}$ der Dreiterm-Rekursion \eqref{eqn:dreitermrekursion} zu den Startwerten $p_0$ und $p_1$ heißt \emph{Minimallösung}, falls für jede Lösung $\{p_k\}$ zu den von $p_0,p_1$ linear unabhängigen Startwerten $q_0,q_1$ gilt, dass:
+\[
+\lim_{k \to \infty} \frac{p_k}{q_k}=0
+\]
+Die Lösung $\{p_k\}$ wird dominante Lösung genannt.
+\end{definition}
+\begin{example}
+In Beispiel \ref{eg:rekursion} ist $\{p_k\}$ Minimallösung genau dann, wenn $\beta=0$.
+\end{example}
+Die Minimallösung ist nur bis auf einen skalaren Faktor eindeutig. Deshalb \underline{normieren} wir sie mit der zusätzlichen Bedingung: $p_0^2+p_1^2=1$.
+\paragraph{Frage:} Wie können wir eine normierte Minimallösung berechnen, obwohl das Problem schlecht konditioniert ist?

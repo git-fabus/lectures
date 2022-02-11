@@ -1,0 +1,87 @@
+\subsection{Das Sortierproblem}
+\paragraph{Gegeben} $n \in \N$ verschiedene Zahlen $z_1,\ldots,z_n \in \R$.
+\paragraph{Gesucht} Permutation $\pi_1,\ldots,\pi_n$, so dass $z_{\pi_1} < \ldots < z_{\pi_n}$
+\begin{definition}[Permutation]
+Eine Permutation $\pi$ von $\{1,2,\ldots, n\}$ ist eine bijektive Abbildung von $\{1,2,\ldots,n\} $ auf sich selbst. Wir schreiben $\pi(k)=\pi_k$ für $k=1,\ldots,n$
+\end{definition}
+\begin{remark}
+Da wir die Zahlen $z_1,\ldots,z_n$als verschieden annehmen ist das Sortierproblem eindeutig lösbar.
+\end{remark}
+\begin{algorithm}
+\label{alg:bruteforce}
+\caption{Brute-Force}
+Probiere so lange alle möglichen Permutationen durch, bis die gewünschte Sortierung vorliegt
+\end{algorithm}
+\begin{theorem}
+Es gibt $n! = n(n-1)\ldots 2 \cdot 1$ Permutationen der Menge $\{1,2,\ldots,n\} $
+\end{theorem}
+\begin{proof}
+Wir haben 
+\begin{itemize}
+	\item $n$ Möglichkeiten die erste Zahl auszuwählen
+	\item $n-1$ Möglichkeiten die zweite Zahl auszuwählen
+	\item \ldots
+	\item 1 Möglichkeit die letzte Zahl auszuwählen
+\end{itemize}
+woraus die Behauptung folgt.
+\end{proof}
+Im schlimmsten Fall (worst case) muss der Algorithmus \ref{alg:bruteforce} also
+\[
+	(n-1)\cdot n!
+\]
+Vergleiche durchführen. Da dies extrem aufwändig sein kann, betrachten wir im Folgenden einem Algorithmus, der die transitive Struktur
+\[
+x<y \text{ und } y<z \implies x<z
+\]
+der Ordnungsrelation ausnutzt. \\
+\begin{algorithm}[H]
+\caption{Bubblesort}
+\label{alg:bubblesort}
+\KwData{Menge $S_n=\{z_1,\ldots,z_n\}$}
+\KwResult{Sortierte Menge $S^{\pi}=\{z_{\pi_1},\ldots,z_{\pi_n}\} $}
+\For{$k \gets n$ \KwTo $1$}{
+$z_{\pi_k}=\max( S_k)$\\
+$S_{k-1}=S_k \setminus \{z_{\pi_k}\}$
+}
+\end{algorithm}
+\begin{example}
+Die zu sortierende Menge ist: $\{4,1,2\}$.
+\begin{itemize}
+	\item $S_3=\{4,1,2\}$, $k=3$, $z_{\pi_3}=4$
+	\item $S_2=\{1,2\}$, $k=2$, $z_{\pi_2}=2$
+	\item $S_1=\{1\}$, $k=1$, $z_{\pi_1}=1$
+\end{itemize}
+Die sortierte Liste ist: $\{1,2,4\}$.
+\end{example}
+Um den Aufwand von Algorithmen zu untersuchen, beschränken wir uns auf das asymptotische Verhalten für große n.
+\begin{definition}[Landau-Notation]
+Wir schreiben
+\begin{itemize}
+	\item $f(x)= \mathcal{O}(g(x))$, falls Zahlen $C>0, x_0>0$ existieren, so dass: $|f(x)|\le Cg(x), \forall_{x>x_0}$.
+	\item $f(x)=\Omega(g(x))$, falls Zahlen $C>0, x_0>0$ existieren, so dass $|f(x)|\ge Cg(x) \forall_{x>x_0}$.
+	\item $f(x)=o(g(x))$, falls für jedes $c>0$ ein $x_0>0$ existiert, so dass 
+		$|f(x)|\le cg(x), \forall_{x>x_0}$.
+	\item $f(x)= \Theta(g(x))$, falls $f(x)=\mathcal{O}(g(x))$, $g(x)= \mathcal{O}(f(x))$
+\end{itemize}
+\end{definition}
+\begin{remark}
+Genau dann wenn Beziehung der Landau-Notation
+\begin{itemize}
+	\item $f(x)=\mathcal{O}(g(x)) \iff \limsup_{x \to \infty} |\frac{f(x)}{g(x)}|\le C<\infty$
+	\item $f(x)= \Omega(g(x)) \iff \liminf_{x \to \infty} |\frac{f(x)}{g(x)}|>0$
+	\item $f(x)= o(g(x)) \iff \lim_{x \to \infty} |\frac{f(x)}{g(x)}| =0$
+	\item $f(x)= \Theta(g(x)) \iff f(x)= \mathcal{O}(g(x)), f(x)= \Omega(g(x))$
+\end{itemize}
+\end{remark}
+\begin{example}
+Es gilt $\sin(x) = \mathcal{O}(1)$, da $|\sin(x)|\le 1$ für alle $x \in  \R$. Bei Polynomen gilt die Laufzeit ist die höchste Potenz, sofern $ x\ge 1$.
+\end{example}
+\begin{definition}
+Der Aufwand eines Algorithmus ist die kleinste obere Schranke für das betrachtete Aufwandsmaß
+\end{definition}
+Für uns ist der Speicherbedarf irrelevant und benutzen als Aufwandsmaß für den Rechen die Anzahl der benötigten Vergleiche. \\
+In der k-ten Iteration des Bubblesort-Algortihmus \ref{alg:bubblesort} müssen k Vergleiche ausgeführt werden. Das heißt, der Gesamtaufwand des Algorithmus ist:
+\[
+\sum_{k=1}^{n-1}k=\frac{n(n-1)}{2}= \mathcal{O}(n^2)
+\]
+Dies ist eine drastische Verbesserung im Vergleich zu $\mathcal{O}(n(n!))$ von Algorithmus \ref{alg:bruteforce}

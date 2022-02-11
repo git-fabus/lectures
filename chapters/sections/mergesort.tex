@@ -1,0 +1,92 @@
+\section{Mergesort}
+Zu erst wollen wir folgendes beobachten:
+\begin{lemma}
+	Gegeben seien zwei sortiere Mengen
+	\begin{itemize}
+		\item $S_x=\{x_1<\ldots<x_m\}$
+		\item $S_y=\{y_1<-\ldots<y_n\}$
+	\end{itemize}
+Dann lässt sich die Menge $S=S_x \cup S_y$ mit linearem Aufwand sortieren. Genauer werden $m+n-1$ Vergleiche benötigt.			
+\end{lemma}
+\begin{proof}
+Konstruktiv, durch den entsprechenden Algorithmus.
+\end{proof}
+\begin{algorithm}[H]
+\label{alg:merge}
+\caption{Merge}
+\KwData{Sortierte Mengen $S_x$ und $S_y$}
+\KwResult{Sortierte Menge $S= S_x \cup S_y$}
+Initialisiere $i=j=k=1$ \\
+\While{$i\le m$ und $j\le n$}{
+\If{$x_i < y_j$}{
+
+$z_k=x_{i}$ \\
+$i=i+1$
+}
+\Else{
+$z_k=y_j$ \\
+$j=j+1$
+
+}
+$k=k+1$
+}
+\For{$l \gets 0$ \KwTo $m-i$}{
+$z_{k+l}=x_{k+l}$
+}
+\For{$l \gets 0$ \KwTo $n-j$}{
+$z_{k+l}=y_{k+l}$
+}
+\end{algorithm}
+Basierend auf dieser Beobachtung können wir eine divide-and-conquer Strategie angeben um Mengen der Länge $n=2^{m}, m \in  \N$ zu sortieren. \\
+\begin{algorithm}[H]
+	\label{alg:mergesort}
+	\caption{Mergesort}
+	\KwData{Menge $S= \{z_1,\ldots,z_n\}$}
+	\KwResult{Sortierte Menge $S^{\pi}= \{z_{\pi_1} < \ldots < z_{\pi_n}\} $}
+	\If{$n=1$}{
+	$S^{\pi}=S$
+	}
+	\Else{
+		\begin{itemize}
+			\item Sortiere \\
+	$L=\{z_1,\ldots, z_{\frac{n}{2}}\}$ \\
+	$R= \{z_{\frac{n}{2}+1},\ldots, z_n\}$
+	mittels Mergesort zu $L^{\pi}$ und $R^{\pi}$ \\
+	\item Sortiere $L^{\pi} \cup R^{\pi}$ mittels Merge-Algorithmus \ref{alg:merge} zu $S^{\pi}$
+	\end{itemize}
+	}
+\end{algorithm}
+\begin{example}
+Mergesort der Menge $\{20,7,84,31,71,42,18,10\} $
+\end{example}
+\begin{remark}
+Da Mergesort sich selbst aufruft, sprechen wir von einem \emph{rekursiven Algorithmus}. Im Allgemeinem ist es schwierig zu beurteilen, ob solche Algorithmen terminieren. Im Fall von Mergesort ist der Fall jedoch klar, da die Rekursion im Fall $n=1$ abgebrochen wird.
+\end{remark}
+\begin{theorem}
+	\label{thm:mergesort}
+	Der Aufwand von Mergesort ist $\mathcal{O}(n \log n)$
+\end{theorem}
+\begin{proof}
+Bezeichne A(n) den Aufwand für das Sortieren einer $n=2^{m}$ elementigen Menge mittels Mergesort. Dann gilt:
+\begin{align*}
+	A(1)&=0 \\
+	A(n)&=n-1 + 2A(\frac{n}{2})
+\end{align*}
+Auflösen der Rekursion ergibt:
+\begin{align*}
+	A(n)
+	&=n-1+2A(\frac{n}{2})\\
+	&=2n-1-2+4A(\frac{n}{4})\\
+	&=\ldots \\
+	&=mn-\sum_{i=0}^{m-1}2^{i} \\
+	&= mn- \frac{1-2^{m}}{1-2} \\
+	&= (m-1)n+1
+\end{align*}
+$m=\log_2(n)=\frac{\log(n)}{\log(2)}$ impliziert die Behauptung
+\end{proof}
+$\log n \ll n$, also ist die Verbesserung von $\mathcal{O}(n^2)$ nach $\mathcal{O}(n\log(n)$ signifikant.
+Man nennt das Wachstum auch beinahe linear.
+
+\begin{remark}
+Die Implementierung von Mergesort als in-place-Algorithmus ist je nach Datenstrukturen trickreich. Deshalb wird oft nicht in-place implementiert, weshalb für jeden "divide"-Schritt zusätzlicher Speicherplatz implementiert werden muss.
+\end{remark}

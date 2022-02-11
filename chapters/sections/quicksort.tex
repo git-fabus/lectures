@@ -1,0 +1,101 @@
+\section{Quicksort}
+\paragraph{Idee:} Divide-and-Conquer Strategie basierend auf dem Inhalt der zu sortierenden Liste.
+\begin{algorithm}
+\label{alg:quicksort}
+\caption{Quicksort}
+\KwData{Menge $S=\{z_1,\ldots, z_n\}$}
+\KwResult{Sortierte Menge $S^{\pi}=\{z_{\pi_1},\ldots,z_{\pi_n}\}$}
+	Wähle ein Pivot-Element $x \in S$ \\
+	Bestimme eine Permutation $\pi$, so dass $x=z_{m_{\pi}}$\\
+	\If{$L=\{z_{\pi_1},\ldots,z_{\pi_{m-1}} \neq \emptyset$\}}
+	{
+	Sortiere $L$ zu $L^{\pi}$ mittels Quicksort
+	}
+
+	\If{ $R=\{z_{\pi_{m+1}},\ldots,z_{\pi_n}\} \neq \emptyset$}{
+		Sortiere $R$ zu $R^{\pi}$ mittels Quicksort}
+	Vereinige $S^{\pi}= R^{\pi} \cup \{x\} \cup L^{\pi}$
+\end{algorithm}
+\begin{example}
+Beispiel anhand der gleichen Menge von Mergesort.
+\end{example}
+\begin{lemma}
+Im schlimmsten Fall ist der Aufwand von Quicksort $\mathcal{O}(n^2)$
+\end{lemma}
+\begin{proof}
+$A(n)$ aus \ref{thm:mergesort} wird umso größer, je unterschiedlicher die Größe der beiden Teilprobleme $A(m-1)$ und $A(n-m)$ ist.
+$A(n)$ ist also maximal für $m=1$ oder $m=n$, also wenn das Pivot-Element das größte oder kleinste Element ist. Dann gilt:
+\[
+A(n)=n-1+A(n-1)
+\]
+Der Rest erfolgt Analog zu der Aufwandserklärung von Bubblesort \ref{alg:bubblesort}:
+\[
+A(n)=\frac{n(n-1)}{2}= \mathcal{O}(n^2)
+\]
+Damit ist der Aufwand gezeigt.
+\end{proof}
+\begin{theorem}
+	Alle Permutationen der Zahlen $\{1,2,\ldots,n\}$ seien gleich wahrscheinlich. Dann benötigt Quicksort im Durchschnitt $\mathcal{O}(n\log(n)$ Vergleiche zum sortieren von Zahlen.
+\end{theorem}
+\begin{proof}
+Sie $\Pi$ die Menge aller Permutationen von $\{1,2,\ldots,n\}$ und sei $A(\pi), \pi \in \Pi$ die Anzahl Vergleiche um eine Permutation $\pi$ mittels Quicksort zu sortieren. Der durchschnittliche Aufwand ist:
+\[
+\overline{A}(n)=\frac{1}{n!} \sum_{\pi \in \Pi}A(\pi)
+\]
+O.B.d.A: Sei das erste Element das Pivotelement. Definiere:
+\[
+\Pi_k = \{\pi \in  \Pi | \pi_1=k \}, k=1,\ldots,n 
+\]
+mit
+\[
+|\Pi_k| =(n-1)!, k=1,\ldots,n
+\]
+Für $k$ fix und $\pi \in \Pi_k$ teilt Quicksort im ersten Aufruf in zwei Mengen
+\begin{align*}
+	\pi_< &= \{\text{Permutationen von } 1,2,3\ldots,k-1\} \\
+	\pi_> &= \{\text{Permutationen von } k+1,\ldots,n\}  
+\end{align*}
+Analog zu \ref{thm:mergesort} folgt
+\[
+A(\pi) = n-1+ A(\pi_<) + A(\pi_>)
+\]
+und
+\begin{equation}
+	\label{eqn:quicksort1}
+\sum_{\pi \in  \pi_k} A(\pi) = (n-1)! (n-1) + \sum_{\pi \in  \Pi_k} A(\pi_<)+ \sum_{\pi \in \Pi_k}A(\pi_>)
+\end{equation}
+Wenn $\pi$ alle Permutationen aus $\Pi_k$ durchläuft, entstehen für $\Pi_<$ alle Permutationen von $\{1,2,\ldots,k-1\}$. 
+Dabei tritt jede Permutation genau $\frac{(n-1)!}{(k-1)!}= \frac{|\Pi_k|}{\Pi_<}$ mal auf.
+\begin{equation}
+\label{eqn:quicksort2}
+\implies \sum_{\pi \in \Pi_k} A(\pi_<) = \frac{(n-1)!}{(k-1)!} \sum_{\pi \in \Pi_k}A(\pi_<) = 
+(n-1)!  \overline{A}(k-1)
+\end{equation}
+Analog:
+\begin{equation}
+\label{eqn:quicksort3}
+\sum_{\pi \in \Pi_k}A(\pi_>)= (n-1)! \overline{A}(n-k)
+\end{equation}
+Zusammensetzen: 
+\begin{align*}
+\overline{A}(n)
+&= \frac{1}{n!}\sum_{\pi \in  \Pi}A(\pi) \\
+&= \frac{1}{n!}\sum_{k=1}^{n}\sum_{\pi \in \Pi_k}
+\end{align*}
+Unter Verwendung der Gleichungen \ref{eqn:quicksort1}, \ref{eqn:quicksort2}, \ref{eqn:quicksort3} folgt weiter:
+\begin{align*}
+&=\frac{1}{n!}\sum_{k=1}^{n}(n-1)! (n-1 + \overline{A}(k-1) +\overline{A}(n-k) \\
+&= n-1+\frac{1}{n}\sum_{k=1}^{n}\overline{A}(k-1) +\overline{A}(n-k) \\
+&= n-1 + \frac{2}{n}\sum_{k=0}^{n-1}\overline{A}(k)
+\end{align*}
+mit Startwerten $\overline{A}(0)=\overline{A}(1)=0$. \\
+Per Induktion folgt:
+\begin{align*}
+\overline{A}(n) 
+&= 2(n+1) \sum_{i=1}^{n}\frac{1}{i}-4n \\
+&\le 2(n+1) (1+ \int_{1}^{n} \frac{1}{x}dx -4n \\
+&= 2(n+1) (1+\log(n)) -4n \\
+&= 2(n+1) \log(n) -2(n-1) \\
+&= \mathcal{O}(n\log(n))
+\end{align*}
+\end{proof}
