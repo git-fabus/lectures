@@ -1,6 +1,4 @@
 % all the packages
-\RequirePackage{polyglossia}
-\setdefaultlanguage{german}
 \usepackage{gitinfo2}
 \usepackage{appendix}   % for the appendix
 \usepackage{amsmath, amssymb, amsthm, mathtools}      % general math stuff
@@ -21,19 +19,9 @@
 \usepackage[backend=biber,style=alphabetic]{biblatex} %for bibliography
 \usepackage{multirow}   % for multicolumn
 \usepackage{bm}         % for bold math symbols
-\usepackage[german,onelanguage,lined,algonl,boxed]{algorithm2e}
 
-\newcommand{\mytheoremstyle}{definition}
-\newcommand{\fancysep}{12pt}
-\newcommand{\fancyifelse}[2]{#2}
-\xdefinecolor{fancycolor}{rgb}{0,0,0}
-\DeclareOption{fancy}{
-	\renewcommand{\mytheoremstyle}{fancy}
-	\renewcommand{\fancyifelse}[2]{#1}
-	\xdefinecolor{fancycolor}{rgb}{0.65,0.04,0.07}
-}
 
-\ProcessOptions\relax
+
 
 
 % fonts for titlepage
@@ -75,109 +63,31 @@
 % prevents breaking inline math around binary or relationship symbols
 \binoppenalty=\maxdimen
 \relpenalty=\maxdimen
-%%%%% THEOREM-LIKE ENVIRONMENTS CONFIGURATION %%%%%
 
+
+
+% theorem like environments
+\theoremstyle{definition}
 \newcounter{everything}[section]
-
-\newtheoremstyle{fancy}
-  {\topsep}   % abovespace
-  {\topsep}   % belowspace
-  {\upshape}  % bodyfont
-  {0pt}       % indent (empty value is the same as 0pt)
-	{\color{fancycolor}\bfseries} % headfont
-  {}          % headpunct
-  {0pt} % headspace
-	{%
-		\thmnumber{\makebox[0pt][r]{\textcolor{fancycolor}{#2}\hspace{\fancysep}}}%
-		\thmname{#1}%
-		\thmnote{\color{black}\mdseries\ (#3)}%
-		\thmname{.\hspace{5pt plus 1pt minus 1pt}}%
-	} % CUSTOM-HEAD-SPEC
-
-
-
-\theoremstyle{fancy}
-\newtheorem{construction}[everything]{\protect\constructionname}
-\newtheorem{convention}  [everything]{\protect\conventionname}
-\newtheorem{corollary}   [everything]{\protect\corollaryname}
-\newtheorem{definition}  [everything]{\protect\definitionname}
-\newtheorem{example}     [everything]{\protect\examplename}
-\newtheorem{fluff}       [everything]{}
-\newtheorem{lemma}       [everything]{\protect\lemmaname}
-\newtheorem{notation}    [everything]{\protect\notationname}
-\newtheorem{proposition} [everything]{\protect\propositionname}
-\newtheorem{question}    [everything]{\protect\questionname}
-\newtheorem{recall}      [everything]{\protect\recallname}
-\newtheorem{remark}      [everything]{\protect\remarkname}
-\newtheorem{theorem}     [everything]{\protect\theoremname}
-\newtheorem{warning}     [everything]{\protect\warningname}
-
-% default names
-\newcommand{\claimname}{Claim}
-\newcommand{\constructionname}{Construction}
-\newcommand{\conventionname}{Convention}
-\newcommand{\corollaryname}{Corollary}
-\newcommand{\definitionname}{Definition}
-\newcommand{\examplename}{Example}
-\newcommand{\lemmaname}{Lemma}
-\newcommand{\notationname}{Notation}
-\newcommand{\propositionname}{Proposition}
-\newcommand{\questionname}{Question}
-\newcommand{\recallname}{Recall}
-\newcommand{\remarkname}{Remark}
-\newcommand{\theoremname}{Theorem}
-\newcommand{\warningname}{Warning}
-
-\gappto\polyglossia@language@switched {
-	\gappto\captionsgerman{
-		\renewcommand{\claimname}{Behauptung}
-		\renewcommand{\constructionname}{Konstruktion}
-		\renewcommand{\conventionname}{Konvention}
-		\renewcommand{\corollaryname}{Korollar}
-		\renewcommand{\definitionname}{Definition}
-		\renewcommand{\examplename}{Beispiel}
-		\renewcommand{\lemmaname}{Lemma}
-		\renewcommand{\notationname}{Notation}
-		\renewcommand{\propositionname}{Proposition}
-		\renewcommand{\questionname}{Frage}
-		\renewcommand{\recallname}{Wiederholung}
-		\renewcommand{\remarkname}{Bemerkung}
-		\renewcommand{\theoremname}{Satz}
-		\renewcommand{\warningname}{Warnung}
-		\crefname{construction}{Konstruktion}{Konstruktionen}
-		\crefname{convention}{Konvention}{Konventionen}
-		\crefname{corollary}{Korollar}{Korollare}
-		\crefname{definition}{Definition}{Definitionen}
-		\crefname{example}{Beispiel}{Beispiele}
-		\crefname{lemma}{Lemma}{Lemmata}
-		\crefname{notation}{Notation}{Notationen}
-		\crefname{proposition}{Proposition}{Propositionen}
-		\crefname{question}{Frage}{Fragen}
-		\crefname{recall}{Wiederholung}{Wiederholungen}
-		\crefname{remark}{Bemerkung}{Bemerkungen}
-		\crefname{theorem}{Satz}{Sätze}
-		\crefname{warning}{Warnung}{Warnungen}
-	}
-}
-
-
-% the numbering for claims is local to the surrounding theorem-like environments;
-% to be used in proofs
-\newtheorem{claim}{\protect\claimname} % unnumbered version
-% unnumbered version of claim
-\newtheorem*{claim*}{\protect\claimname} % unnumbered version
+\newtheorem{example}[everything]{Beispiel}
+\newtheorem*{claim}{Behauptung}
+\newtheorem{conventions}[everything]{Konvention}
+\newtheorem{corollary}[everything]{Korollar}
+\newtheorem{definition}[everything]{Definition}
+\newtheorem{fluff}[everything]{}      % to be replaced with something better
+\newtheorem{lemma}[everything]{Lemma}
+\newtheorem{notation}[everything]{Notation}
+\newtheorem{proposition}[everything]{Proposition}
+\newtheorem{recall}[everything]{Erinnerung}
+\newtheorem{remark}[everything]{Bemerkung}
+\newtheorem{theorem}[everything]{Satz}
+\newtheorem{warning}[everything]{Achtung}
 
 
 % don't reset section counter
 \counterwithout{section}{chapter}
 % reset equation counters between sections
 \counterwithin*{equation}{section}
-
-% printing of counters
-\renewcommand{\theeverything}{\thesection.\arabic{everything}}
-\renewcommand{\theclaim}{\arabic{claim}}
-
-
 
 
 % how counters are printed
@@ -371,6 +281,7 @@
   }
 }
 \makeatother
+
 \newcommand\N{\ensuremath{\mathbb{N}}}
 \newcommand\R{\ensuremath{\mathbb{R}}}
 \newcommand\Z{\ensuremath{\mathbb{Z}}}
@@ -378,9 +289,4 @@
 \newcommand\Q{\ensuremath{\mathbb{Q}}}
 \newcommand\C{\ensuremath{\mathbb{C}}}
 
-\RequirePackage{hyperref}
-\RequirePackage[
-	capitalise,
-	noabbrev,
-	nameinlink
-]{cleveref}
+\usepackage[german,onelanguage,lined,algonl,boxed]{algorithm2e}
