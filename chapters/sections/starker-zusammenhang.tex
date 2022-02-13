@@ -131,5 +131,37 @@ Seien $v,w \in V$ mit $comp(v)=comp(w)$. Definiere $r(v)$ ist derjenige von $v$ 
 \end{itemize}
 \end{proof}
 \begin{definition}
-
+	Sei $G=(V,E)$  ein Digraph. Zieht man die starken Zusammenhangskomponenten zu einem Knoten zusammen, entsteht ein \emph{kondensierter Graph}. \\
+Eine \emph{Nummerierung} $v=\{v_1,\ldots,v_n\}$ der Knoten heißt \emph{topologische Ordnung}, falls $(v_i, v_j) \in  E$ nur, wenn $i<j$.
 \end{definition}
+\begin{lemma}
+	\label{lem:topo_ordnung}
+Der Digraph $G=(V,E)$  besitzt eine topologische Ordnung genau dann, wenn er azyklisch ist.
+\end{lemma}
+\begin{proof}
+Übung
+\end{proof}
+\begin{theorem}
+	Zu jedem Digraphen $G=(V,E)$  bestimmt Algorithmus \ref{alg:starker_zusammenhang} eine topologische Ordnung in linearem Aufwand $\mathcal{O}(|V|+|E|)$.
+	Gibt es eine solche Ordnung nicht, so sagt uns das der Algorithmus ebenfalls in linearem Aufwand.
+\end{theorem}
+\begin{proof}
+Seien $V_i, V_j \subset V$ die (disjunkten) Knotenmengen zweier stabiler Zusammenhangskomponenten mit $comp(v_i)=i, comp(v_j)=j$ für $v_i \in  V_i, v_j \in  V_j$. \\
+Ohne Beschränkung der Allgemeinheit: $i<j$\\
+\underline{Annahme:} Es gibt eine Kante $e=(v_j,v_i)$ mit $v_j \in  V_j, v_i \in  V_i$ .
+\emph{Beobacht:} In SecondVisit werden alle Knoten in $V_i$ vor derjenigen in $V_j$ zu $R$ hinzugefügt. $\implies $ 
+\begin{itemize}
+	\item Beim Überprüfen von $e=(v_j,v_i)$ in SecondVisit gilt: $v_i \in R, v_j \not\in R$ 
+	\item $v_j$  wird zu $R$ hinzugefügt, bevor $K$ erhöht wird.
+	\item $comp(v_i)=comp(v_j)$ 
+\end{itemize}
+Dies ist ein Widerspruch. \\
+$\implies $ Algorithmus \ref{alg:starker_zusammenhang} erzeugt eine topologische Ordnung, falls diese existiert. \\
+Aus Lemma \ref{lem:topo_ordnung} folgt: \\
+Es gibt genau dann eine topologische Ordnung auf $G$, falls $G$ azyklisch ist.\\
+$\iff $ alle starken Zusammenhangskomponenten sind eindeutig. \\
+$\iff $ Am Ende des Algorithmus ist $K=|V|$ 
+\end{proof}
+\begin{remark}
+Der Beweis zeigt, dass Algorithmus \ref{alg:starker_zusammenhang} auch benutzt werden kann, um in linearer Zeit zu überprüfen, ob ein Graph Zyklen hat.
+\end{remark}
