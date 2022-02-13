@@ -1,0 +1,106 @@
+\section{Zusammenhang}
+\begin{definition}
+Sei $G=(V,E)$ ein ungerichteter Graph $\emptyset \neq C \subset V$
+\begin{itemize}
+	\item Die Menge $C$ heißt \emph{zusammenhängend}, falls je zwei Knoten $v,w \in C , v\neq w,$ voneinander erreichbar sind, das heißt, $v \in post^*(w), w \in post^{*}(v)$. \\
+Ist G ein Digraph, so heißt $C$ zusammenhängend, falls $C$ im zugrundeliegenden ungerichteten Graphen zusammenhängend ist.
+\item Eine zusammenhängende Knotenmenge heißt \emph{Zusammenhangskomponente}, falls sie \emph{maximal} ist. Das bedeutet, es gibt keine weitere zusammenhängende Knotenmenge $D \subset V$ mit $C \subsetneq V$.
+\item Ein Graph heißt zusammenhängend, falls $V$ zusammenhängend ist.
+\end{itemize}
+\end{definition}
+\begin{example}
+Dies ist ein unzusammenhängender Graph mit drei Zusammenhangskomponenten:
+\begin{center}
+\begin{tikzpicture}
+    \node (A) at (0,0) {•};
+    \node (B) at (0,-1) {•};
+    \node (C) at (0,-2) {•};
+    
+    \node (D) at (2,0) {•};
+    \node (E) at (1,-1) {•};
+
+    \node (F) at (-1,0) {•};
+    \node (G) at (-1,-1) {•};
+    \node (H) at (-1,-2) {•};
+    \node (I) at (-2,-1) {•};
+
+    \path [-] (A) edge node {} (B);
+    \path [-] (C) edge node {} (B);
+    \path [-] (D) edge node {} (E);
+    \path [-] (F) edge node {} (G);
+    \path [-] (G) edge node {} (H);
+    \path [-] (I) edge node {} (G);
+\end{tikzpicture}
+\end{center}
+Analog hierzu ist der folgende Graph zusammenhängend:
+\begin{center}
+\begin{tikzpicture}
+    \node (A) at (0,0) {•};
+    \node (B) at (0,-1) {•};
+    \node (C) at (0,-2) {•};
+
+    \node (D) at (2,0) {•};
+    \node (E) at (1,-1) {•};
+
+    \node (F) at (-1,0) {•};
+    \node (G) at (-1,-1) {•};
+    \node (H) at (-1,-2) {•};
+    \node (I) at (-2,-1) {•};
+
+    \path [-] (A) edge node {} (B);
+    \path [-] (C) edge node {} (B);
+    \path [-] (D) edge node {} (E);
+    \path [-] (F) edge node {} (G);
+    \path [-] (G) edge node {} (H);
+    \path [-] (I) edge node {} (G);
+    
+    \path [-] (B) edge node {} (G);
+    \path [-] (B) edge node {} (E);
+\end{tikzpicture}
+\end{center}
+\end{example}
+Wir können beobachten, dass die Zusammenhangskomponenten eines ungerichteten Graphen die Äquivalenzklassen der Knotenmenge V unter der Äquivalenzrelation
+\[
+v=w \iff \{v\} \cup post^{*}(v) = \{w\} post^{*}(w) 
+\]
+ist. \\
+Insbesondere zerfällt $G$ in paarweise disjunkte Zusammenhangskomponenten $C_1,\ldots, C_r$ mit
+\begin{align*}
+	V &= \bigcup_{i=1}^{r} C_i \\
+	E &= \bigcup_{i=1}^{r}E_i
+\end{align*}
+wobei $E_i= E \cap \{X \subset C_i : |X|=2\}$.
+
+\begin{theorem}
+	\label{thm:zusammenhang}
+	Sei $G=(V,E)$ ein ungerichteter Graph mit $n=|V| \ge 1$ Knoten und $m=|E|$ Kanten. Ist $G$ zusammenhängend, so folgt für die Anzahl Knoten und Kanten, dass 
+\[
+m \ge n-1
+\]
+\end{theorem}
+\begin{proof}
+
+\end{proof}
+Per vollständiger Induktion:
+
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item IV \underline{n=1} \\ $m=0=n-1$
+	\item IS \underline{$n \ge 3$} \\ Wähle $v \in  V$ mit:
+		\[
+		deg(v)= \min_{v \in V} deg(v) \eqqcolon k
+		\]
+		Da $G$ zusammenhängend ist, muss $k>0$ gelten. \\
+		\underline{$k\ge 2$}
+		\begin{align*}
+		2m 
+		&= 2|E| \\
+		&= \sum_{w \in V} |deg{w} \\
+		&\ge 2 |V| \\
+		&= 2n 
+		&\implies m\ge n\ge n-1
+		\end{align*}
+	\underline{$k=1$} \\ Sei $G'(V',E')$ derjenige Graph, der durch das Streichen von v und der zugehörigen Kante entsteht. $G'$ ist zusammenhängend, weil $G$ zusammenhängend ist. Die Induktionsannahme impliziert:
+	\[
+m-1=|E'| \ge |V'|-1 =(n-1)-1 = n-1 \implies m \ge n-1
+	\]
+\end{itemize}
