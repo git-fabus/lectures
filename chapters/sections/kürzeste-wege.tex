@@ -1,1 +1,36 @@
 \section{Kürzeste Wege Probleme}
+\begin{definition}[gewichteter Graph]
+Sei $G=(V,E)$ ein Graph. Eine \emph{Gewichtsfunktion} für die Kanten von $G$ ist eine Abbildung $w \colon E \to R$. Ist $\pi=v_0,v_1,\ldots,v_r$ ein Weg, so heißt
+\[
+w(\pi) = \sum_{i=1}^{r-1}w(v_i,v_{i+1})
+\]
+die \emph{Weglänge} von $\pi$ bezüglich $w$. Das Trippel $G=(V,E,w)$ heißt \emph{gewichteter Graph}. 
+\end{definition}
+\begin{definition}
+Sei $G=(V,E,w)$  ein gewichteter Graph und $v, \tilde{w} \in  V$. Ein \emph{kürzester Weg} von $v$ nach $\tilde{w}$  in $G$  bezüglich $w$ ist ein $v\text{-} \tilde{w}$-Weg $\pi$  mit der Eigenschaft $w(\pi) \le w(\pi')$  für alle anderen $v\text{-}w$-Wege $\pi'$ .
+Die kürzeste Weglänge $\delta(v,\tilde{w})$  von $v$ nach $\tilde{w}$ ist definiert durch:
+
+\begin{center}$\delta(v,\tilde{w}) \begin{cases}
+	\min \{w(\pi) | \pi \text{ ist $v$-$\tilde{w}$-Weg  }\} &, \text{falls ein solcher Weg existiert} \\
+	\infty &, \text{ sonst}
+\end{cases}$ \end{center}
+\end{definition}
+
+\begin{example}
+Betrachte den gewichteten Graph $G=(V,E,w)$ mit
+
+\begin{center}
+\begin{tikzpicture}
+
+%Nicer Graph
+
+
+\end{tikzpicture}
+\end{center}
+Mögliche Wege von $v_3$ nach $v_1$ sind:
+\begin{align*}
+	\pi_1&=v_3,v_1 &\implies w(\pi_1)&=6 \\
+	\pi_2&=v_3,v_2,v_1 &\implies w(\pi_2)&=5 \\
+	\pi_3&=v_3,v_4,v_2,v_1 &\implies w(\pi_3)&=9
+\end{align*}
+\end{example}
