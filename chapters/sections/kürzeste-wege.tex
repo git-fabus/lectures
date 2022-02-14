@@ -388,4 +388,19 @@ Wir haben gezeigt: $w(\pi) = \delta(s,y)$, wobei $\pi$ der eindeutige Weg in $(R
 Daraus folgt die Behauptung.
 \paragraph{Aufwand:} Trivial.
 \end{proof}
-
+Die letzte Frage dieses Kapitels: Algorithmus für das Alle-Paare-kürzeste-Wege Problem lässt eine naive Antwort zu. Diese lautet: Wende Dijkstra oder Moore-Belmann-Ford auf jede Quelle an.Das Resultat ist jedoch, dass man keine brauchbaren Datenstrukturen mehr hat. Demnach gibt es folgenden Algorithmus:\\
+Ohne Beschränkung der Allgemeinheit sei $V=\{1,\ldots,n\} $ \\
+\begin{algorithm}[H]
+	\label{alg:fw}
+	\caption{Floyd-Warshall}
+	\KwData{Gewichteter Digraph $G=(V,E,w), V=\{1,\ldots,n\} $ ohne negative Zyklen}
+	\KwResult{Matrizen $[l_{i,j}]_{i,j=1}^{n}, [p_{i,j}]_{i,j=1}^{n}$}
+\end{algorithm}
+\begin{theorem}
+	Der Algorithmus \ref{alg:fw} arbeitet korrekt, mit Aufwand $\mathcal{O}(n^3), n=|V|$ 
+\end{theorem}
+\begin{proof}
+\begin{notation}
+Im Iterationsschritt $j_0$ ist $l_{ik}^{(j_0)}$ die Länge eines kürzesten i-k-Weges im von $\{1,\ldots,j_0\} $ aufgespannten Teilgraphen mit Endkante $(p_{ik}^{(j_0)},k)$. 
+\end{notation}
+\end{proof}
