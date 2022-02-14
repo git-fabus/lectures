@@ -93,13 +93,14 @@ ein kürzester Weg von $v_i$ nach $v_j$.
 \begin{align*}
 	\implies \pi' &= \pi_{0,i} \pi_{i,j}' \pi_{j,r} \text{ erfüllt:}\\
 	w(\pi')&= w(\pi_{0,i})+w(\pi_{i,j}')+w(\pi_{j,r}) \\
-	       &< w(\pi_{0,i})+ w(\pi_{i,j} + w(\pi_{j,r})\\
+	       &< w(\pi_{0,i})+ w(\pi_{i,j}) + w(\pi_{j,r})\\
 	       &= w(\pi') \\
 	       &\implies w(\pi') < w(\pi)
 \end{align*}
 Dies ist ein Widerspruch, da $\pi$ kürzester Weg nach Annahme ist.
 \end{proof}
 \begin{lemma}
+	\label{lem:delta_delta_w}
 	Sei $G=(V,E,w)$ ein gewichteter Digraph ohne negative Zyklen und sei $\pi=v_0,v_1,\ldots,v_r$ ein kürzester Weg von $v_0$ nach $v_r$ . Dann gilt:
 	\[
 	\delta(v_0,v_r)= \delta(v_0, v_{r-1} + w(v_{r-1}, v_r)
@@ -252,4 +253,139 @@ Dies ist ein Widerspruch $\implies $ c) für $k+1$. Für $k=n$ impliziert b) die
 \begin{remark}
 Clevere Implementierungen können den Dijkstra-Algorithmus \ref{alg:dijkstra} in $\mathcal{O} (m+n\log(n), n=|V|, m=|E|$ durchführen.
 \end{remark}
-Für die Verallgemeinerung für negative Gewichte betrachten wir folgend den Moore-Bellmann-Ford Algorithmus:
+Für die Verallgemeinerung für negative Gewichte betrachten wir folgend den Moore-Bellmann-Ford Algorithmus: \\
+\begin{algorithm}[H]
+	\label{alg:mbf}
+	\caption{Moore-Bellmann-Ford}
+	\KwData{Gewichteter Digraph $G=(V,E,w)$ ohne negative Zyklen, Startknoten $s \in V$ }
+	\KwResult{kürzeste Wege von s nach v, $v \in post^{*}(s)$ samt Weglänge $l(v)=\delta(s,v)$} 
+\begin{itemize}
+	\item $l(s)=0$\\
+	$l(v)=\infty, v \in V \setminus \{s\}$ 
+\item \For{$e =(u,v) \in  E$}{\If{$l(v)>l(u)+w(u,v)$}{$l(v)=l(u)+w(u,v)$\\ $p(v)=u$}   }
+\end{itemize}
+\end{algorithm}
+\begin{example}
+Betrachte den Graphen:
+\begin{center}
+\begin{tikzpicture}[node distance = 2cm, auto]
+\node (q) {a};
+\node (b) [below left of=q] {b};
+\node (c) [below right of=q] {c};
+\node (d) [below of=b] {d};
+\node (e) [below of=c] {e};
+
+\path [->] (q) edge node[above left] {1} (b);
+\path [->] (q) edge node[above right] {4} (c);
+\path [->] (b) edge node[left] {-2} (d);
+\path [->] (c) edge node[right] {1} (e);
+\path [->] (d) edge node[above left] {1} (c);
+\path [->] (d) edge node[below] {3} (e);
+\end{tikzpicture}
+\end{center}
+mit Startknoten a.
+\clearpage
+\begin{table}[htpb]
+	\centering
+	\caption{Iteration 1}
+	\label{tab:bmf-1}
+	\begin{tabular}{c| c c c c c|c c c c}
+		Kante & \multicolumn{5}{c|}{$l(a) , \ldots, l(e)$} & \multicolumn{4}{|c}{$p(b),\ldots,p(e)$} \\ 
+		\hline
+		$(a,b)$ & 0 & 1 & $\infty$ & $\infty$ & $\infty$  & a & - & - & - \\
+		$(a,c)$ & & & 4 & $\infty$ & $\infty$  & & a & - & - \\
+		$(b,d)$ & & & 4 & $-1$ & $\infty$ & & a & & c \\ 
+		$(c,e)$ & & & 4 & &5 & & a & &c \\
+		$(d,c)$ & & & 0 & & 5 & & d & &c \\
+		$(d,e)$ & & & & & 2 & & & & d
+
+		 
+	\end{tabular}
+\end{table}
+\begin{table}[htpb]
+	\centering
+	\caption{Iteration 2}
+	\label{tab:bmf-2}
+	\begin{tabular}{c| c c c c c|c c c c}
+		Kante & \multicolumn{5}{c|}{$l(a),\ldots,l(e)$} & \multicolumn{4}{|c}{$p(b),\ldots, p(e)$}\\
+		\hline
+		$(a,b)$ & $0$ & $1$ & $0$ & $-1$ & $2$ & a & d & b & d \\
+		$(a,c)$\\
+		$(b,d)$ \\
+		$(c,e)$ \\
+		$(d,c)$ & & & & & $1$ & & & & c \\
+		$(d,e)$ 
+
+
+	\end{tabular}
+\end{table}
+Keine Veränderung mehr ab der 3. Iteration.
+\end{example}
+
+\begin{theorem}
+	Der Moore-Bellman-Ford Algorithmus \ref{alg:mbf} arbeitet korrekt mit Aufwand $\mathcal{O}(m \cdot n), m =|E|, n=|V|$. 
+\end{theorem}
+\begin{proof} 
+Bezeichne zu jedem Zeitpunkt:
+\begin{align*}
+	R &= \{v \in V | l(v) < \infty\} \\
+	F &= \{(u,v) \in E | u = p(v)\} 
+\end{align*}
+Zeige zu erst:
+\begin{enumerate}
+	\item $l(v) \ge l(u) + w(u,v), (u,v) \in E$ 
+	\item $(R,F)$  ist ein azyklischer Graph
+	\item $(R,F)$ ist ein gerichteter Baum mit Wurzel $s$, d.h jeder Knoten in $R$ ist über genaue einen Weg von $s$ aus erreichbar.
+\end{enumerate}
+\paragraph{a)} Bei $p(v)=u$ gilt:
+\[
+l(v)=l(u)+w(u,v)
+\]
+Danach wird $l(u)$ höchstens verkleinert.
+\paragraph{b)}
+\underline{Angenommen:} Es gibt einen Zyklus $\pi=v_0,v_1,\ldots,v_{r-1},v_r$ mit $v_0=v_r$ \\
+Ohne Beschränkung der Allgemeinheit entstanden durch Setzen von $p(v_r)=v_{r-1}$ \\
+$\implies$ Davor galt:
+\[
+l(v_0)=l(v_r) > l(v_{r-1}) + w(v_{r-1},v_r)
+\]
+Wegen a) gilt:
+\[
+l(v_{i+1}) \ge l(v_i) +w(v_i, v_{i+1}, i=0,\ldots,r-2)
+\]
+\begin{align*}
+	\implies \sum_{i=1}^{r}w(v_{i-1},v_i) &= \left( \sum_{i=1}^{r-1}w(v_{i-1},v_i) \right)+ w(v_{r-1},v_r) \\
+					      &< \sum_{i=1}^{r}(l(v_i)-l(v_{i-1}) \\
+					      &=0
+\end{align*}
+Widerspruch dazu, dass es keine negativen Zyklen gibt.
+
+\paragraph{c)}
+$x \in R \setminus \{s\} \implies p(x)=R$ Gehe von Blättern zu Wurzel dann folgt c)\\
+$a,b,c \implies l(y)$ ist mindestens die Länge des (eindeutigen) s-y-Wegs in $(R,F)$ \\
+\underline{Behauptung:} Nach k Iterationen ist $l(y)$ auch die maximale Länge eines kürzesten s-y-Wegs in $G$ mit maximal k Kanten.\\
+Zeige durch Induktion:
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+
+	\item IV \underline{$k=1$} klar
+	\item \underline{$k-1 \to k$} Sei 
+		\[
+		\pi=s,v_1,\ldots,v_r,x,y
+		\]
+	ein kürzester s-y-Weg in G mit höchsten k Kanten und $r\le k-2$. \\
+	Dann folgt aus Lemma \ref{lem:delta_delta_w}:
+	\begin{itemize}
+		\item $\pi'=s,v_1,\ldots,v_r,x$ ist ein kürzester s-k-Weg mit k-1 Kanten
+		\item $l(x)\le w(\pi')$
+		\item \begin{align*}
+				l(y)&\le l(x)+w(x,y) \\
+				    &\le w(\pi') + w(x,y) \\
+				    &= w(\pi)
+		\end{align*}
+	\end{itemize}
+\end{itemize}
+Wir haben gezeigt: $w(\pi) = \delta(s,y)$, wobei $\pi$ der eindeutige Weg in $(R,T)$ mit maximal k Kanten. \\
+Daraus folgt die Behauptung.
+\paragraph{Aufwand:} Trivial.
+\end{proof}
+
