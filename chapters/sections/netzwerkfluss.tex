@@ -29,4 +29,67 @@ Konstruiere einen gewichteten Digraph $G=(V,E,w)$ mit
 \end{tikzpicture}
 \end{center}
 \end{example}
-
+\begin{definition}
+Ein \emph{Netzwerk} ist ein Tupel $N=(V,E,c,s,t)$  bestehend aus
+\begin{itemize}
+	\item einem gewichteten Digraphen $G=(V,E,c)$
+	\item einer \emph{Kapazitätsfunktion} $c \colon E \to R_{\ge 0}$
+	\item einer Quelle $s \in V$ mit $pre(s)= \emptyset$ 
+	\item einer Senke $t \in V$ mit $post(t)=\emptyset$ 
+\end{itemize}
+Ein Fluss $f \colon E \to R_{\ge 0}$ ist eine Funktion, die folgende Bedingungen erfüllt:
+\begin{enumerate}
+	\item \emph{Kapazitätsbedingung:}
+		\[
+		f(v,w) \le c(v,w)
+		\]
+	\item \emph{Kirchhoffsches Gesetz:}
+		\[
+		\sum_{u \in pre(v)} f(u,v) = \sum_{w \in  post(v)} f(v,w)
+		\]
+für alle $v \in V \setminus \{s,t\} $ .
+\end{enumerate}
+Der \emph{Wert} des Flusses ist:
+\[
+flow(f) = \sum_{w \in post(s)}f(s,w)
+\]
+Der \emph{maximale FLuss} von N wird bezeichnet als:
+\[
+MaxFlow(N) = \max \{flow(f) \text{ ist Fluss für N}\} 
+\]
+Eine Flussfunktion $f$ wird \emph{optimal} genannt, falls 
+\[
+flow(f)=MaxFlow(N)
+\]
+ist. \\
+Ein \emph{Schnitt} für N ist eine Knotenmenge $S \subset V$ mit $s \in S, t \not\in S$. \\
+Die \emph{Kapazität} eines Schnittes ist gegeben durch:
+\[
+cap(S)= \sum_{v \in S \\ w \in post(v) \setminus S}c(v,w)
+\]
+Die minimale Schnittkapazität von N ist:
+\[
+MinCut(N)= \min \{cap(S) | \text{ S ist Schnitt für N}\} 
+\]
+\end{definition}
+\begin{lemma}
+	Sei S ein Schnitt für $N=(V,E,c,s,t)$. Dann gilt für jeden Fluss f, dass
+	\begin{align*}
+		flow(f) &= \sum_{w \in post(v) \setminus S} f(v,w) - \sum_{u \in  pre(v)} f(u,v) \\
+		flow(f) &\le cap(S)
+	\end{align*}
+\end{lemma}
+\begin{proof}
+Rechne:
+\begin{align*}
+	flow(f) &= \sum_{w \in post(s)} f(s,w) \\
+		&= \sum_{v \in S}\left( \sum_{w \in post(v)}f(v,w)- \sum_{u \in pre(v)}f(u,v) \right)\\
+		&=\sum_{w \in post(v)}f(v,w) - \sum_{u \in pre(v) \setminus S}f(u,v)
+\end{align*}
+Für die nächste Behauptung können wir ebenfalls nachrechnen:
+\begin{align*}
+	flow(f) &= \sum_{w \in post(v) \setminus S} f(v,w) - \sum_{u \in pre(v) \setminus S}f(u,v) \\
+		&\le \sum_{w \in post(v) \setminus S}c(v,w) \\
+		&=cap(S)
+\end{align*}
+\end{proof}
