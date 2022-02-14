@@ -187,5 +187,69 @@ $5$ & & & & & & $7$ & $v_6$ & $7$ & $v_5$ \\
 \begin{theorem}
 Der Algorithmus von Dijkstra \ref{alg:dijkstra} arbeitet korrekt, mit einer Laufzeit von $\mathcal{O}(n^2), n=|V|$.
 \end{theorem}
+\begin{proof}
+\begin{notation}
+Schreibe in der k-ten Iteration $^{(k)}$ an alle Größen, die im Algorithmus vorkommen
+\end{notation}
+\underline{Zeige:} Bei jeder Ausführung von 2. gilt:
+\begin{enumerate}
+	\item $l^{(k)}(v) \le l^{(k)}(y)$ für alle $v \in R^{(k)}, y \in V \setminus R^{(k)}$
+	\item $l^{(k)}(v)=\delta(s,v)$ für alle $v \in R^{(k)}$ \\
+	$l^{(k)}(v)<\infty, v \neq s \implies$ Es existiert ein kürzester s-v-Weg mit Knoten in $R^{(k)}$ und letzter Kante $(p(v),v)$
+\item $v \in V \setminus R^{(k)} \implies l^{(k)}(v)$ ist die kürzeste Weglänge 
+	von s nach v im Teilgraphen mit Knoten $R^{\left( k \right)} \cup \{v\} $ in $G$ \\
+	$v \in V \setminus R^{(k)}, l^{(k)}(v)<\infty \implies p^{(k)}(v) \in R^{(k)}$ und $l^{(k)}(v)=l^{(k)}(p(v))+w(p^{(k)}(v),v)$  
+\end{enumerate}
+Per vollständiger Induktion:
 
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item IV \underline{$k=0$} Trivialerweise erfüllt
+	\item IS \underline{$k \to k+1$} Sei u der in 2. ausgewählte Knoten.
+		\paragraph{a)} Für $v \in R^{(k)}, y \in V \setminus R^{(k)}$ gilt:
+		\begin{align*}
+			l^{(k+1)}(v)&= l^{(k)}(v) \\
+				    &\le  l^{(k)}(u) \\
+				    &= \min_{u \in V \setminus R^{(k)}} l^{(k)}(u)\\
+				    &\le l^{(k+1)}(y)
+		\end{align*}
+Da $R^{(k+1)}=R^{(k)}\cup \{u\} \implies $ Behauptung a) für $k+1$ gilt.
 
+\paragraph{b)} Wir müssen die Behauptung über die kürzeste Weglänge nur für u überprüfen.\\
+
+c) für $k \implies l^{(k)}(u)$ ist die kürzeste Weglänge zum Weg $\pi$ im Teilgraphen $R^{(k)}\cup \{u\}$. \\
+\underline{zu Zeigen} $l^{(k+1)}(u)=l^{(k)}(u)=w(\pi) = \delta(s,u)$ in $G$ \\
+\underline{Angenommen:} Es gibt einen Weg $\pi'$ in $G$ mit mindestens einem Knoten $y \in V \setminus R^{(k)}$ und $w(\pi' < w(\pi)$ \\
+$\pi' = s,v_1,\ldots,v_{r-1},y,v_{r+1},\ldots,v_{r+m},u$ \\
+\begin{align*}
+	\implies l^{(k)}(y) &\le  w(s,v_1,\ldots,v_{r-1},y) \\
+			    &\le w(\pi') \\
+			    &< w (\pi) \\
+			    &= l^{(k)}(u)
+\end{align*}
+Dies ist ein Widerspruch zu $l^{(k)}(u)= \min_{v \in V \setminus R^{(k)}} l^{(k)}(v)$ \\
+$\implies b$ für $k+1$
+\end{itemize}
+\paragraph{c)}
+Zeige, dass 3. und 4. die Aussage c) erhalten. Sei $v \in V \setminus R^{(k+1)}$ in 4. \\
+\begin{align*}
+	\implies p^{(k+1)}(v)&= u \\
+	l^{(k+1)}(v) &= l^{\left( k+1 \right)}(u) +w(u,v)
+\end{align*}
+c) für $k \implies $ Es gibt einen s-v-Weg im von $R^{(k+1)}\cup \{v\} $ aufgespannten Teilgraph $G'(v)$  in $G$ , mit Länge $l^{(k+1)}(v)= l^{(k+1)}(u)+w(u,v)$ \\
+\underline{zu Zeigen} Dieser Weg ist ein kürzester Weg in $G$ \\
+\underline{Angenommen:} Für ein $v \in V \setminus R^{(k+1)}$ in 4. gibt es einen s-v-Weg $\pi$ in $G'(v)$ mit $w(\pi) < l^{(k+1)}(v)$. \\
+Beobachte: $l^{(k+1)}(v) \le l^{(k)}(v)$ \\
+$\implies u$ muss $\pi$ enthalten sein, da dies die einzige Veränderung zum k-ten Schritt ist und $l^{(k)}(v)$ nach c) im k-ten Schritt ein kürzester Weg in $R^{(k)}\cup \{u\} $ ist. \\
+Sei $x$ der Vorgänger von $v$  in $\pi$. 
+\begin{align*}
+	l^{(k+1)}(v)&= l^{(k+1)}(x) + w(x,v) \\
+		    &\le l^{(k+1)}(u) + w(x,u) \\
+		    &\le w(\pi)
+\end{align*}
+Dies ist ein Widerspruch $\implies $ c) für $k+1$. Für $k=n$ impliziert b) die Behauptung. 
+\paragraph{Aufwand:} $\mathcal{O}(n^2)$ ist trivial. 
+\end{proof}
+\begin{remark}
+Clevere Implementierungen können den Dijkstra-Algorithmus \ref{alg:dijkstra} in $\mathcal{O} (m+n\log(n), n=|V|, m=|E|$ durchführen.
+\end{remark}
+Für die Verallgemeinerung für negative Gewichte betrachten wir folgend den Moore-Bellmann-Ford Algorithmus:
