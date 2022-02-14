@@ -1,0 +1,32 @@
+\section{Netzwerkflussprobleme}
+\begin{example}
+Ausgehend von einer Bananenplantage s sollen alle geernteten Bananen zum Lagerhaus t transportiert werden. Für den Transport stehen Straßen mit $r_1,\ldots,r_p$ $\frac{kg}{n}$ Transportkapazität zu den Seehäfen $A_1,\ldots,A_p$ zu Verfügung. Von den Zielhäfen $B_1,\ldots,B_q$ stehen Transportkapazitäten von $d_1,\ldots,d_q$ $\frac{kg}{n}$ zum Supermarkt t bereit.
+Die Transportkapazität zwischen den Seehäfen werden mit $c(A_i,A_j), 1\le i\le p, 1\le j \le p$ bezeichnet.
+\paragraph{Fragen:}
+\begin{itemize}
+	\item Ist es mögliche, alle Transportkapazitäten auszuschöpfen?
+	\item Falls nein, was ist die maximal mögliche Transportkapazität?
+	\item Wie sollen die Bananenladungen aufgeteilt werden?
+\end{itemize}
+Konstruiere einen gewichteten Digraph $G=(V,E,w)$ mit
+\begin{itemize}
+	\item $V=\{s, A_1,\ldots,A_p, B_1,\ldots,q,t\} $ 
+	\item $E= \{(s,A_i), (A_i,B_j), (B_j,t) ; 1\le i\le p, 1\le j\le p\} $ 
+	\item $w(e)= \begin{cases}
+			r_i &, e=(s,A_i) \\
+			c(A_i,B_j) &, e(A_i,B_j) \\
+			d_i &, e(B_i,t)
+	\end{cases}$ 
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+
+
+	%Netzwerk einfügen
+
+
+\end{tikzpicture}
+\end{center}
+\end{example}
+
