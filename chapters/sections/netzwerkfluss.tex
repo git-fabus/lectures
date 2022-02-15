@@ -93,3 +93,156 @@ Für die nächste Behauptung können wir ebenfalls nachrechnen:
 		&=cap(S)
 \end{align*}
 \end{proof}
+\begin{theorem}[Max-FLow-Min-Cut Theorem]
+\label{thm:min-cut}
+Sei $N=(V,E,c,s,t)$ ein Netzwerk, dann gilt:
+\[
+MaxFlow(N)=MinCut(N)
+\]
+\end{theorem}
+\begin{proof}
+\underline{Zu zeigen:} Es gibt einen Schnitt für den die Gleichheit gilt. \\
+\underline{Idee:} Gegeben sei ein Fluss f mit flow(f)=MaxFlow(N), konsturiere einen Schnitt $S$ mit flow(f)=cap(S). \\
+\begin{algorithm}[H]
+\label{alg:beweis-max-min}
+\KwData{Netzwerk $N$, Fluss $f$ mit $flow(f)=MaxFlow(N)$.}
+\KwResult{S mit $flow(f)=cap(S)$}
+\begin{itemize}
+	\item $S=\{s\}$ 
+	\item \While{$x \in S, y \in V \setminus S$ existieren mit $\begin{cases}
+				f(x,y) < c(x,y) &, \text{ falls } (x,y) \in E \\
+				0 < f(y,x) &, \text{ falls } (y,x) \in E
+	\end{cases}$ \\ dann }{$S=S \cup \{y\}$}
+\end{itemize}
+\end{algorithm}
+\underline{Behauptung} Das Resultat $S$ des Algorithmus ist ein Schnitt von $N$
+\begin{proof}
+Zu Zeigen: $t \not\in S$ \\
+\underline{Angenommen:}  $t \in S, v_r=t$ \\
+$\implies$ Es gibt $v_{r-1} \in S$ mit $f(v_{r-1},v_r) < c(v_{r-1},v_r)$. \\
+Iterativ: Es gibt einen ungerichteten Weg $\pi$ mit $v_0=s, v_r=t$\\
+Definiere für $i=0,\ldots,r-1$:
+\[
+\varepsilon_i = \begin{cases}
+	c(e)-f(e) &, \text{ falls } e=(v_i,v_{i+1}) \in E , e^{-1}=(v_{i+1}, v_i) \not\in E \\
+	f(e^{-1}) &, \text{ falls } e \not\in E , e^{-1} \in E \\
+	\max \{c(e)-f(e), f(e^{-1})\} &, \text{ falls } e \in E , e^{-1} \in E
+\end{cases}
+\]
+Beobachte: $\varepsilon_i > 0$
+\begin{equation}
+	\label{eqn:epsilon}
+\varepsilon = \min_{ß\le i \le r-1} \varepsilon_i > 0
+\end{equation}
+\underline{Zeige:} Es gib einen Fluss $f^{*}$ in $N$  mit $flow(f^{*}) = flow(f)+\varepsilon$ \\
+\underline{Konstruiere:}
+\[
+f^{*}(e)= \begin{cases}
+	f(e)+\varepsilon &, \text{ falls } e=(v_i, v_{i+1} \in E, e^{-1}\not\in E \\
+	f(e)-\varepsilon &, \text{ falls } e = (v_{i+1}, v_i) \in E, e^{-1}\not\in E \\
+	f(e)+\varepsilon &, \text{ falls } e=(v_i, v_{i+1}), e^{-1} \in E \text{ und } c(e)-f(e) > f(e^{-1}) \\
+	f(e)-\varepsilon &, \text{ falls } e=(v_{i+1}, v_i), e^{-1} \in E \text{ und } c(e)-f(e) \le f(e^{-1}) \\
+	f(e) &, \text{ sonst}
+\end{cases}
+\]
+Bemerke:
+\begin{itemize}
+	\item Kapazitätsbedingung bleibt erfüllt.
+	\item Kirchpffsches Gesetz bleibt erfüllt, da $f^{*}$ weiterhin ein Fluss ist.
+\end{itemize}
+Das heißt:
+\begin{align*}
+	flow(f^{*}) &= \sum_{v \in post(s)} f^{*}(s,v) \\
+		    &= \sum_{v \in pre(t)} f^{*}(v,t) \\
+		    &= \sum_{v \in pre(t) \setminus \{v_{r-1}\} } f^{*}(v,t) + f^{*}(v_{r-1},t) \\
+		    &=flow(f) +\varepsilon
+\end{align*}
+Dies ist ein Widerspruch dazu, dass $flow(f) = MaxFlow(N) \implies S$ ist ein Schnitt.
+\end{proof}
+S ist ein Schnitt in N mit:
+\[
+f(x,y)=c(x,y) 
+\]
+\[
+	f(y,x)=0
+\]
+für alle $x \in S, y \in V \setminus S \implies flow(f)=cap(S)$ nach Kirchoff. 
+\end{proof}
+Wir formalisieren nun weiter:
+\begin{definition}
+Sei f ein Fluss im Netzwerk $N=(V,E,c,s,t)$. Eine Kante $e=(x,y) \in E$  heißt \emph{Vorwärtskante}, falls $f(e)<c(e)$ \\
+Eine Kante $e^{-1}(y,x) \in E$ heißt \emph{Rückwärtskante}, falls $f(e^{-1}) > 0$. \\
+Der \emph{Restgraph} für f ist der Digraph $G'=(V,E')$ mit
+\[
+E'=\{(x,y) \in V \times V | (x,y) \text{ ist Vorwärts- oder Rückwärts-Kante}\} 
+\]
+$c(e)-f(e)$ bzw. $f(e^{-1})$ heißen \emph{Restkapazitäten}. Ein \emph{augmentierender Weg} ist ein s-t-Weg im Restgraphen.
+\end{definition}
+Im vorherigen Beweis haben wir einen solchen augmentierenden Weg konstruiert.
+
+\begin{example}
+Betrachte
+\begin{center}
+\begin{tikzpicture}[node distance = 2cm, auto]
+ \node (v) {v};
+ \node (s) [below left of=v] {s};
+ \node (w) [below right of=s] {w};
+ \node (t) [below right of=v] {t};
+
+ \path [->] (v) edge node[above right]{2/3} (t);
+ \path [->] (s) edge node[above left] {2/2}(v);
+ \path [->] (s) edge node[below left] {0/1} (w);
+ \path [->] (w) edge node[below right] {0/4} (t);
+\end{tikzpicture}
+\end{center}
+Der Restgraph mit Restkapazitäten ist:
+\begin{center}
+\begin{tikzpicture}[node distance = 2cm, auto]
+
+	\node (v) {v};
+ \node (s) [below left of=v] {s};
+ \node (w) [below right of=s] {w};
+ \node (t) [below right of=v] {t};
+\begin{scope}[every edge/.style={draw=blue}]
+ \path [->] (t) edge[bend right=30] node[right] {2} (v);
+ \path [<-] (s) edge node[above left] {2}(v);
+ \end{scope}
+ \begin{scope}[ever edge/.style={draw=red}]
+ \path [->] (s) edge node[below left] {1} (w);
+ \path [->] (w) edge node[below right] {4} (t);
+ \path [->] (v) edge node[below left]{1} (t);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+Blau: Rückwärtskante, Rot: Vorwärtskante
+\end{example}
+Der Beweis von Satz \ref{thm:min-cut} gibt uns außerdem einen Algorithmus, wie wir, für einen nicht-optimalen Fluss, ein Fluss mit höheren Wer finden können.
+\underline{Idee:} Benutze dies um einen optimalen Fluss zu finden. \\
+\begin{algorithm}[H]
+	\label{alg:ford-fulkerson}
+	\caption{Ford-Fulkerson}
+	\KwData{Netzwerk $N=(V,E,c,s,t)$ }
+	\KwResult{Fluss $f$ mit $flow(f)=MaxFlow(N)$ }
+	\begin{itemize}
+		\item $f(e)=0, e \in E$ 
+		\item Suche einen augmentierenden Weg von $s$ nach $t$ 
+		\item \If{ keiner existiert}{stop}
+		\item Berechne $\varepsilon$ \eqref{eqn:epsilon}
+		\item Augmentiere $f$ um $\varepsilon$, gehe zu 2
+	\end{itemize}
+\end{algorithm}
+\begin{remark}
+Im Falle von irrationalen Kapazitäten muss der Algorithmus nicht notwendigerweise terminieren (Beweis durch Gegenbeispiel)
+\end{remark}
+\begin{theorem}[Integral-Flow-Theorem]
+Sei $N=(V,E,c,s,t)$ ein Netzwerk mit ganzzahligen Kapazitäten. Dann terminiert der Algorithmus \ref{alg:ford-fulkerson} nach maximal $\sum_{e \in E}c(e)$ Augmentierungsschritten mit einem ganzzahligen, optimalen Fluss.
+\end{theorem}
+\begin{proof} Betrachte:
+\paragraph{Ganzzahlig:} Wir starten mit $f(e)=0, e \in E$. Die Restkapazitäten im Algorithmus und somit auch $\varepsilon $ sind zu jedem Zeitpunkt ganzzahlig.
+\paragraph{Optimal:} Der Algorithmus terminiert, falls kein augmentierender Weg mehr gefunden werden kann. Der Beweis des Max-Flow-Min-Cut-Theorem zeigt, dass dies den maximalen Fluss impliziert.
+\paragraph{Anzahl Schritte} Im schlimmsten Fall wird pro Iteration der Fluss von genau einer Kante um 1 erhöht $\implies$ Behauptung 
+\end{proof}
+%Beispiel
+
+Es gibt eine Möglichkeit, die Laufzeit des Algorithmus zu verbessern, indem man immer den kürzesten augmentierenden Weg wählt. Dies bringt uns zum nächsten Algorithmus:
+
