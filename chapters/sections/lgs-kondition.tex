@@ -16,3 +16,28 @@ und
 \[
 	\frac{\|\Delta x\|}{\|x\|} \le \|A^{-1}\| \frac{\|\Delta b\|}{\|x\|}\le  \|A^{-1}\| \|A\| \frac{\|\Delta b\|}{\|b\|}
 \]
+\begin{definition}
+Der Faktor 
+\[
+cond_M (A) = \|A^{-1}\|_M \|A\|_M 
+\]
+wird als \emph{Kondition} der Matrix $A$ bezüglich der Matrixnorm $\|•\|_M$ bezeichnet. 
+\end{definition}
+\begin{example}
+Betrachte 
+\[
+A= \begin{bmatrix}
+	10^{-3} & 1 \\
+	1 & 1
+\end{bmatrix}
+\]
+\begin{align*}
+	&\implies A^{-1} \approx \begin{bmatrix}
+		-1.001 & 1.001 \\
+		1.001 & -0.001
+	\end{bmatrix} \\
+	&\implies \|A\|_{\infty} =2 & \|A^{-1}\|_{\infty} \approx 2 \\
+	&\implies cond_{\infty}(A) \approx 4
+\end{align*}
+A ist also bezüglich $\|•\|_{\infty}$ gut konditioniert.
+\end{example}
