@@ -244,5 +244,121 @@ Sei $N=(V,E,c,s,t)$ ein Netzwerk mit ganzzahligen Kapazitäten. Dann terminiert 
 \end{proof}
 %Beispiel
 
-Es gibt eine Möglichkeit, die Laufzeit des Algorithmus zu verbessern, indem man immer den kürzesten augmentierenden Weg wählt. Dies bringt uns zum nächsten Algorithmus:
-
+Es gibt eine Möglichkeit, die Laufzeit des Algorithmus zu verbessern, indem man immer den kürzesten augmentierenden Weg wählt. Dies bringt uns zum nächsten Algorithmus: \\
+\begin{algorithm}[H]
+	\label{alg:edmonds-karp}
+	\caption{Edmonds-Karp}
+	\KwData{Netzwerk $N=(V,E,c,s,t)$}
+	\KwResult{Fluss $f$ mit $flow(f)=MaxFlow(N)$}
+	\begin{itemize}
+		\item $f(e)=0, e \in E$ 
+		\item Suche einen kürzesten augmentierenden Weg von $s$ nach $t$
+		\item \If{keiner existiert}{stop}
+		\item Berechne $\varepsilon$ \eqref{eqn:epsilon}
+		\item Augmentiere $f$ um $\varepsilon $ und gehe zu 2
+	\end{itemize}
+\end{algorithm}
+\begin{example}
+Betrachte
+%Grafik auf Vorlesung 19 Seite 2 muss hinzugefügt werden
+\end{example}
+\begin{lemma}
+	Sei $(f_0,\pi_0),(f_1,\pi_1)\ldots$ die Folge von Flüssen $f_i$ mit zugehörigen augmentierenden Weg $\pi $, die vom Edmonds-Karps-Algorithmus \ref{alg:edmonds-karp} erzeugt wird. Dann gilt:
+	\[
+	|\pi_i \le |\pi_{i+1}| \text{ für alle } i
+	\]
+und falls $e=(v,w)$ in $\pi_i $ und $e^{-1}=(w,v)$ in $\pi_j,  i<j$ dann gilt:
+\[
+|\pi_i| +2 \le |\pi_j|
+\]
+\end{lemma}
+\begin{proof}
+	%Sind das Gs oder fs?
+Sei $l_i(x,y)$ die Länge des kürzesten x-y-Wegs im Restgraphen von $f_i \implies |\pi_i|=e_i(s,t)$ \\
+\underline{Behauptung 1} $l_{i+1}(s,v) \ge l_i(s,v)$ für alle $v \in V$ \\
+Falls $l_{i+1}(s,v)=\infty$ ist Behauptung 1 trivial. \\
+Sonst: $v$ ist von $s$ im Restgraphen von $f_{i+1}$ erreichbar, d.h
+\[
+\infty>l_{i+1}(s,v)=r
+\]
+Sei also $\pi=s,v_1,\ldots,v_r$ ein kürzester Weg von s nach $v=v_r$ im Restgraphen von $f_{i+1}$. \\
+\underline{Behauptung 2 } $l_i(s,v_{j+1}) \le l_i(s,v_j)+1, 1\le j<r$ \\
+\begin{proof}
+Behauptung 2
+\begin{itemize}
+	\item \emph{Fall 1} $(v_j,v_{j+1})$ hat eine Kante im Restgraphen $f_i \to$ trivial
+	\item \emph{Fall 2} $(v_j,v_{j+1})=e$ ist keine Kante im Restgraphen von $f_i$.
+		\begin{align*}
+		&\implies e^{-1}=(v_{j+1},v_j) \text{ ist Kante im Restgraphen von } f_i \\
+		&\implies \text{ Der Flusswert von} e^{-1} \text{ muss sich von } f_i \text{ zu } f_{i+1} \text{ verändert haben.} \\
+		&\implies (v_{j+1}),v_j) \text{liegt auf }\pi_i \\
+		&\implies l_i(s,v_{j+1}) =l_i(s,v_j) -1 \le l_i(s,v_j)+1
+		\end{align*}
+\end{itemize}
+\end{proof}
+\begin{proof}
+Behauptung 1. Rechne:
+\begin{align*}
+	l_i(s,v) &= l_i(s,v_r) \\
+		 &\le  l_i(s,v_{r-1}) +1 \\
+		 &\le \ldots \\
+		 &\le l_i(s,s) +r \\
+		 &= l_{i+1}(s,v)
+\end{align*}
+Behauptung 1 impliziert 1. mit $v=t$. 
+\end{proof}
+\underline{Behauptung 3} $l_{i+1} (v,t) \ge l_i(v,t)$ für alle $i$ \\
+Beweis Analog zu Behauptung 1. \\
+Nun können wir alles zusammenführen und rechnen:
+\begin{align*}
+	|\pi_j| &= l_j(s,t) \\
+		&= l_j(s,w) +1 +l_j(v,t) \\
+		&\ge l_i(s,w) +1 + l_i(v,t) \\
+		&= l_i(s,v) + l_i(v,t) +2 \\
+		&= |\pi_i|+2
+\end{align*}
+\end{proof}
+\begin{theorem}
+	Der Algorithmus von Edmonds-Karp \ref{alg:edmonds-karp} terminiert nach höchsten $\frac{m\cdot n}{2}$ Augmentierungsschritten, $m=|E|, n=|V|$. 
+\end{theorem}
+\begin{proof}
+Sei $(f_0,\pi_0),(f_1,\pi_1),\ldots$ die vom Algorithmus erzeugte Folge von Flussfunktionen $f_i$  und zugehörigen augementierenden Wegen $\pi_i$ im Restgraphen von $f_i$ .\\
+\emph{Beobachte 1:} In jedem Augmentierungsschritt wird mindestens eine Kante $e \in (v,w)$  in $\pi_i$ voll ausgeschöpft:
+\begin{itemize}
+	\item $e$ Vorwärtskante  im Restgraph zu $f_i$
+		\[
+		f_i(e) < c(e) \to f_{i+1}(e)=c(e)
+		\]
+	\item e Rückwärtskante im Restgraph zu $f_i$ 
+		\[
+		f_i(e)>0 \to f_{i+1}(e) = 0
+		\]
+\end{itemize}
+$\implies e$ ist im $i+1$ Schritt nicht im Restgraph. \\
+\emph{Beobachte 2:} In Augmentierungsschritt $f_k \to f_{k+1}$ kann $e$  nur in $\pi_k$ vorkommen und voll ausgeschöpft werden, falls $e^{-1}=(w,v)$ im Weg $\pi_j, i<j<k$ vorgekommen ist. 
+\[
+	\implies |\pi_i|\le |\pi_j| -2 \le |\pi_k| -4
+\]
+\underline{Also:} Falls $e$ in $\pi_{i_0},\ldots,\pi_{i_e}$ voll ausgeschöpft wird, gibt es $j_0,\ldots,j_{e-1}$ so, dass
+\begin{itemize}
+	\item $i_0<j_0<i_1<j_1<\ldots<j_{e-1} < i_{e}$
+	\item $e^{-1}$ kommt in $\pi_{j_0},\ldots,\pi_{j_{e-1}}$ vor
+	\item $1 \le |\pi_{i_0}| \le \ldots\le |\pi_{i_k}|-4l$ 
+\end{itemize}
+\emph{Beobachte:} $\pi_{i_k}$ ist eine kürzester Weg im Restgraphen von $f_{i_k}$
+\begin{align*}
+&\implies \pi_{i_k} \text{ ist einfach}\\
+&\implies |\pi_{i_k}| <n \\
+&\implies l< \frac{n}{4} \text{ für jede Kante}\\
+&\implies \text{ maximal } 2m \frac{n}{4}= \frac{m\cdot n}{2} \text{ Augmentierungsschritte}
+\end{align*}
+\end{proof}
+\begin{remark}
+Dies beweist die Existenz einer Lösung des Netzwerkflussproblems  für Kapazitäten in $R_{\ge  0}$. 
+\end{remark}
+\begin{corollary}
+	Für $m=|E|, n=|V|,$ ist der Aufwand des Edmonds-Karp Algorithmus $\mathcal{O}(m^2n)$. 
+\end{corollary}
+\begin{proof}
+Ein kürzeste-Wege-Problem pro Schritt lösbar in $\mathcal{O}(m)$ mit Breitensuche.  
+\end{proof}

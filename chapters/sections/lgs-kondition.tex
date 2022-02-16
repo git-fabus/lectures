@@ -1,0 +1,18 @@
+\section{Kondition linearer Gleichungssysteme}
+\begin{recall}
+Die Kondition beschreibt, wie sehr Fehler in den Eingangsdaten eines Problems
+verstärkt oder gedämpft werden und sich auf einen Fehler der Ausgangsdaten übertragen.
+\end{recall}
+Zum Lösen von $Ax=b$, $A$ invertierbar, bezeichnen wir $\Delta b$ als einen Eingangsfehler in $b$. 
+\begin{align*}
+&\implies x+ \Delta x = A^{-1}(b+\Delta b) = A^{-1}b +A^{-1} \Delta b \\
+&\implies \Delta x= A^{-1} \Delta b
+\end{align*}
+Für ein verträgliches Matrix-Vektorraum-Paar gilt dann: 
+\[
+\|\Delta x\|= \|A^{-1} \Delta b\| \le \|A^{-1}\|\|\Delta b\| 
+\]
+und 
+\[
+	\frac{\|\Delta x\|}{\|x\|} \le \|A^{-1}\| \frac{\|\Delta b\|}{\|x\|}\le  \|A^{-1}\| \|A\| \frac{\|\Delta b\|}{\|b\|}
+\]

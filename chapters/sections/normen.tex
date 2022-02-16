@@ -1,0 +1,162 @@
+\section{Vektoren- und Matrixnormen}
+
+Im folgendem werden wir uns damit beschäftigen, ob lineare Gleichungssysteme gut oder schlecht konditioniert sind, d.h kann man stabile Algorithmen zur Lösung solcher Systeme zur Lösung angeben.
+
+\begin{definition}
+Sei $X$ ein $\K$-Vektorraum. Eine Abbildung $\|•\| \colon X \to (0,\infty) $ heißt \emph{Norm} auf $X$, falls:
+\begin{enumerate}
+	\item $\|x\|>0$ für alle $x \in X \setminus \{0\}$
+	\item $\| \alpha \cdot x \|= |\alpha| \cdot \|x\|$ für alle $\alpha \in \R, x \in X$
+	\item $\|x+y\|\le \|x\|+\|y\|$, für alle $x,y \in X$ 
+\end{enumerate}
+\end{definition}
+\begin{remark}
+Jede Norm induziert auch einen Distanzbegriff, den durch die Norm induzierte Metrik 
+\[
+dist(x,y)=\|x-y\|
+\]
+Wegen $x=x-0$ kann $\|x\|$ deshalb als Distanz zum Nullpunkt aufgefasst werden, welche von der gewählten Norm abhängt.  
+\end{remark}
+\begin{example}Normen:
+\begin{itemize}
+	\item Für $X= \K^{n}$
+		\begin{itemize}
+			\item Betragssummennorm: $\|x\|_1 = \sum_{i=1}^{n}|x_{i}|$
+			\item Euklidische Norm: $\|x\|_2 = \sqrt[2]{\sum_{i=1}^{n}|x_{i}|^2} $ 
+			\item Maximumsnorm: $\|x\|_{\infty} = \max_{1\le i\le n} |x_{i}|$ 
+			\item Schatten p-Norm- $\|x\|_p = \sqrt[p]{\sum_{i=1}^{n}|x_{i}|^{p}} $ 
+		\end{itemize}
+	\item Für $X = \K^{m\times n}$ 
+		\begin{itemize}
+			\item Spaltensummennorm: $\|A\|_1 = \max_{1\le j\le n} \sum_{i=1}^{m}|a_{i,j}|$ 
+		\item Zeilensummennorm: $\|A\|_{\infty} = \max_{1\le i\le m} \sum_{j=1}^{n}|a_{i,j}|$
+		\item Frobeniusnorm $\|A\|_F = \sqrt[2]{\sum_{i=1}^{m}\sum_{j=1}^{n}|a_{i,j}|^2}$ 
+		\end{itemize}
+\end{itemize}
+Für $A = \begin{bmatrix}
+	2  & -3 \\
+	1 & 1 
+\end{bmatrix}$
+gilt: 
+\[
+\|A\|_1=4 , \|A\|_{\infty} = 5, \|A\|_F = \sqrt[2]{15} 
+\]
+\end{example}
+
+\begin{theorem}
+	Alle Normen auf $\K^{n}$ sind äquivalent, d.h für zwei Normen $\|•\|_a, \|•\|_b$ auf $\K^{n}$ gilt:
+	\[
+	\underline{c} \|x\|_a \le \|x\|_b\le \overline{c}\|x\|_a
+	\]
+für $\underline{c},\overline{c}>0$, unabhängig von $x$. 
+\end{theorem}
+\begin{proof}
+Es genügt die Behauptung für $\|•\|_a = \|•\|_{\infty}$  und $\|•\|_b$  beliebig zu zeigen. Wegen:
+\[
+x-y = \sum_{i=1}^{n}(x_{i}-y_{i}) e_i
+\]
+gilt:
+\begin{align*}
+	\lvert \|x\|-\|y\|\rvert &\le  \|x-y\| \\
+				 &= \|\sum_{i=1}^{n}(x_{i}-y_{i}) e_i\| \\
+				 &\le \sum_{i=1}^{n}\|(x_{i}-y_{i})e_i\| \\
+				 &= \sum_{i=1}^{n}|x_{i}-y_{i}| \|e_i\| \\
+				 &\le \|x-y\|_{\infty} \sum_{i=1}^{n}\|e_i\|
+\end{align*}
+Also ist $\|•\| \colon \K^{n} \to \R $ eine Lipschitz-stetige Funktion mit Konstante L. \\
+$\implies \|•\|$ nimmt auf jeder kompakten Menge sowohl Minimum $\underline{c}$ als auch Maximum $\overline{c}$ an. Insbesondere auch auf:
+\[
+S^{n-1} = \{x \in \K^{n} : \|x\|_{\infty} =1\} 
+\]
+\begin{align*}
+&\implies 0 < \underline{c} \le \overline{c} \\
+&\implies \underline{c} \le \|\frac{x}{\|x\|_{\infty}}\|\le \overline{c} \\
+&\implies \underline{c} \|x\|_{\infty} \le \|x\| \le \overline{c}\|x\|_{\infty}
+\end{align*}
+\end{proof}
+\begin{corollary}
+	Analog für Matrizen.
+\end{corollary}
+\begin{example}
+Für $x \in \K^{n}$
+\[
+\|x\|_{\infty}^2 = \max_{1\le i\le n} |x_i|^2 \le \sum_{i=1}^{n}|x_{i}|^2 \le n \max |x_{i}|^2 = n \cdot  \|x\|_{\infty}^2
+\]
+$\implies \|x\|_{\infty} \le \|x\|_2 \le \sqrt[2]{n} \|x\|_{\infty}$ \\
+Die deutet darauf hin, dass im Unendlichdimensionalen nicht alle Normen äquivalent sind.
+\end{example}
+Da Matrizen miteinander multipliziert werden können, können Normen auf Matrizen spezielle Eigenschaften haben, die diese Eigenschaft wiederspiegeln.
+
+\begin{definition}
+Eine Matrixnorm $\|•\|_M$ heißt \emph{submultiplikativ}, falls 
+\[
+\|A\cdot B\|_M \le \|A\|_M \cdot \|B\|_M
+\]
+für alle $A,B \in \K^{n\times n}$.\\
+Eine Matrixnorm $\|•\|_M$ auf $\K^{n\times n}$ heißt \emph{verträglich} mit einer Vektornorm $\|•\|_V$  auf $\K^{n}$ , falls:
+\[
+\|Ax\|_V \le \|A\|_M \cdot \|x\|_V
+\]
+für alle $A \in \K^{n\times n}, x \in \K^{n}$ .
+\end{definition}
+\begin{example}
+\begin{itemize}
+	\item $\|A\|= \max |a_{i,j}$ ist nicht submultiplikativ auf $\K^{n\times n}$.
+		\[
+		A = \begin{bmatrix}
+		 1 & 1 \\ 1 & 1
+		\end{bmatrix} \implies \|A\|=1
+		\]
+		jedoch 
+		\[
+		A^2= \begin{bmatrix}
+			2 & 2 \\ 2 & 2
+		\end{bmatrix} \implies \|A^2\|=2 \neq 1 = \|A\|^2
+		\]
+	\item Die Frobenius Norm ist submultiplikativ und mit der Euklischen Norm verträglich (Übung)
+\end{itemize}
+\end{example}
+\begin{definition}
+Sei $\|•\|_V $ eine Vektornorm auf $\K^{n}$ , dann ist 
+\[
+|\|A\|| = \sup_{x\neq 0} \frac{\|Ax\|_V}{\|x\|_V}= \max \|Ax\|_V
+\]
+eine Norm auf $\K^{n\times n}$, die von  $\|•\|_V$ induzierte Matrixnorm. 
+\end{definition}
+\begin{example}
+Die Spaltensummennorm ist von $\|•\|_1$ und die Zeilensummennorm ist von $\|•\|_{\infty}$ induziert.
+\end{example}
+\begin{lemma}
+	Die von $\|•\|_V$ induzierte Matrixnorm ist submultiplikativ und ist mit $\|•\|_V$ verträglich. Ist $\|•\|_M$ eine mit $\|•\|_V$ verträgliche Matrixnorm so gilt:
+	\[
+	|\|A\|| \le \|A\|_M
+	\]
+	für alle $A \in \K^{n\times n}$ .
+\end{lemma}
+\begin{proof}
+Unterteile:
+\paragraph{Submultiplikativität} $A=0$ oder $B=0 \implies$ klar. \\
+Seien $A,B \neq 0$:
+\begin{align*}
+	|\|AB\|| 
+	&= \sup_{x\neq 0} \frac{\|ABx\|_V}{\|x\|_V} \\
+	&= \sup_{Bx\neq 0} \frac{\|ABx\|_V}{\|x\|_V} \\
+	&= \sup_{Bx \neq 0} \left( \frac{\|ABx\|_V}{\|x\|_V} \frac{\|Bx\|_V}{\|x\|_V} \right) \\
+	&\le \left( \sup_{Bx \neq 0} \frac{\|ABx\|_V}{\|x\|_V} \right) \left( \sup_{Bx\neq 0} \frac{\|Bx\|_V}{\|x\|_V} \right) \\
+	&= |\|A\|| \cdot |\|B\||
+\end{align*}
+\paragraph{Verträglichkeit} $A= 0$ oder $x=0$  klar. \\
+Seien $A \neq 0, x\neq 0$. 
+\begin{align*}
+&\implies \frac{\|Ax\|_V}{\|x\|_V} \le \sup \frac{\|Ax\|_V}{\|x\|_V} = |\|A\|| \\
+&= \text{ Behauptung.}
+\end{align*}
+Rechne nun: 
+\[
+|\|A\|| = \sup \frac{\|Ax\|_V}{\|x\|_V}\le  \|A\|_M
+\]
+da $\|Ax\|_V \le \|A\|_M \|x\|_v$ 
+\end{proof}
+\begin{remark}
+Mit den offensichtlichen Modifikationen gelten die Definitionen über Submultiplikativität und Verträglichkeit auch für rechteckige Matrizen.
+\end{remark}
