@@ -1,0 +1,22 @@
+\section{Motivation}
+Betrachte die Temperatur in einem Raum, modelliert durch $\Omega = (0,1)^2$.
+Die Temperatur in jedem Punkt im Raum kann als Funktion $u \colon \Omega \to \R $ aufgefasst werden.
+Gegeben sei außerdem eine Wärmequelle, modelliert als $f \colon \Omega \to \R $  im Raum und eine Temperatur der Wände von $u(x)=0, x \in \partial \Omega = (\{0,1\} \times [0,1] ) \cup ([0,1] \times \{0,1\} $.
+Nach einer gewissen (unendlichen) Zeit wird die Temperatur ein Gleichgewicht annehmen, welches die Lösung einer \emph{partiellen Differentialgleichung}
+\begin{equation}
+\begin{cases}
+	-\Delta u(x) = f(x) & x \in \Omega \\
+	u(x) = 0 & x \in \partial \Omega
+\end{cases}
+\end{equation}
+geschrieben werden.
+\begin{definition}
+Der Laplace-Operator $\Delta$ ist definiert als: 
+\[
+\Delta u(x) = \frac{\partial^2 u}{\partial x_1^2}(x_1,x_2) + \frac{\partial^2 u}{\partial x_2^2}(x_1,x_2 , x = \begin{bmatrix}
+x_1 \\ x_{2} 
+\end{bmatrix} \in \Omega
+\]
+falls $u$ genügend oft differenzierbar ist.
+\end{definition}
+
