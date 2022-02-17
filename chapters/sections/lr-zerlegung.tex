@@ -1,1 +1,250 @@
 \section{LR-Zerlegung}
+Man betrachte das Lösen von linearen Gleichungssystemen
+\begin{align*}
+\begin{bmatrix}
+	a_{1,1} & \ldots a_{1,n} \\
+	\vdots & & \vdots \\
+	a_{n,1} & \ldots & a_{n,n}
+\end{bmatrix}
+\cdot 
+\begin{bmatrix}
+	x_1  \\ \vdots \\ x_{n}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	b_1 \\ \vdots \\_{n}
+\end{bmatrix}
+\end{align*}
+mittels Gauss-Elimination. Im i-ten Schritt:
+\begin{align*}
+\begin{gmatrix}[b][ccccc|c]
+	* & \ldots & \ldots &\ldots& *  &*\\
+	0 & * & \ldots &\ldots& * &*\\
+	\vdots  & 0 & a_{i,i}^{(i)} & \ldots & a_{i,n}^{(i)}  & b_i^{(i)} \\
+	\vdots & \vdots & \vdots &  & \vdots  &  \vdots\\
+	0 & 0 & a_{n,i}^{(i)} & \ldots & a_{n,n}^{(i)} &  b_n^{(i)}
+\rowops
+\mult{2}{\cdot(-\tau_{i+1}^{(i)})}
+\add{2}{3}
+\mult{2}{\cdot(-\tau_{n}^{(i)})}
+\add{2}{4}
+\end{gmatrix}
+&
+\tau_j^{(i)}= \frac{a_{j,i}^{(i)}}{a_{i,i}^{(i)}}
+\end{align*}\\[2ex]
+Die Elimination im i-ten Schritt lässt sich als Matrix-Matrix-Produkt darstellen:
+\[
+L_i [A_i | b_i] = [A_{i+1} | b_{i+1}]
+\]
+wobei 
+\begin{align*}
+	L_i = \begin{bmatrix}
+		  1 & & & & \\
+		  & 1 & & & \\
+		  & & 1 & & \\
+		  & & -\tau_{i+1}^{(i)}& 1 & \\
+		  & & -\tau_n^{(i)}& & 1
+	\end{bmatrix}
+\end{align*}
+In der Matrix-Schreibweise ist der Gauss-Algorithmus also als
+\[
+L_{n-1}\cdot L_{n-2} \cdot \ldots \cdot L_1[A|b] = [A_n|b_n] = [R|c] = \begin{bmatrix}
+	* & \ldots & * \\
+	  & \ddots  & \vdots \\
+	0  &   & *
+\end{bmatrix}
+\]
+darstellbar, wobei R eine \emph{obere Dreiecksmatrix} ist. \\
+Insbesondere folgt aus 
+\[
+L_{n-1} \cdot  \ldots \cdot L_1 A = R \text{,}
+\]
+dass
+\[
+A= L_1^{-1} \ldots L_{n-1}^{-1} R = LR
+\]
+ist.
+
+\begin{lemma}
+	Es gilt:
+	\begin{enumerate}
+		\item $L_i = I-l_i e_i^{t} = I- \begin{bmatrix}
+		0 \\ \vdots \\ 0 \\ \tau_{i+1}^{(i)} \\ \vdots \\ \tau_n^{(i)}
+		\end{bmatrix}$ 
+		\item $L_i^{-1} = I+ l_i e_i^{t} = \begin{bmatrix}
+			1 & & & & \\
+                  & 1 & & & \\
+                  & & 1 & & \\
+                  & & -\tau_{i+1}^{(i)}& 1 & \\
+                  & & -\tau_n^{(i)}& & 1
+		\end{bmatrix}$
+	\item $L= I+ l_1e_1^{t}+ l_2^{t}e_2+\ldots+ l_{n-1} e_{n-1}^{t}= \begin{bmatrix}
+			1 & \\
+			\tau_2^{(1)} & 1 \\
+			\tau_3^{(1)} & \tau_3^{(2)} & 1 \\
+			\vdots & \vdots & \ddots & \ddots \\
+			\tau_n^{(1)} & \tau_n^{(2)} &  \ldots &\tau_n^{n-1} & 1
+	\end{bmatrix}$ 
+	\end{enumerate}
+
+\end{lemma}
+\begin{proof} Nacheinander:
+\begin{enumerate}
+	\item Durch hinschreiben.
+	\item Rechne: 
+		\[
+			(I-l_i e_i^{t}) (I+l_ie_i^{t}) = [\ldots 1 \ldots] \cdot \begin{bmatrix}
+				0 \\ \vdots \\ 0 \\ * \\ \vdots \\ *
+			\end{bmatrix} = 0 
+		\]
+	\item Zeige per Induktion über i, dass: $L_1^{-1} \ldots L_i^{-1} = I + l_1e_1^{t} + \ldots + l_ie_i^{t}$
+		\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+			\item IV \underline{$i=1$} aus b.
+			\item IS \underline{$i \to i+1$} 
+			\begin{align*}
+			L_1^{-1} \ldots L_i^{-1} L_{i+1}^{-1} &= (I+ l_1e_1^{t}+\ldots+ l_ie_i^{t}) (I+l_{i+1} e_{i+1}^{t}) \\
+	&= I + l_1e_1^{t}+l_2e_2 + \ldots + l_ie_i^{t}+ l_{i+1}e_{i+1}^{t}
+			\end{align*}
+		\end{itemize}
+\end{enumerate}
+\end{proof}
+Wir können L also direkt aus den im Gauss-Algorithmus vorkommenden Größen zusammensetzen. Der Algorithmus bricht ab, wenn eins der Pivotelemente null wird.
+
+\begin{theorem}
+	Falls kein Pivotelement null wird, bestimmt der Gauss-Algorithmus neben der Lösung $x$ von $Ax=b$ eine LR-Zerlegung $A=LR$ in eine obere Dreiecksmatrix $R$ und eine normierte, untere Dreiecksmatrix $L$.
+\end{theorem}
+\begin{example}
+	\label{eg:gauss}
+Betrachte den Gauss-Algorithmus angewandt auf:
+\begin{align*}
+	A &=
+\begin{gmatrix}[b]
+1 & 4 & 7\\
+2 & 5 & 8\\
+3 & 6 & 10
+\rowops
+\mult{0}{-2}
+\add{0}{1}
+\mult{0}{-3}
+\add{0}{2}
+\end{gmatrix} \\
+	  &\to \begin{gmatrix}[b]
+1 & 4 & 7\\
+0 & -3 & -6\\
+0 & -6 & -11
+\rowops
+\mult{1}{-2}
+\add{1}{2}
+\end{gmatrix} \\
+	  &\to \begin{gmatrix}[b]
+1 & 4 & 7\\
+0 & -3 & -6\\
+0 & 0 & 1
+\end{gmatrix}=R
+	  &L = \begin{bmatrix}
+		  1 & 0 & 0 \\
+		  2 & 1 & 0 \\
+		  3 & 2 & 1
+	  \end{bmatrix}
+\end{align*} 
+\end{example}
+\begin{remark}
+In der Praxis werden die ursprünglichen Einträge der Matrix $A$ durch die modifizierten Einträge $a_{i,j}^{(k)}$ überschrieben. Die Matrix $L$ lässt sich sukzessive in die nicht mehr benötigten untere Hälfte von A schreiben. Man spricht von "in place"- Algorithmen, die keinen zusätzlichen Speicher benötigen.
+\end{remark}
+Mit Hilfe der LR-Zerlegung wollen wir im folgenden das Lösen von linearen Gleichungssystemen ermöglichen.
+\begin{description}
+	\item[1] Berechne $A=LR$
+	\item [2] Löse $Ax=LRx=b$ durch
+		\begin{itemize}
+			\item Löse $Ly =b $ mittels Vorwärtssubstitution
+			\item Löse $Rx=y$ mittels Rückwärtssubsititution
+		\end{itemize}
+\end{description}
+\begin{algorithm}[H]
+	\label{alg:subsitution}
+	\caption{Vorwärts- und Rückwärtssubsitution}
+	\KwData{LR-Zerlegung $A=LR$ invertierbar, $A \in \R^{n\times n}, b \in \R^{n}$}
+	\KwResult{Lösung $x$ von $Ax=b$ }
+\For {$i \gets 1$ \KwTo $n$}{$y_i= b_i - \sum_{j=1}^{i-1}L_{i,j}y_j$}
+\For {$i \gets n$ \KwTo $1$}{$x_i = \frac{1}{R_{i,i}}\left( y_i - \sum_{j=i+1}^{n}R_{i,j}x_j \right) $} 
+\end{algorithm}
+\begin{example}
+Löse $Ax=b$ mit $A$ aus Beispiel \ref{eg:gauss}: 
+\begin{align*}
+	A &= \begin{bmatrix}
+		1 & 4 & 7 \\
+		2 & 5 & 8 \\
+		3 & 5 & 10 
+	\end{bmatrix} = \begin{bmatrix}
+	1 \\
+	2 & 1 \\
+	3 & 2 & 1
+	\end{bmatrix}
+	\cdot
+	\begin{bmatrix}
+		1 & 4 & 7 \\
+		  & -3 & -6 \\
+		  & & 1
+	\end{bmatrix}
+	  & 
+	b= \begin{bmatrix}
+	1 \\ 1 \\ 1
+	\end{bmatrix}
+\end{align*}
+Vorwärtssubstitution: 
+\begin{align*}
+Ly= \begin{bmatrix}
+	1 \\
+	2 & 1 \\
+	3 & 2 & 1
+\end{bmatrix}
+\cdot 
+\begin{bmatrix}
+y_1 \\ y_{2} \\ y_3 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+1 \\ 1 \\ 1
+\end{bmatrix} =b 
+&\implies \begin{cases}
+	y_1=1 \\
+	y_2= 1-2 =-1 \\
+	y_3= 1-3-2\cdot (-1) =0
+\end{cases}
+\end{align*}
+Rückwärtssubstitution:
+\begin{align*}
+	Rx= \begin{bmatrix}
+		1 & 4 & 7 \\
+		  & -3 & -6 \\
+		  & & 1
+	\end{bmatrix}
+	\cdot 
+	\begin{bmatrix}
+	x_1 \\ x_2 \\ x_3
+	\end{bmatrix}
+	= \begin{bmatrix}
+	1 \\ -1 \\ 0
+	\end{bmatrix} = y
+	&\implies \begin{cases}
+		x_3 = 0 \\
+		x_2= \frac{1}{-3}(-1-(-6) 0) =\frac{1}{3} \\
+		x_1= 1(1-\frac{4}{3}-7\cdot 0 = -\frac{1}{3}
+	\end{cases}
+\end{align*}
+\end{example}
+\begin{remark}
+Die LR-Zerlegung und Vorwärts- und Rückwärtssubstitution sind zum klassischen Gauss-Algorithmus äquivalent, es werden sogar die genau gleichen Operationen durchgeführt. Die LR-Zerlegung kann jedoch für andere rechte Seiten wiederverwendet werden.
+\end{remark}
+\paragraph{Aufwand:} Anzahl der Multiplikationen im i-ten Schirtt:
+\[
+n-i + (n-i) (n-i) = (n-i)^2 + n-i
+\]
+Also 
+\[
+\sum_{i=1}^{n-1}\left( (n-i)^2 + n-i \right)= \sum_{i=1}^{n-1}\left( i^2+i \right)= \frac{1}{3}n^3 + \mathcal{O}(n^2)
+\]
+Multiplikationen zur Berechnung der $LR$-Zerlegung.
+Der Aufwand der Substitutionen beträgt: $\mathcal{O}(n^2)$. \\
+Daraus resultiert ein Gesamtaufwand zum Lösen eines linearen Gleichungssystem von : $\frac{1}{3}n^3+\mathcal{O}(n^2)$. Der Aufwand im Speicher ist $\mathcal{O}(n^2)$.
+%missing Charamsche Regel, cause not important.

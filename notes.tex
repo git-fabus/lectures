@@ -1,6 +1,13 @@
 \documentclass[a4paper, 10pt, oneside, openany,  bibliography=totocnumbered]{scrbook}
 % bibliography-totocnumbered: Adds bibliography to toc.
 \usepackage{styles/generalstyle}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\usepackage{gauss}
 \addbibresource{references.bib}
 \usetikzlibrary{arrows.meta}
 \begin{document}
