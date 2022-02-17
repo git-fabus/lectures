@@ -1,0 +1,19 @@
+\section{Cholesky-Zerlegung}
+In der Praxis sind viele Matrizen symmetrisch, positiv definit.
+\begin{definition}
+Eine symmetrische Matrix $A \in \R^{n\times n}$ heißt \emph{positiv definit}, falls 
+\begin{equation}
+\label{eqn:positivdefinit}
+x^{t}Ax  > 0 \text{ für alle } x \in \R^{n}\setminus{0}
+\end{equation}
+\end{definition}
+\begin{lemma}
+	Eine positiv definite symmetrische Matrix $A \in R^{n\times n}$ ist invertierbar.
+\end{lemma}
+\begin{proof}
+\underline{Angenommen:} A ist nicht invertierbar. \\
+$\implies$ Es gibt $x \in \R^{n}, x\neq 0$ so, dass $Ax=0$ \\
+$\implies x^{t}Ax=0$ \\
+Dies ist schon ein Widerspruch zu \eqref{eqn:positivdefinit}
+\end{proof}
+

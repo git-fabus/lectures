@@ -1,2 +1,218 @@
 \section{LR-Zerlegung mit Spaltenpivotisierung}
+\begin{example}
+	Fortsetzung von Beispiel \ref{eg:lgs-kondition}
+	\begin{align*}
+	A= \begin{bmatrix}
+		10^{-3} & 1 \\
+		1 & 1
+	\end{bmatrix}
+	&, b= \begin{bmatrix}
+	1 / 2
+	\end{bmatrix}
+	&\implies x = \begin{bmatrix}
+	1.001001 \\ 0.998999
+	\end{bmatrix}
+	\end{align*}
+	Löse in dreistelliger Arithmetik, mit kleiner Störung in der rechten Seite:
+	\begin{align*}
+	\begin{gmatrix}[b]
+		0.001 & 1 & 1.01\\
+		1 & 1 & 2.01
+\rowops
+\mult{0}{-1000}
+\add{0}{1}
+\end{gmatrix}
+&\to \begin{bmatrix}[cc|c]
+	0.001 & 1 & 1.01 \\
+	0 & -999 & -1010
+\end{bmatrix}
+\\ 
+&\implies \begin{cases}
+	x_2= -1010 \boxslash (-999) = 1.01 \\
+	x_1= (1.01 \boxminus (1 \boxcircle 1.01)) \boxslash 0.001 = 0
+\end{cases}
+	\end{align*}
+Der Algorithmus muss also instabil sein.
+\end{example}
+\paragraph{Grund:} Das Inverse des Pivot-Elemts (1000) ist sehr groß und verstärkt den Fehler
 
+\begin{definition}
+Sei $1\le i < j \le n$
+\begin{align*}
+T^{\{i,j\}} = \begin{bmatrix}
+	1 \\
+	& \ddots\\
+	& & 1 \\
+	& & & 0 & & & 1\\
+	& & & & 1 \\
+	& & & & & 1 \\
+	& & & 1 & & & 0 \\
+	& & & & & & & 1 \\
+	& & & & & & & & \ddots \\
+	& & & & & & & & &  1
+\end{bmatrix}
+\end{align*}
+heißt Transpositionsmatrix.\\
+Eine Permutationsmatrix ist das Produkt mehrerer Transpositionsmatrizen.
+\end{definition}
+
+\begin{lemma}
+	Sei $T^{\{i,j\} }$ eine Transpositionsmatrix. Es gilt:
+	\begin{enumerate}
+		\item Multiplikation von links mit $T^{\{i,j\} }$ vertauscht i-te und j-te Zeile.
+		\item Multiplikation von rechts mit $T^{\{i,j\} }$ vertauscht i-te und j-te Spalte. 
+		\item $T^{\{i,j\} }$  ist symmetrisch. 
+		\item $\left( T^{\{i,j\} } \right)^2=I$ 
+	\end{enumerate}
+	Ist $P$ eine Permutationsmatrix, so gilt: $P^{T}P=I$ 
+\end{lemma}
+\begin{proof}
+a-d sind elementar. Letzter Punkt: Übung.
+\end{proof}
+\paragraph{Umseztung:} Anstatt im i-ten Schritt des Gauss-Algorithmus 
+\[
+A_i \to L_iA_i =A_{i+1}
+\]
+zu berechnen, berechnen wir:
+\begin{equation}
+\label{eqn:lr-gauss}
+A_i \to  L_iP_iA_i = A_{i+1}
+\end{equation}
+\begin{lemma}
+	Sei $1 \le i < j \le n$ und $P_i = T^{\{i,k\} }$ mit $i<k\le n$. Dann gilt: $P_iL_j=\tilde{L_j}P_i$, wobei $\tilde{L_j}$ und $L_j$ bis auf ein Vertauschen der $\tau_k^{(j)}$ und $\tau_i^{(j)}$ gleich sind.  
+\end{lemma}
+\begin{proof}
+Durch nachrechnen. Also:
+\[
+\tilde{L_j} = P_iL_jPi
+\]
+\end{proof}
+\begin{theorem}
+	Sei A nicht singulär. Dann bestimmt der Gauss-Algorithmus mit Spaltenpivotisierung eine Zerlegung der Matrix $PA=\tilde{L}R$ , wobei $R$ die obere Dreiecksmatrix $A_n$ ,$P=P_{n-1} \ldots P_1$ eine Permutationsmatrix und $\tilde{L} = \tilde{L_1^{-1}}\ldots\tilde{L_{n-1}^{-1}}$ eine untere Dreiecksmatrix ist mit:
+	\begin{align*}
+		&\tilde{L_{n-1}} = L_{n-1} \\
+		&\tilde{L_{n-2}} = P_{n-1} L_{n-2} P_{n-1} \\
+		&\ldots  \ldots\\
+		&\tilde{L_1}= P_{n-1}P_{n-2}\ldots P_2P_1 L_1 P_2 \ldots P_{n-2} P_{n-1}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+Falls der Algorithmus nicht zusammenbricht:
+\begin{align*}
+	R = A_n &= L_{n-1} P_{n-1} A_{n-1} \\
+		&= \tilde{L_{n-1}} P_{n-1} L_{n-2} P_{n-2} A_{n-2} \\
+		&= \tilde{L_{n-1}}\tilde{L_{n-2}} P_{n-1} P_{n-2} L_{n-3} P_{n-3} A_{n-3} \\
+		&\ldots \\
+		&= \tilde{L_{n-1}}\ldots \tilde{L_1} P_{n-1}\ldots P_1 A \\
+		&= \tilde{L^{-1}} \cdot P
+\end{align*}
+Sollte der Algorithmus abbrechen, folgt, dass ein Pivot-Element null wird. Daraus folgt, dass die Determinante von der Restmatrix null ist. Demnach ist auch die Determinante von der Matrix $A$ null. Das ist ein Widerspruch dazu, dass A invertierbar ist. 
+\end{proof}
+\begin{example}
+Wir betrachten die $PA = \tilde{L}R$ Zerlegung.
+\begin{align*}
+&\begin{gmatrix}[b]
+	1 & 1 & 0 & 2 \\
+	\frac{1}{2} & \frac{1}{2} & 2 & -1 \\
+	-1 & 0 & -\frac{1}{8} & -5 \\
+	1 & -7 & 9 & 10 
+\rowops
+\mult{0}{-\frac{1}{2}}
+\add{0}{1}
+\add{0}{2}
+\mult{0}{-1}
+\add{0}{3}
+\end{gmatrix}
+&\to \begin{gmatrix}[b]
+	1&1&0&2\\
+	0 & 0 & 2 & -2 \\
+	0 & 1 & -\frac{1}{8} & -3 \\
+	0 & -8 & 9 & 8 
+\rowops
+\swap{1}{3}
+\end{gmatrix}
+	\overset{P_2}{\to} \\ &\begin{gmatrix}[b]
+	1 & 1 & 0 & 2 \\
+	0 & -8 & 9 & 8 \\
+	0 & 1 & -\frac{1}{8} &-3 \\
+	0 & 0 & 2 & -2
+\rowops
+\mult{1}{\frac{1}{8}}
+\add{1}{2}
+\end{gmatrix} &\to \begin{gmatrix}[b]
+1 & 1 & 0 & 2 \\
+0 & -8 & 9 & 8 \\
+0 & 0 & 1 & -2 \\
+0 & 0 & 2 & -2
+\rowops
+\swap{2}{3}
+\end{gmatrix} \overset{P_3}{\to} \\
+			      &\begin{gmatrix}[b]
+	1 & 1 & 0&2 \\
+	0 & -8 & 9 & 8 \\
+	0 & 0 & 2 &-2 \\
+	0 & 0 & 1 & -2
+\rowops
+\mult{2}{-\frac{1}{2}}
+\add{2}{3}
+\end{gmatrix} &\to \begin{bmatrix}
+1 & 1 &0 &2 \\
+0&-8&9&8\\
+0 & 0 & 2 &-2 \\
+0 & 0 & 0 &-1
+\end{bmatrix} = R
+\end{align*}
+\begin{align*}
+PA= \begin{bmatrix}
+	1 & 1 & 0 &2 \\
+	1 & -7 & 9 & 10 \\
+	\frac{1}{2} & \frac{1}{2} & 2 & -1 \\
+	-1 & 0 & -\frac{1}{8} & -5
+\end{bmatrix} & L= \begin{bmatrix}
+1 \\
+\frac{1}{2} & 1 \\
+-1 & -\frac{1}{8} &1 \\
+1 & 0& \frac{1}{2}& 1
+\end{bmatrix} \to \tilde{L} = \begin{bmatrix}
+1 \\
+1 & 1 \\
+\frac{1}{2} & 0 & 1 \\
+-1 & -\frac{1}{8} & \frac{1}{2} &1
+\end{bmatrix}
+\end{align*}
+\end{example}
+\begin{remark}
+Um $\tilde{L}$ zu bekommen, berechne zuerst $L$, und wende dann die Transpositionsmatrizen $P_j$  auf die i-te Spalte an.
+\end{remark}
+\begin{example}
+Betrachte
+\begin{align*}
+A= \begin{bmatrix}
+	10^{-3} & 1 \\ 1 & 1
+\end{bmatrix},
+b= \begin{bmatrix}
+1 \\ 2 
+\end{bmatrix} &\implies x= \begin{bmatrix}
+1.001001 \\ 0.998999
+\end{bmatrix}
+\end{align*}
+in 3-stelliger Arithmetik wie zuvor.
+\begin{align*}
+\begin{bmatrix}[c c | c]
+	0.001 & 1 & 1.01 \\
+	1 & 1 & 2.01
+\end{bmatrix} \to \begin{bmatrix}[c c | c]
+	1 & 1 & 2.01 \\
+	0.001 & 1 & 1.01 
+\end{bmatrix} \to \begin{bmatrix}[c c | c]
+	1 & 1 &2.01 \\
+	0 & -0.999 & 1.01
+\end{bmatrix} \implies \begin{cases}
+	x_2= 1.01 \boxslash (-0.999) = 1.01 \\
+	x_1= (2.01 \boxminus 1.01) =1
+\end{cases}
+\end{align*}
+\end{example}
+\begin{remark}
+Die Spaltenpivotisierung reicht in der Praxis meistens aus. Eine stabilere Idee ist die totale Pivotisierung. Hierbei werden Zeilen und Spalten so permutiert, dass das betragsmäßig größte Element von $A_i$ im i-ten Schritt das Pivot-Element ist. Der Aufwand ist jedoch nicht mehr vernachlässigbar. 
+\end{remark}
