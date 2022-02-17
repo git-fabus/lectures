@@ -16,4 +16,159 @@ $\implies$ Es gibt $x \in \R^{n}, x\neq 0$ so, dass $Ax=0$ \\
 $\implies x^{t}Ax=0$ \\
 Dies ist schon ein Widerspruch zu \eqref{eqn:positivdefinit}
 \end{proof}
+Betrachte eine Matrix
+\begin{align*}
+A= \begin{bmatrix}[c | c]
+	A_{1,1} & A_{1,2}\\
+	\hline
+	A_{2,1} & A_{2,2}
+\end{bmatrix} \in  \R^{n\times n}
+\end{align*}
+mit $1\le p \le n-1$ und das lineare Gleichungssystem:
+\begin{equation}
+	Ax= \begin{bmatrix}[c | c]
+		A_{1,1} & A_{1,2} \\ \hline
+		A_{2,1} & A_{2,2}
+	\end{bmatrix} \cdot \begin{bmatrix}
+	x_1 \\ \hline x_2 
+	\end{bmatrix} = \begin{bmatrix}
+	b_1 \\ \hline b_2
+	\end{bmatrix}
+\end{equation}
+Falls $A_{1,1}$ invertierbar ist, können wir eine "Block"-Gauss-Elimination durchführen:
+\begin{align*}
+\begin{gmatrix}[b]
+	A_{11} & A_{12} & b_1 \\
+	A_{21} & A_{22} & b_2
+\rowops
+\mult{0}{-A_{21}A_{11}^{-1}}
+\add{0}{1}
+\end{gmatrix} \to
+\begin{bmatrix}[c c | c]
+	A_{11} & A_{12} & b_1 \\
+	0 & A_{22}-A_{21}A_{11}^{-1}A_{12} & b_2-A_{21}A_{11}^{-1}b_1
+\end{bmatrix}
+\end{align*}
 
+\begin{definition}
+Sei $S \coloneqq A_{22}-A_{11}^{-1}A_{12}$ dann ist S das Schurkomplement von $A$  bezüglich $A_{11}$.
+Falls S invertierbar ist gilt:
+\begin{align*}
+	x_2&= S^{-1}(b_2-A_{21}A_{11}^{-1}b_1) \\
+	x_1 &= A_{11}^{-1} (b_1-A_{12}x_2)
+\end{align*}
+\end{definition}
+\begin{lemma}
+	Sei $A \in \R^{n\times n}$ symmetrisch, positiv definit. Dann ist $A_{11}$ dies ebenfalls und somit invertierbar. Das Schurkomplement $S$ bezüglich $A_{11}$ ist wohldefiniert und symmetrisch, positiv definit.
+\end{lemma}
+\begin{proof} Zeige:
+\paragraph{A spd:} Da A spd gilt:
+\[
+0 \le \begin{bmatrix}
+	x_1^{t} & 0
+\end{bmatrix}
+\cdot \begin{bmatrix}
+	A_{11} & A_{12} \\
+	A_{21} & A_{22}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\ 0
+\end{bmatrix} = \begin{bmatrix}
+x_1^{t} & 0		
+\end{bmatrix} \cdot \begin{bmatrix}
+A_{11} x_{1} \\ A_{21}x_1
+\end{bmatrix}= x_1^{t}A_{11}x_1
+\]
+mit Gleichheit genau dann, wenn $x_1=0 \implies A_{11}$ ist spd und $S$ wohldefiniert.
+\paragraph{S symmetrisch}:
+\begin{align*}
+	S^{t}&= \left( A_{22}-A_{21}A_{11}^{-1}A_{12} \right)^{t} \\
+	     &= A_{22}^{t}-A_{12}^{t}A_{11}^{-t}A_{21}^{t} \\
+	     &= A_{22}- A_{21}A^{-1}A_{12} \\
+	     &=S
+\end{align*}
+\paragraph{S positiv definit:}
+Für $x_2$ beliebig setze $x_1=-A_{11}^{-1}A_{12}x_2$ :
+\begin{align*}
+	0&\le \begin{bmatrix}
+	x_1^{t} & x_2^{t} 
+\end{bmatrix}
+\begin{bmatrix}
+	A_{11} & A_{12} \\
+	A_{21} & A_{22}
+\end{bmatrix} \begin{bmatrix}
+x_1 \\ x_2
+\end{bmatrix} \\
+	 &= \begin{bmatrix}
+	 A_{11}x_1 + A_{12}x_2 \\
+	 A_{21}x_1+A_{22}x_2
+	 \end{bmatrix} \\
+	 &= \begin{bmatrix}
+	 0 \\ -A_{21}A_{11}^{-1}A_{12}x_2+A_{22}x_2
+	 \end{bmatrix} \\
+	 &= \begin{bmatrix}
+	 0 \\ Sx_2
+	 \end{bmatrix}
+\end{align*}
+mit Gleichheit genau dann, wenn $x_2=0$ und $x_1=0 \implies S$  ist positiv definit und symmetrisch.
+\end{proof}
+\begin{theorem}
+	Sei $A \in  \R^{n\times n}$ und symmetrisch, positiv definit. Dann existiert eine \emph{Cholesky-Zerlegung} $A=LL^{t}$, wobei $L \in \R^{n\times n}$   eine untere Dreiecksmatrix ist.
+\end{theorem}
+\begin{proof}
+Per Induktion.
+
+%Vorlesung 23 Seite 4,5
+\end{proof}
+\begin{corollary}
+	$A$ hat eine Cholesky-Zerlegung genau dann, wenn A spd ist.
+\end{corollary}
+\begin{proof}
+Übung.
+\end{proof}
+\subsection{Berechnung der Cholesky-Zerlegung}
+Wir suchen Zahlen $l_{i,j}$ so, dass :
+\begin{align*}
+\begin{bmatrix}
+	a_{1,1} & \ldots & a_{n,1} \\
+	\vdots & & \vdots \\
+	a_{n,1} & \ldots & a{n,n}
+\end{bmatrix} = \begin{bmatrix}
+l_{11} \\
+	l_{21} & l_{22} \\
+	\vdots & \vdots & \ddots \\	
+	l_{n,1} & l_{n,2} & l_{n,n}
+\end{bmatrix} \cdot \begin{bmatrix}
+	l_{11} & l_{21}& \ldots & l_{n,1} \\
+	       &l_{22} &  & \vdots \\
+	        & & \ddots  & l_{n,n}
+\end{bmatrix}
+\end{align*}
+Also: 
+\begin{align*}
+	a_{11}=l_{11}^2 &\implies l_{11}=\sqrt[2]{a_{11}} \\
+	a_{21}= l_{21}l_{11} &\implies l_{21}= \frac{a_{21}}{l_{11}} \\
+	\vdots &\implies \vdots \\
+	a_{22}= l_{21}^2 +l_{22}^2 &\implies l_{22}= \sqrt[2]{a_{22}-l_{21}^2} \\
+	a_{32}= l_{31}l_{21}+l_{32}l_{22} &\implies l_{32}= \frac{a_{32}-l_{31}l_{21}}{l_{22}}
+\end{align*}
+Allgemein:
+\begin{equation}
+	\label{eqn:cholesky-berechnung}
+\begin{rcases}
+	l_{j,j} = \sqrt[2]{a_{jj} \sum_{k=1}^{j-1}l_{j,k}^2} & j=1,\ldots,n \\
+	l_{i,j} = \frac{1}{l_{j,j}\left( a_{i,j} -\sum_{k=1}^{j-1}l_{i,k} l_{j,k} \right)} & j<i\le n
+\end{rcases}
+\end{equation}
+\begin{remark}
+Es muss $l_{jj} \neq 0$ gelten, da anderenfalls ein Widerspruch zur Existenzaussage über die Cholesky-Zerlegung besteht.
+\end{remark}
+\begin{corollary}
+	Werden die Vorzeichen der Diagonalelemente der Cholesky-Faktoren eindeutig festgelegt, dann ist die Cholesky-Zerlegung eindeutig.
+\end{corollary}
+\paragraph{Aufwand:} \eqref{eqn:cholesky-berechnung} sagt, dass zur Berechnung von $l_{i,j}$ , $j$ Multiplikationen bzw. Divisionen / Wurzeln benötigt werden.
+Der Gesamtaufwand beträgt demnach: 
+\[
+\sum_{j=1}^{n}(n-j+1)j) = \frac{1}{6}n^3+\mathcal{O}(n^2)
+\]
+Dies ist circa doppelt so schnell wie die LR-Zerlegung.
