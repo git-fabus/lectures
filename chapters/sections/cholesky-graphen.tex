@@ -2,4 +2,50 @@
 \paragraph{Beobachtung:} Da Umnummerieren von Knoten verändert einen Graphen nicht.
 In der zugehörigen Adjazenzmatrix müssen aber Spalten und Zeilen entsprechend permutiert werden.
 \paragraph{Idee:} Permutiere Zeilen und Spalten der Adjazenzmatrix so, dass möglichst wenig fill-in bei der Berechnung von $LR$- oder Cholesky-Zerlegung generiert wird.\\
-Die MAtrix aus dem vorherigen Kapitel ist symmetrisch positiv definit. Die Einträge der Cholesky-Zerlegung sind dann gegeben durch:
+Die Matrix aus dem vorherigen Kapitel ist symmetrisch positiv definit. Die Einträge der Cholesky-Zerlegung sind dann gegeben durch:
+\begin{align*}
+	l_{j,j} &= \sqrt[]{a_{\partial(j),\partial(j)}-\sum_{k=1}^{j-1}l_{j,\partial(k)}}\\ 
+	l_{i,j} &= \frac{1}{l_{jj}}\left(a_{\partial(i),\partial(j)} -\sum_{k=1}^{j-1}l_{i,\partial(k)}l_{j,\partial(k)}\right)
+\end{align*}
+wobei $\partial(1), \partial(2), \ldots , \partial(N)$ eine Permutation ist. \\
+Setzen wir $l_i = \begin{bmatrix}
+0 \\ \vdots \\ 0 \\ l_{i,i} \\ \vdots \\ l_{n,i}
+\end{bmatrix} \in \R^{N}$ und schreiben 
+\[
+A_1=A, A_{i+1} = A_i -l_il_i^{t} = [a_{l,k}^{(i)}]_{l,k=1}^{N}
+\]
+Wir können $l_i$ auch berechnen durch:
+\begin{equation}
+	\label{eqn:li-berechnen}
+l_i = \frac{1}{\sqrt[]{a_{\partial(i),\partial(i)}^{(i)}}} \begin{bmatrix}
+a_{1, \partial(i)}^{(i)} \\ \vdots \\ a_{N,\partial(i)}^{(i)}
+\end{bmatrix}
+\end{equation}
+Dies entspricht der sukzessiven Elimination der Zeilen und Spalten $\partial(1),\ldots, \partial(N)$. Der zugehörige Graph verändert sich in denn Sinne, dass in jedem Schritt ein Knoten eliminiert wird.
+\begin{example}
+Betrachte $A$ aus Beispiel \ref{eg:löser1}.
+
+%noch nerviger lol
+
+\end{example}
+\begin{lemma}
+	Sei $v_i= nnz(l_i)$  die Anzahl nicht-null Einträge in $l_i$.
+	Dann ist der Aufwand um die Cholesky-Zerlegung $A= LL^{t}$ zu bestimmen gegeben durch:
+	\[
+	\Theta = \sum_{i=1}^{N}\frac{v_i(v_i+3)}{2}
+	\]
+Die Anzahl nicht-null Einträge $nnz(L)$ in L ist:
+\[
+\eta = \sum_{i=1}^{N}v_i
+\]
+\end{lemma}
+\begin{proof} \eqref{eqn:li-berechnung} impliziert, dass $l_i$ mit $v_i$  Multiplikationen berechnet werden kann. $l_il_i^{t}$ ist symmetrisch, kann also in $\frac{v_i(v_i+1)}{2}$ Multiplikationen berechnet werden.
+	\[
+	\Theta = \sum_{i=1}^{N}\left( \frac{v_i(v_i+1)}{2}+v_i \right)= \sum_{i=1}^{N}\frac{v_i(v_i+3)}{2}
+	\]
+Die Formel für $\eta$ folgt aus $L=[l_1|\ldots|l_N]$.
+\end{proof}
+Um $v_i$ möglichst klein zu halten eliminieren wir nun in einer Reihenfolge.
+\begin{definition}
+Eine \emph{Eliminationsreihenfolge} auf einem Graphen $G=(V,E)$ ist eine Nummerierung $\sigma \colon \{1,\ldots, |V|\}  \to V $ der Knoten. Diese führt auf einen \emph{geodneten Graphen} $G^{\sigma}= (V,E,\sigma)$. Für $G^{\sigma}$ ist das \emph{Defizit} eines Knotens gegeben durch: 
+\end{definition}
