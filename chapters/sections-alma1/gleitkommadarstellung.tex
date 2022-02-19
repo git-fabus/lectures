@@ -2,7 +2,7 @@
 \begin{definition}[Gleitkommadarstellung]
 	Die Gleitkommastellung einer Zahl $z \in  \R$ ist gegeben durch:
 	\[
-	z=+-m\cdot b^{e}
+	z=\pm m\cdot b^{e}
 	\]
 mit einer \underline{Matisse} m, dem \underline{Exponenten} e und der \underline{Basis} b.
 \end{definition}
@@ -11,7 +11,7 @@ Der Einfachheit halber nehmen wir an, dass die Basis für alle Zahlen gleich ist
 Die Gleitkommadarstellungen von:
 \begin{itemize}
 	\item $(-384.753)_{10}= -3.84753 \cdot 10^2$
-	\item $(0.00042)_{10}=4.2 \cdot 10^{-4d}$
+	\item $(0.00042)_{10}=4.2 \cdot 10^{-4}$
 	\item $(1010.101)_2= (1.010101)_2 \cdot 2^{3}$
 \end{itemize}
 \end{example}
@@ -22,7 +22,7 @@ Die Matisse m heißt \underline{normalisiert}, falls $m=m_1.m_2m_3 \ldots m_t$ m
 \end{definition}
 Um die eindeutige, normalisierte Gleitkommadarstellung im Computer zu speichern, müssen wir festlegen, wie viele Stellen für Matisse und Exponent zur Verfügung gestellt werden. Dies resultiert in der Menge 
 \[
-F=F(b,t,e_{min}, e_{max}) = \{z= +-m_1.m_2m_3\ldots m_t \cdot b^{e} | e_{min} \le e \le e_{max} \} 
+F=F(b,t,e_{min}, e_{max}) = \{z= \pm m_1.m_2m_3\ldots m_t \cdot b^{e} | e_{min} \le e \le e_{max} \} 
 \]
 Da 0 nicht in dieser Form dargestellt werden kann, reserviert man dafür eine spezielle Ziffernfolge in Matisse und Exponent.
 %Hier fehlt wieder ein schöne Grafik

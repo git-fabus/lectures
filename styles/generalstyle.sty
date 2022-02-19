@@ -76,7 +76,7 @@
 \binoppenalty=\maxdimen
 \relpenalty=\maxdimen
 %%%%% THEOREM-LIKE ENVIRONMENTS CONFIGURATION %%%%%
-
+\newcounter{tricks}[part]
 \newcounter{everything}[chapter]
 
 \newtheoremstyle{fancy}
@@ -111,6 +111,7 @@
 \newtheorem{remark}      [everything]{\protect\remarkname}
 \newtheorem{theorem}     [everything]{\protect\theoremname}
 \newtheorem{warning}     [everything]{\protect\warningname}
+\newtheorem{trick}	 [tricks]{}
 
 % default names
 \newcommand{\claimname}{Claim}
