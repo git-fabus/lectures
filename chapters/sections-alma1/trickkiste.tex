@@ -1,0 +1,99 @@
+\section{}
+Dieses Kapitel zeigt, wie man mit möglichen Aufgaben in der Klausur umgeht und wie man diese lösen kann.
+
+\section*{Zahlen umrechnen}
+Die wirkliche Grundlage, die jeder können muss ist zu wissen, wie man Zahlen in andere Systeme konvertiert. Die typischen Systeme sind vor allem das Dezimalsystem, Oktalsystem, Hexadezimalsystem und das Binärsystem.
+
+Falls man die Zahl im Binärsystem gegeben hat, dann kann man die Zahl ohne wirklich zu rechen schnell in das Oktalsystem oder Hexadezimalsystem umwandeln.
+Dazu nimmt man einfach entweder immer 3er oder 4er Tupel von den Binärzahlen und rechnet diese um. \\
+Sei also $(1011100)_2$ die umzurechnende Zahl in die zwei Systeme. Dann können wir die Zahl einfach in folgende Teile unterteilen:
+\begin{itemize}
+	\item Oktalsystem:
+		\begin{itemize}
+			\item $100$
+			\item $011$
+			\item $001$ 
+		\end{itemize}
+		Wir rechnen diese Zahlen nun einzeln in das Dezimalsystem um. So ergibt sich:
+		\begin{align*}
+			100 &= 0\cdot 1 + 0 \cdot 2 + 1\cdot 4 = 4 \\
+			011 &= \ldots = 3 \\
+			001 &= 1 
+		\end{align*}
+		Als Resultat erhalten wir also: 
+		\[
+			(1011100)_2 = (134)_8
+		\]
+	\item Hexadezimalsystem
+		\begin{itemize}
+			\item $1100$
+			\item $0101$ 
+		\end{itemize}
+		Nun berechnen wir auch wieder diese Zahlen:
+		\begin{align*}
+			1100 &= 4+8 = 12 \\
+			0101 &= 1+ 4 =5 
+		\end{align*}
+		\underline{Achtung!} Die Zahl 12 muss natürlich im Alphabet des Hexadezimalsystems sein! 
+		Wir erinnern uns: $A=10$, demnach ist $12=C$.
+		Das Resultat ist also:
+		\[
+			(1011100)_2 = (5C)_{16}	
+		\]
+\end{itemize}
+Eine Umrechnung in das Dezimalsystem geht wie folgt:
+Wir überlegen uns, welche Basis hat unser Ursprungssystem. Dann addieren wir die erste Ziffer unserer Zahl einfach zu unserem Zwischenspeicher. Die zweite Ziffer multiplizieren wir mit der Basis und addieren sie dann wieder. Danach multiplizieren wir unsere Basis mit der Basis und machen das gleiche nochmal. Sollte die Zahl danach noch mehr Ziffern haben, multiplizieren wir die ursprüngliche Basis wieder mit der neuen Basis (Stichwort: Potenz) usw.
+\[
+	(1011100)_2 = 0 + 0 + 1\cdot 4 + 1\cdot 8 + 1\cdot 16 + 0+ 1\cdot 64 = (92)_{10}
+\]
+Was machen wir aber, wenn wir eine Zahl im Dezimalsystem in das Hexadezimalsystem oder in ein 7-adisches-System überführen sollen?
+
+Wir dividieren unsere Zahl einfach durch die Basis der jeweiligen Zahl und merken uns den Rest. 
+Sollten wir die $(93)_{10}$ ins 7-adische System umrechnen. Rechnen wir:
+\begin{align*}
+	93 \div 7 = 13 R 2 \\
+\end{align*}
+Dann übertragen wir die 13 auf die linke Seite und rechnen weiter:
+\begin{align*}
+	13 \div 7 = 1 R 6
+\end{align*}
+Dies machen wir solange, bis nur noch ein Rest da steht.
+\begin{align*}
+	1 \div 7 = 0 R 1
+\end{align*}
+Dann können wir unsere Zahl aufschreiben:
+\[
+	(93)_{10} = (162)_{7}
+\]
+Wichtig ist dabei, unser erster Rest ist unsere kleinste Ziffer
+
+\section*{Komplementdarstellung}
+Eine weitere typische Aufgabe ist, die Zweierkomplementdarstellung einer Dezimalzahl zu bestimmen mit einer gewissen Anzahl von Stellen.
+Die zwei wichtigen Stichworte sind hier: negative Zahlen und der darstellbare Bereich.\\
+
+Betrachten wir als erstes die Zahl $(-95)_{10}$. Diese wollen wir in Zweierkomplementdarstellung mit $n=4$ und $n=8$ Stellen haben. Betrachten wir nun erst mal die darstellbare Bereiche:
+\[
+-\frac{2^{4}}{2} \le z \le \frac{2^{4}}{2}-1
+\]
+Wir stellen fest. Die Zahl ist für $n=4$ nicht darstellbar. \\
+Der darstellbare Bereich für $n=8$ ist:
+\[
+-\frac{2^{8}}{2} \le  z  \le  \frac{s^{8}}{2}-1
+\]
+Also ist die Zahl für $n=8$ darstellbar. Nun lautet unser erster Schritt, $-95$ in das Dualsystem umzuwandeln:
+\begin{enumerate}
+	\item Wir rechnen 95 in das Dualsystem um.
+	\item Wir tauschen alle Einsen und Nullen. 
+	\item addieren 1 dazu.
+\end{enumerate}
+Das heißt:
+\[
+	(-95)_{10} = (10100001)_2 
+\]
+Um nun das 2er Komplement zu erhalten, tauschen wir wieder alle Nullen und Einsen und addieren 1 dazu:
+\[
+01011111
+\]
+Diese Zahl ist unser 2er-Komplement.\\
+Natürlich ist auch an die Rückrichtung zudenken. So
+
