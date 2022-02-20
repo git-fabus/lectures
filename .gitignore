@@ -8,3 +8,4 @@ chapters/
 *.f*
 *.toc
 *.run.xml
+.vscode
