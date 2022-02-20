@@ -1,2 +1,113 @@
 \section{Vollständige Induktion}
+Das Beweisprinzip der vollständigen Induktion ist: \\
+$\forall_{n \in \N}: A(n) $ falls 
+\begin{description}
+	\item [1. Induktionsanfang (IA, IV)]: $A(1)$ gilt
+	\item [2. Induktionsschritt (IS)] : $\forall_{n \in \N}: $ falls $A(n)$ gilt, dann auch $A(n+1)$ 
+\end{description}
+\begin{theorem}
+	\label{thm:gauss}
+	$\forall_{n \in \N}: 1+2+3+ \ldots + n = \frac{n(n+1)}{2} $ 
+\end{theorem}
+\begin{proof}
+per Induktion.
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item \underline{IA $n=1$}
+		\[
+		1 = \frac{1 \cdot 2}{2}
+		\]
+	\item \underline{IS $n \to n+1$} Angenommen $A(n)$ ist wahr, dann muss
+		\[
+		1+2+\ldots+n + n +1 = \frac{(n+1)\cdot (n+2)}{2}
+		\]
+		gelten.
+		\[
+		1+2+\ldots+n+n+1= \frac{n(n+1)}{2}+n+1
+		\]
+		nach Induktionsannahme.Dies ist nichts anderes als:
+		\[
+			\frac{(n+1)n}{2}+(n+1) = \frac{(n+1)\cdot (n+2)}{2}
+		\]
+\end{itemize}
+\end{proof}
+Um nicht immer $1+2+\ldots+n$ zu schreiben, verwenden wir ab sofort das Summenzeichen.
+\begin{notation}
+Für ganze Zahlen $m,n$ und $a_k \in \R$ ist 
+\begin{align*}
+	\sum_{k=m}^{n}a_k &= a_m +a_{m+1} + \ldots + a_n \\
+	\sum_{k=m}^{m-1}a_k &= 0
+\end{align*}
+\end{notation}
+\begin{example} Der Satz \ref{thm:gauss} lässt sich wie folgt schreiben:
+\[
+\sum_{k=1}^{n}k = \frac{n(n+1)}{2}
+\]
+\end{example}
+\begin{theorem}
+	Für alle $n \in \N$ gilt:
+	\[
+	\sum_{k=1}^{n}(2k-1) = n^2
+	\]
+\end{theorem}
+\begin{proof}
+per Induktion:
 
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item \underline{IA $n=1$}
+		\[
+		1 = 1^2
+		\]
+	\item \underline{IS $n \to n+1$} $A(n)$ gilt, dann muss auch
+		\[
+		\sum_{k=1}^{n+1}(2k-1) = (n+1)^2
+		\]
+		gelten.
+		\[
+		\sum_{k=1}^{n+1}(2k-1)=n^2+(2(n+1)-1) = n^2+2n+1
+		\]
+		Damit gilt die Behauptung
+\end{itemize}
+\end{proof}
+\begin{theorem}[Geometrische Summenformel]
+	Für alle $x \in \R \setminus \{1\}$ und für alle $n \in  \N$ gilt:
+	\[
+	\sum_{k=1}^{n}x^k = \frac{1-x^{n+1}}{1-x}
+	\]
+\emph{Hierbei gilt} $x^{0}=1$ \emph{auch für} $x=0$.
+\end{theorem}
+\begin{proof}
+per Induktion.
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item \underline{IA $n=1$ }
+		\[
+		1+x = \frac{1-x^2}{1-x}
+		\]
+	\item \underline{IS $n \to n+1$}
+		Angenommen $A(n)$ gilt.
+		\begin{align*}
+			\sum_{k=0}^{n}x^{k}+x^{n+1}&= \frac{1-x^{n+1}}{1-x}+x^{n+1}\\
+						   &=\frac{1-x^{n+2}}{1-x}
+		\end{align*}
+\end{itemize}
+\end{proof}
+\begin{remark}
+Statt den Anfang bei $n=1$ kann der Induktionsbeweis auch bei jeder Zahl $n_0 \in  \Z$ starten und dann die Aussagen für alle $n \in \Z, n\ge n_0$ liefern.  
+\end{remark}
+Analog zu dem Summenzeichen gibt es auch ein Produktzeichen:
+\begin{notation}[Produktzeichen]
+Für $m,n \in \N, a_k \in \R, m \le n$ gilt: 
+\begin{align*}
+	\prod_{k=m}^{n} a_k &= a_m \cdot a_{m+1} \cdot \ldots * a_n \\
+\prod_{k=m}^{m-1}a_k &= 1 
+\end{align*}
+Rekursiv $\forall_{k\ge m}$:
+\begin{align*}
+	\prod_{k=m}^{n} a_k= a_n \cdot \prod_{k=m}^{n-1} a_k  
+\end{align*}
+\end{notation}
+\begin{definition}[Fakultät]
+	Die Fakultät ist definiert als:
+	\[
+	n! = \prod_{k=1}^{n} k = 1 \cdot 2 \cdot \ldots \cdot n 
+	\]
+\end{definition}
