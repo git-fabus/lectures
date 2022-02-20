@@ -1,0 +1,73 @@
+\section{Aussagenlogik}
+\begin{definition}[Aussage]
+	Eine \emph{Aussage} ist eine Behauptung, die eindeutig feststeht, so ist diese entweder \emph{wahr} oder \emph{falsch}
+\end{definition}
+\begin{definition}
+Falls A und B Aussagen gilt:
+\begin{table}[htpb]
+	\centering
+	\label{tab:junktoren}
+	\begin{tabular}{c|c}
+		Symbol & Gesprochen \\
+		\hline
+		$\neg A$ & "nicht A" \\
+		$A \vee B$ & "A oder B" \\
+		$A \wedge B$ & "A und B" \\
+		$A \implies B$ & "aus A folgt B", "A impliziert B" \\
+		$A \iff B$ & "A ist äquivalent zu B", "A genau dann wenn B"
+	\end{tabular}
+\end{table}
+Die Wahrheitstafeln dazu sehen wie folgt aus:
+\begin{table}[htpb]
+	\centering
+	\label{tab:wahrheitstafel}
+	\begin{tabular}{c|c|c|c|c|c|c}
+		$A$ & $B$ & $\neg A$ & $A \vee B$ & $A \wedge B$ & $A \implies B$ & $A \iff B$ \\ 
+\hline
+		w & w & f & w & w & w & w \\
+		w & f & f & w & f & f & f \\
+		f & w & w & w & f & w & f \\
+		f & f & w & f & f & w & w 
+	\end{tabular}
+\end{table}
+\end{definition}
+\subsection{Gesetze der Aussagenlogik}
+\begin{align*}
+	(A \implies B) &\iff (\neg B \implies \neg A) \\
+	(A \implies B) &\iff (\neg A \vee B) \\
+	(A \iff B) &\iff (\neg A \iff \neg B) \\
+	(A \wedge (A \implies B)) &\implies B \\
+	((A\implies B) \wedge (\neg B)) &\implies \neg A \\
+	((A \implies B) \wedge (B \implies C)) &\implies (A \implies C) \\
+	(A) &\implies (A \vee B)\\
+	(\neg A) &\implies (A \implies B)
+\end{align*}
+Wir können diese Gesetze durch Wahrheitstafeln beweisen. Das wichtigste Gesetzt ist die Kontraposition
+\begin{theorem}[Kontraposition]
+	\label{thm:kontraposition}
+Falls $A$ und $B$ Aussagen gilt:
+\[
+	(A \implies B) \iff (\neg B \implies \neg A)
+\]
+\end{theorem}
+\begin{remark}
+Der Satz \ref{thm:kontraposition} wird oft benutzt um etwas zu beweisen. 
+\end{remark}
+Noch ein kurzer Beweis zu 
+\[
+	(A \implies B) \iff (\neg A \vee B)
+\]
+\begin{proof}
+Durch eine Wahrheitstafel.
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{c|c|c|c}
+		$A$ & $B$ & $A \implies B$ & $\neg A \vee B$ \\
+		\hline
+		w & w & w & w \\
+		w & f & f & f \\
+		f & w & w & w \\
+		f & f & w & w
+	\end{tabular}
+\end{table}
+\end{proof}

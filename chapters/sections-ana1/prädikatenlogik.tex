@@ -1,0 +1,29 @@
+\section{Prädikatenlogik}
+Aussagen, die von freien Variablen abhängen.
+\begin{example}
+	Zwei Ausssagenformen
+\begin{itemize}
+	\item Es gibt eine reele Zahl $x$ mit $x^2+1=0$
+	\item Für alle natürlichen Zahlen $x$ gilt: $x^2-1=(x-1)(x+1)$ 
+\end{itemize}
+\end{example}
+\begin{notation}[Quantoren]
+	Wir verwenden die  Kurzformen
+	\begin{itemize}
+		\item $\exists$ für "es gibt ein"
+		\item $\forall$ für "für alle" 
+	\end{itemize}
+\end{notation}
+\paragraph{Regeln:}
+\begin{align*}
+	\neg(\forall_{x}: A(x)) &\iff (\exists_{x}: \neg A(x)) \\
+	\neg (\exists_{x}:A(x) &\iff (\forall_{x}: \neg A(x))  \\
+	\neg (\forall_{x}\forall_{y} : A(x,y)) &\iff (\forall_{x}\exists_{y}: \neg A(x,y))    
+\end{align*}
+\begin{warning}
+Es gilt \underline{nicht}:
+\[
+\forall_{x \in M}: A(x) \implies \exists_{x \in M}:A(x)  
+\]
+Da $M$ z.B eine leere Menge sein kann.
+\end{warning}
