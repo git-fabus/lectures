@@ -1,0 +1,87 @@
+$\R$ ist Körper, angeordnet, archimedisch, vollständig. \\
+\section{Körperaxiome}
+\begin{definition}[$\R$] 
+$\R$ ist eine Menge, auf der zwei Verknüpfungen definiert sind:
+\begin{align*}
++ &\colon \R \times \R \to \R \\
+\cdot  &\colon \R \times \R \to \R 
+\end{align*}
+Dabei wird jedem Paar $(x,y)$ mit $x,y \in \R$ ein Element $x+y \in \R$ (bzw $x\cdot y \in \R$ zu geordnet.  
+\end{definition}
+\begin{remark}
+Die zwei Verknüpfungen sind die zwei Grundrechenarten "plus" und "mal". 
+Jedoch müssen wir die typischen Rechenregeln, die wir bereits kennen erst anhand der Körperaxiome zeigen.
+\end{remark}
+\begin{definition}[Körper]
+	$\K$ ist ein Körper falls folgende Axiome gelten:
+	Es sei $a,b,c \in \K$. \\
+	Für die Addition:
+	\begin{description}
+		\item [A1] $\forall_{a,b,c}: a+(b+c) = (a+b)+c$
+		\item [A2] $\forall_{a,b}: a+b = b+a $
+		\item [A3] $\exists_{0 \in \K}: a+0=a $
+		\item [A4] $\forall_{a}\exists_{-a \in \K}: a+(-a)=0$
+	\end{description}
+	Analog weiter für die Multiplikation:
+	\begin{description}
+		\item [M1] $\forall_{a,b,c}: (a\cdot b) \cdot c = a \cdot (c \cdot b) $
+		\item [M2] $\forall_{a,b}: a \cdot b = b \cdot a $
+		\item [M3] $\exists_{1 \in \K}\forall_{a}: 1\neq 0 \wedge 1\cdot a=a$
+		\item [M4] $\forall_{a\neq 0}\exists_{a^{-1} \in \K}: a\cdot a^{-1}=1 $  
+	\end{description}
+	Außerdem gilt das Distributivgesetz:
+	\begin{description}
+		\item [D] $\forall_{a,b,c}: (a+b)\cdot c = a\cdot c + b\cdot c $
+	\end{description}
+\end{definition}
+\begin{notation}
+Vereinfachend schreiben wir auch:
+\begin{itemize}
+	\item $a\cdot b = ab$
+	\item $a^{-1}=\frac{1}{a}$
+	\item $a\cdot b^{-1}= \frac{a}{b}$ 
+\end{itemize}
+\end{notation}
+\subsubsection*{Rechenregeln für Körper}
+\begin{remark}
+Die Eigenschaften A1-A4 besagen außerdem, dass $(\R,+)$ eine Gruppe ist.
+\end{remark}
+\begin{enumerate}
+	\item Eindeutigkeit der $0$
+		\begin{proof}
+		$0^{*}= 0^{*}+0 = 0+0^{*}=0$ 
+		\end{proof}
+	\item Das Negativ $-x$ ist eindeutig.
+		\begin{proof}
+		Seien $x'', x'$ für $(x'+x=0) \wedge (x+x'' =0) $ gilt. \\
+		$\implies x'=x'+0 = x'+x(-x) = x'' +x+(-x) = x''$ 
+		\end{proof}
+	\item $-0 = 0$
+		\begin{proof}
+		$0= 0+(-0) = (-0)+0= -0$
+		\end{proof}
+	\item $\forall_{x}: -(-x) = x $
+		\begin{proof}
+		$0=x+(-x)= (-x)+x$ und Eindeutigkeit des Negativen folgt: $x=-(-x)$   
+		\end{proof}
+	\item $\forall_{a,b,c \in \R}: a+b= c \iff a = c-b$
+	\item $\forall_{a,b \in \R}: -(a+b) = (-a) + (-b) $ 
+\end{enumerate}
+\begin{remark}
+Die Eigenschaften M1-M4 besagen, dass $\R \setminus \{0\}, \cdot )$ auch eine Gruppe ist. Demnach gelten die Eigenschaften a-f eigentlich fast Analog für die Multiplikation.
+\end{remark}
+Wegen der Distributivität folgt außerdem:
+\begin{enumerate}[resume]
+	\item $\forall_{a,b,c \in \R}: (a+b) \cdot c = c\cdot a + c\cdot b $ 
+	\item $\forall_{a \in \R}: x\cdot 0=0 $
+		\begin{proof}
+		$x\cdot 0=x\cdot 0+x\cdot 0 = x \cdot (0+0) = x\cdot 0$ 
+		\end{proof}
+	\item $\forall_{a,b \in \R}: a \cdot b = 0 \iff (x=0) \vee (y=0)$
+		\begin{proof}
+		Hinrichtung folgt aus h. \\
+		\emph{Annahme:} $xy=0$ und $x\neq 0$. Zu zeigen: $y=0$\\
+		Mit $y=0\cdot x^{-1}$ und h folgt: $y=0$ 
+		\end{proof}
+\end{enumerate}
+
