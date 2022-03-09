@@ -28,7 +28,7 @@ Auf Hardwareebene wird üblicherweise mit einer längeren Matisse gearbeitet und
 \begin{remark}
 Für $|x|,|y|, |x \circ y| \in [z_{min},z_{max}]$ impliziert \eqref{eqn:rundung}, dass
 \[
-	\frac{|x \boxcircle y - x \circ y|}{|x \circ y|}= \frac{rd(x \circ y - x \circ y)}{|x \circ y|} \le \varepsilon_{mach}
+	\frac{|x \boxcircle y - x \circ y|}{|x \circ y|}= \frac{ | rd(x \circ y ) - x \circ y |}{|x \circ y|} \le \varepsilon_{mach}
 \]
 
 Das bedeutet, dass $\boxcircle$ im Computer bestmöglich umgesetzt ist.
@@ -65,6 +65,13 @@ Dann gilt
 (a+b)\cdot c = a \cdot c + b \cdot c = 0.006339520000001
 \]
 Numerisch gilt:
+\[
+	(4.2832 \boxminus 4.2821) \boxcircle 5.7632 = 0.006339
+\]
+und
+\[
+	(4.2832 \boxcircle 5.7632) \boxminus (4.2821 \boxcircle 5.7632) = 0.006000
+\]
 \end{itemize}
 \end{example}
 \begin{remark}
@@ -75,7 +82,7 @@ Unglücklicherweise pflanzen sich numerische Fehler, zum Beispiel durch Rundung 
 
 \begin{lemma}[Fehlerfortpflanzung]
 Es seien $x,y \in \R$ mit Datenfehlern $\Delta x, \Delta y \in  \R$ behaftet, welche\[
-|\frac{\Delta x}{x}| , |\frac{\Delta y}{y}| \ll 1
+\left| \frac{\Delta x}{x} \right| , \left|\frac{\Delta y}{y} \right| \ll 1
 \]
 erfüllen. Für $\circ \in  \{+,-,\cdot, \div\}$ gilt für den fortgepflanzten Fehler
 \[
