@@ -148,9 +148,9 @@ mit $\alpha, \beta \in \R$ Lösungen des linearen Gleichungssystems.
 \begin{itemize}
 	\item Induktion über k\medskip
 \begin{itemize}[label=$\lozenge$, itemsep=2ex]
-\item Induktionsanfang: \underline{$k=0$}: 
-	$p_0=\alpha+\beta = \alpha \lambda_1^{0}+\beta \lambda_2^{0}$
-\item Induktionsschritt: \underline{$k \to k+1$}:
+\item Induktionsanfang: \underline{$k=0,k=1$}: 
+	$p_0=\alpha+\beta = \alpha \lambda_1^{0}+\beta \lambda_2^{0}, p_1=\alpha \lambda_1^{1}+\beta \lambda_2^{1}$
+\item Induktionsschritt: \underline{$k-1,k \to k+1$}:
 	\begin{align*}
 	p_{k+1}
 	&=ap_k +bp_{k-1} \\
@@ -221,9 +221,9 @@ und somit
 \end{align*}
 Der relative Fehler von $\tilde{p_k}$ zu $p_k= \lambda_1$ ist somit :
 \begin{align*}
-	|\frac{\tilde{p_k}-p_k}{p_k}
-	&= |\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1} -\varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1} + (\varepsilon_1-\varepsilon_1) \frac{\lambda_1}{\lambda_2-\lambda_1}(\frac{\lambda_2}{\lambda_1})^{k}| \\
-	&= | \varepsilon_0 + (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \left( \left( \frac{\lambda_2}{\lambda_1}^{k} \right)-1 \right)|
+	\left|\frac{\tilde{p_k}-p_k}{p_k} \right|
+	&= \left|\varepsilon_0 \frac{\lambda_2}{\lambda_2-\lambda_1} -\varepsilon_1 \frac{\lambda_1}{\lambda_2-\lambda_1} + (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \left(\frac{\lambda_2}{\lambda_1} \right)^{k}\right| \\
+	&= \left| \varepsilon_0 + (\varepsilon_1-\varepsilon_0) \frac{\lambda_1}{\lambda_2-\lambda_1} \left( \left( \frac{\lambda_2}{\lambda_1}^{k} \right)-1 \right) \right|
 \end{align*}
 \paragraph{Beobachte:}Falls $\frac{\lambda_2}{\lambda_1}>1$ explodiert der relative Fehler für wachsende k. Dies war in Beispiel \ref{eg:rekursion} der Fall. \\
 Falls wir den Begriff der Konditionszahl aus der Definition \ref{def:konditionszahl} geeignet für Funktion $\R^2 \to \R$ erweitern, sehen wir, dass das Problem schlecht konditioniert ist.
@@ -233,7 +233,7 @@ Die Lösung $\{p_k\}$ der Dreiterm-Rekursion \eqref{eqn:dreitermrekursion} zu de
 \[
 \lim_{k \to \infty} \frac{p_k}{q_k}=0
 \]
-Die Lösung $\{p_k\}$ wird dominante Lösung genannt.
+Die Lösung $\{q_k\}$ wird dominante Lösung genannt.
 \end{definition}
 \begin{example}
 In Beispiel \ref{eg:rekursion} ist $\{p_k\}$ Minimallösung genau dann, wenn $\beta=0$.
