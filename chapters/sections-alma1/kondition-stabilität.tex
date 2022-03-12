@@ -22,9 +22,9 @@ K_{abs} = |f'(x)|\]
 heißt \emph{absolute Konditionszahl} des Problems $x \mapsto f(x)$. 
 Für $f(x)\cdot x \neq 0$ heißt
 \[
-K_{rel}=|\frac{f'(x) \cdot x}{f\left( x \right)}|\] 
+K_{rel}= \left| \frac{f'(x) \cdot x}{f\left( x \right)} \right|\] 
 die entsprechende \emph{relative Konditionszahl}.
-Ein Problem heißt \underline{schlecht konditioniert},falls eine dieser beiden Konditionszahlen deutlich größer als 1 sind.
+Ein Problem heißt \underline{schlecht konditioniert}, falls eine dieser beiden Konditionszahlen deutlich größer als 1 sind.
 Ansonsten heißt das Problem \underline{gut konditioniert}.
 \end{definition}
 \begin{example}
@@ -32,25 +32,25 @@ Konditionierung der Addition und Multiplikation
 \begin{itemize}
 	\item Für die Addition $f(x)=x+a$ gilt
 \[
-K_{rel}= |\frac{f'(x)x}{f(x)}|= |\frac{x}{x+1}|
+K_{rel}= \left|\frac{f'(x)x}{f(x)} \right|= \left|\frac{x}{x+1} \right|
 \]
 $\implies K_{rel}$ ist groß, falls $|x+a| \ll |x|$.
 \item Für die Multiplikation $f(x)=x \cdot a$ gilt
 \[
 K_{rel} = \frac{|f'(x)x|}{|f(x)|}= \frac{|ax|}{|ax|}=1
 \]
-$\implies$ Die absolute Kondition ist schlecht, falls $1 \ll q$. Die relative Kondition ist immer gut.
+$\implies$ Die absolute Kondition ist schlecht, falls $1 \ll a$. Die relative Kondition ist immer gut.
 \end{itemize}
 \end{example}
 \begin{definition}
 Erfüllt die Implementierung eines Algorithmus $\boxed{f}$ zur Lösung eines Problems $x \mapsto f(x)$ die Abschätzung
 \[
-|\frac{\boxed{f}-f(x)}{f(x)} \le C_V K_{rel} \varepsilon_{mach}
+\left|\frac{\boxed{f}-f(x)}{f(x)} \right| \le C_V K_{rel} \varepsilon_{mach}
 \]
 mit einem mäßig großen $C_V >0$, so wird der Algorithmus \emph{vorwärtsstabil} genannt.
 Ergibt die Rückwärtsanalyse $\boxed{f}(x)=f(x+\Delta x)$ mit
 \[
-|\frac{\Delta x}{x} \le C_R \varepsilon_{mach}
+\left|\frac{\Delta x}{x} \right| \le C_R \varepsilon_{mach}
 \]
 mit $C_R>0$ nicht zu groß, so heißt der Algorithmus \boxed{f} \emph{rückwärtsstabil}
 
@@ -82,11 +82,11 @@ K_{abs} = |f'(q)|= |\frac{1}{2\sqrt[2]{p^2-q}}| < 1
 \end{equation*}
 \begin{align*}
 	K_{rel} 
-	&=|\frac{f'(q)q}{f(q)}| \\
-	&=|\frac{q}{2\sqrt[2]{p^2-q}(p-\sqrt[2]{p^2-q})(p+\sqrt[2]{p^2-q})}| \\
-	&=\frac{1}{2}|\frac{p+\sqrt[2]{p^2-q}}{\sqrt[2]{p^2-q}} \\
-	&\approx \frac{1}{2}|\frac{p+p}{p}| \approx 1
+	&= \left|\frac{f'(q)q}{f(q)} \right| \\
+	&= \left|\frac{q}{2\sqrt[2]{p^2-q}(p-\sqrt[2]{p^2-q})(p+\sqrt[2]{p^2-q})} \right| \\
+	&=\frac{1}{2} \left|\frac{p+\sqrt[2]{p^2-q}}{\sqrt[2]{p^2-q}} \right| \\
+	&\approx \frac{1}{2} \left|\frac{p+p}{p}\right| \approx 1
 \end{align*}%
-$\implies$ Nullstellenberechung ist ein gut konditioniertes Problem, aber  Algorithmus \ref{alg:nst1} muss instabil sein
+$\implies$ Nullstellenberechung ist ein gut konditioniertes Problem, aber  Algorithmus \ref{alg:nst1} muss instabil sein.
 \end{example}
 
