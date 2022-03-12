@@ -37,24 +37,25 @@ Der Algorithmus muss also instabil sein.
 \paragraph{Grund:} Das Inverse des Pivot-Elemts (1000) ist sehr groß und verstärkt den Fehler
 
 \begin{definition}
-Sei $1\le i < j \le n$
-\begin{align*}
-T^{\{i,j\}} = \begin{bmatrix}
-	1 \\
-	& \ddots\\
-	& & 1 \\
-	& & & 0 & & & 1\\
-	& & & & 1 \\
-	& & & & & 1 \\
-	& & & 1 & & & 0 \\
-	& & & & & & & 1 \\
-	& & & & & & & & \ddots \\
-	& & & & & & & & &  1
-\end{bmatrix}
-\end{align*}
-heißt Transpositionsmatrix.\\
-Eine Permutationsmatrix ist das Produkt mehrerer Transpositionsmatrizen.
-\end{definition}
+	Sei $1\le i < j \le n$
+	\begin{align*}
+	T^{\{i,j\}} = \begin{bmatrix}
+		1 \\
+		& \ddots\\
+		& & 1 \\
+		& & & 0 & & & & 1\\
+		& & & & 1 \\
+		& & & & & \ddots\\
+		& & & & & & 1\\
+		& & & 1 & & & & 0 & \\
+		& & & & & & & & 1 \\
+		& & & & & & & & & \ddots \\
+		& & & & & & & & & &  1
+	\end{bmatrix}
+	\end{align*}
+	heißt Transpositionsmatrix.\\
+	Eine Permutationsmatrix ist das Produkt mehrerer Transpositionsmatrizen.
+	\end{definition}
 
 \begin{lemma}
 	Sei $T^{\{i,j\} }$ eine Transpositionsmatrix. Es gilt:
