@@ -396,12 +396,13 @@ Ohne Beschränkung der Allgemeinheit sei $V=\{1,\ldots,n\} $ \\
 	\KwData{Gewichteter Digraph $G=(V,E,w), V=\{1,\ldots,n\} $ ohne negative Zyklen}
 	\KwResult{Matrizen $[l_{i,j}]_{i,j=1}^{n}, [p_{i,j}]_{i,j=1}^{n}$}
 	\begin{itemize}
-		\item \begin{align*}
-				l_{i,j} &= w(i,j) &,(i,j) \in E \\
-				l_{i,j} &= \infty &,\forall (i,j) \in (V\times V)\backslash E, i = j\\
-				l_{i,i} = 0 &, i \in V \\
-				p_{i,j} &= i &, i,j \in V
-		\end{align*}
+		\item \begin{itemize}[label={}]
+				\item $l_{i,j} = w(i,j) \quad,(i,j) \in E$
+				\item $l_{i,j} = \infty \quad,\forall (i,j) \in (V\times V)\backslash E, i = j$
+				\item $l_{i,i} = 0 \quad, i \in V$
+				\item $p_{i,j} = i \quad, i,j \in V$
+			\end{itemize}
+		
 		\item \For{$j = 1,...,n$}{\For{$i = 1,...,n, i\neq j$}{\For{$k = 1,...,n, k \neq j$}{
 			\If{$l_{i,k} > l_{i,j} + l_{j,k}$}
 			{
