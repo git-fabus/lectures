@@ -84,4 +84,181 @@ Wegen der Distributivität folgt außerdem:
 		Mit $y=0\cdot x^{-1}$ und h folgt: $y=0$ 
 		\end{proof}
 \end{enumerate}
+\begin{remark}
+Jede Menge $K$ mit Verknüpfungen $+$ und $\cdot$ für die Axiome gelten heißt Körper.  
+\end{remark}
 
+\begin{example}
+	Dies sind Körper:
+\begin{itemize} 
+	\item $\R, \Q, \C$
+	\item $\mathbb{F}_p = \{0,1,\ldots,p\} $ mit Addition / Multiplikation $\mod p$ 
+	\item $\mathbb{F}_2 = \{0,1\}$
+\end{itemize}
+\end{example}
+\begin{enumerate}[resume]
+	\item $\forall_{x}: -x = (-1)x $
+		\begin{proof}
+		$x+(-1)x=1x+(-1)x=(1+(-1))x=0x=0$ 
+		\end{proof}
+	\item $(-x)\cdot (-y) = xy$
+		\begin{proof}
+			$(-x)\cdot (-y) = (-x)(-1)y= ((-1)\cdot (-x))y=(-(-x)\cdot y)=xy$ 
+		\end{proof}
+\end{enumerate}
+Im Allgemein gilt:
+\begin{itemize}
+	\item Assoziativ: \\
+		$\forall_{n \in \N}, \forall_{x_1,\ldots,x_{n} \in \R} : x_1+\ldots+x_{n} = x_1+ (x_2 +(x_3\ldots)x_{n-1} + x_{n}$
+	\item Kommutativ: \\
+		$\forall_{n \in  \N}, \forall_{x_1,\ldots,x_{n} \in \R} : x_1+\ldots+x_{n}= x_{n}+x_{n-1}+ \ldots + x_1$
+\end{itemize}
+\begin{theorem}[Doppelsummen]
+\[
+	\forall_{m,n \in  \N}, \forall_{a_{ij} \in  \R}: \sum_{i=1}^{m} \left( \sum_{j=1}^{n}a_{i,j} \right) = \sum_{j=1}^{n} \left( \sum_{i=1}^{m}a_{i,j} \right)
+\]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+	\sum_{i=1}^{m}\sum_{j=1}^{n}a_{i,j} &= \left( \sum_{j=1}^{n}a_{1,j} + \ldots + \sum_{j=1}^{n}a_{n,j} \right) \\
+					    &= \left( \sum_{i=1}^{m}a_{i,1} + \ldots + \sum_{i=1}^{m}a_{i,m} \right) \\
+					    &=\sum_{j=1}^{n}\sum_{i=1}^{m}a_{i,j}
+\end{align*}
+\end{proof}
+Es gilt ebenfalls das Distributivgesetz für Summen.
+\begin{theorem}[Distributiv]
+	\[
+		\left( \sum_{i=1}^{m}x_i \right) \cdot \left(\sum_{j=1}^{n}y_{i} \right) = \sum_{i=1}^{m}\sum_{j=1}^{n}x_{i}y_{j}
+\]
+\end{theorem}
+\begin{definition}[Potenzen]
+$\forall_{n \in \N_0}, \forall_{x \in \R} : x^{n} \in \R $ \\
+Weiter definieren wir: \\
+$x^{0} \coloneqq 1$ und $x^{n+1} \coloneqq x \cdot x^{n}, \forall_{n \in \N}$. \\
+Außerdem gilt für $x \neq 0: x^{-n}\coloneqq (x^{-1})^{n}$
+\end{definition}
+Daraus folgt:
+\begin{enumerate}[resume]
+	\item $\forall_{m,n \in  \Z}, \forall_{x,y \in \R}: x^{m}x^{n}= x^{m+n}$, $\left(x^{m}\right)^{n}= x^{mn}$ und $x^{n}y^{n}= (xy)^{n}$   
+\end{enumerate}
+\subsection{Anordnungsaxiome}
+\begin{description}
+	\item [Trichotomie] $\forall_{x \in \R}$ gilt genau eine der folgende Aussagen: $x>0, x=0 , x<0$
+	\item [Abgeschlossenheit] $\forall_{x,y \in \R}: x>0$ und $y>0 \implies x+y >0$ und $xy>0$   
+\end{description}
+\begin{notation}
+\begin{itemize}
+	\item $x>y \iff x-y >0$
+	\item $x<y \iff x-y < 0$
+	\item $x \ge y \iff x>y$ oder $y=x$
+	\item $x\le y \iff x<y$ oder $x=y$  
+\end{itemize}
+\end{notation}
+Daraus ergeben sich weitere Konsequenzen:
+\begin{enumerate}[resume]
+	\item $\forall_{x,y}: x<y $ oder $x=y$ oder $x>y$
+	\item Transitivität: $x<y$ und $y<z \implies x<z$
+		\begin{proof}
+		$x<y$ und $y<z \implies y-x>0$ und $z-y > 0 \implies z-x > (z-y) + (y-x) >0$   
+		\end{proof}
+	\item Translation-Invarianz: $x<y \implies \forall_{z}: x+z < y+z$
+		\begin{proof}
+			$(y+z)-(x-z) = y-x >0$ 
+		\end{proof}
+	\item Spiegelung: $x<y \iff (-x) > (-y)$
+		\begin{proof}
+			$(-x)-(-y) = y-x > 0$ 
+		\end{proof}
+	\item $x<y$ und $u < v \implies x+u < y+v$
+	
+	\item $x<y$ und $t>0 \implies tx <ty$
+	\item $x<y$ und $t<0 \implies tx<ty$
+	\item $0 \le x < y$ und $0  \le x < y$ und $0 \le  u < v \implies xu < yv$
+	\item $\forall_{x\neq 0}: x>0 \iff x^{-1} >0 $ 
+	\item $0<x<y \implies x^{-1}> y^{-1}$
+	\item $\forall_{x \neq 0}: x^{2}>0$ insbesondere gilt: $1>0$
+		\begin{proof}
+		Falls $x>0$ gilt: Abgeschlossenheit der Multiplikation\\
+		Sonst: $x^{2}= (-x) \cdot (-x) > 0 $ ebenfalls gilt die Abgeschlossenheit der Multiplikation
+		\end{proof}
+\end{enumerate}
+
+\subsection{Das Archimedische Axiom}
+\[
+\forall_{x \in \R}\exists_{n \in \N}: n>x  
+\]
+Daraus folgt:
+
+\begin{enumerate}[resume]
+	\item $\forall_{\varepsilon >0}\exists_{n \in  \N}: \frac{1}{n} < \varepsilon$
+	\item $\forall_{x \in  \R} \exists!_{n \in  \N}: n \le x < n+1 $ 
+\end{enumerate}
+
+\begin{theorem}[Bernulische Ungleichung]
+\[
+\forall_{x \in  \R, x \ge -1} \forall_{n \in  \N}: (1+x)^{n} \ge 1 + nx   
+\]
+\end{theorem}
+\begin{proof}
+durch Induktion.
+\begin{itemize}[label=$\lozenge$, itemsep=2ex]
+	\item \underline{IA $n=1$}
+		\[
+		1+x \ge 1+x
+		\]
+	\item \underline{ $n \to n+1$}
+		da $A(n)$ gilt: \\
+		Es bleibt zu Zeigen: $(1+x)^{n+1} \ge 1+ (n+1)x$.\\
+		Nach der Induktionsannahme gilt:
+		\begin{align*}
+			(1+x)(1+nx) &\ge 1 + (n+1)x \\
+			1+nx+x+nx^{2} &\ge  1+nx+x
+\end{align*}	
+\end{itemize}
+\end{proof}
+\begin{corollary}
+	\begin{itemize}
+		\item $\forall_{a \in \R, a>1} \forall_{K \in \R } \exists_{n \in \N}: a^{n} > K $
+	\item $\forall_{a \in \R, 0<a<1} \forall_{\varepsilon >0} \exists_{n \in  \ N} : a^{n} < \varepsilon  $  
+	\end{itemize}
+\end{corollary}
+\begin{proof}
+\begin{itemize}
+	\item Bernulische Ungleichung mit $x=a\cdot 1 > 0$ 
+	\item Analog zu (i) nur mit $\frac{1}{a}$ statt $a$ und $K=\frac{1}{\varepsilon}$   
+\end{itemize}
+\end{proof}
+
+\begin{definition}[Absolut-Betrag]
+\[
+x \in \R : |x| \coloneqq \begin{cases}
+	x &, \text{falls } x\ge 0 \\
+	-x &, \text{falls } x<0
+\end{cases} \]
+\end{definition}
+\begin{definition}[Maximum]
+\[
+\max(x,y) \coloneqq \begin{cases}
+	x &, x\ge y \\
+	y &, \text{sonst}
+\end{cases}
+\]
+\end{definition}
+\begin{theorem}
+	Für den Betrag $|•|$ gilt:
+\begin{itemize}
+	\item $\forall_{x}: |x| \ge 0 $ 
+	\item $\forall_{x,y}: |xy| = |x| \cdot |y| $
+	\item $\forall_{x,y}: |x+y| \le |x| + |y| $ 
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Wir betrachten nur Aussage 3, da die anderen Aussagen trivial sind: \\
+Weil $x\le |x|$ gilt:
+\begin{align*}
+	&x+y \le |x| + |y| \\
+	&\implies -x\le |x| \\
+	&-(x+y) = (-x) + (-y) \le (x)+(y) \\
+	&\implies |x+y| \le |x| + |y|
+\end{align*}
+\end{proof}

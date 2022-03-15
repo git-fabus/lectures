@@ -1,0 +1,28 @@
+\section{Konvergenz von Folgen}
+Eine Folge reeler Zahlen ist eine Abbildung von $\N \to \R$.
+Hierbei wird eine natürliche Zahle auf eine reele Zahl geschickt.
+\begin{align*}
+	a_{n \in \N} &= (a_1,a_2,a_3,\ldots) \\
+	a_{k \in  \Z} &= (a_k, a_{k+1},\ldots)
+\end{align*}
+\begin{example}
+	Typische Folgen:
+\begin{itemize}
+	\item $\frac{1}{n}= (1,\frac{1}{2},\frac{1}{3},\ldots)$
+	\item $(-1)^{n}= (1,-1,\ldots)$
+	\item $2^{n}= (1,2,4,8,16,\ldots)$
+	\item Fibonnacci mit $f_0 \coloneqq 0, f_1 \coloneqq 1$ und $f_n \coloneqq f_{n-1} + f_{n-2}$  
+\end{itemize}
+\end{example}
+\begin{definition}[Konvergenz]
+	Eine Folge $(a_n)_{n \in \N}$ reeler Zahlen heißt konvergent gegen $a \in \R$ falls
+	\[
+	\forall_{\varepsilon > 0}\exists_{N \in \N}: |a_n -a | < \varepsilon  
+	\]
+gilt. Äquivalent hierzu:
+\begin{align*}
+\forall_{\varepsilon > 0} \exists_{N} \forall_{n\ge N}: |a_n -a | < \frac{\varepsilon}{k} \\
+\forall_{\varepsilon>0} \exists_{N}\forall_{n>N}: |a_n-a| \le \varepsilon   
+\end{align*}
+\end{definition}
+
