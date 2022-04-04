@@ -1,0 +1,83 @@
+\section{Rechnen mit zufälligen Ereignissen}
+\begin{notation}
+Sei $\Omega$ eine Ereignismenge. Für einen Versuch $\omega \in \Omega$ und Ereignisse $A,B \in \Omega$ sagen wir:  
+\begin{itemize}
+	\item A oder B, falls $\omega \in A \cup B$.
+	\item A und B, falls $\omega \in A \cap B$
+	\item nicht A, falls $ \omega \not\in A \iff \omega \in \Omega \setminus A \eqqcolon \overline{A}$ 
+	\item sicheres Ereignis, falls $A=\Omega$
+	\item unmögliches Ereignis, falls $A=\overline{\Omega}= \emptyset$
+	\item Elementarereignis A, falls $A = \{\tilde{\omega}\}$ für $\tilde{\omega}\in \Omega$
+	\item unvereinbare Ereignisse, falls $A \cap B= \emptyset$
+	\item A zieht B nach sich, falls $A \subset B$ 
+\end{itemize}
+\end{notation}
+\begin{remark}
+	Die Begriffe gelten auch für $\bigcup_{i=1}^{n} A_i$ und $\bigcap_{i=1}^n A_i$ bzw.
+	$\bigcup_{i=1}^{\infty} A_i$ und $\bigcap_{i=1}^{\infty}A_i$ mit $A_i \subset \Omega, i \in \N$  
+\end{remark}
+\begin{theorem}
+	Sei $\Omega$ eine Menge mit $A,B,C \subset \Omega$. Dann gilt: 
+	\begin{itemize}
+		\item Kommutativgesetz:
+		\begin{itemize}
+			\item $A \cup B = B \cup A$
+			\item $A \cap B= B \cap A$ 
+		\end{itemize}
+	\item Assoziativgesetz:
+		\begin{itemize}
+		\item $(A \cup B) \cup C = A \cup (B \cup C)$
+		\item $A \cap B) \cap C = A \cap (B \cap C)$
+		\end{itemize}
+	\item Distributivgesetz:
+		\begin{itemize}
+			\item $(A \cap B) \cup C = (A \cup C) \cap (B \cup C)$
+			\item $(A \cup B) \cap C = (A \cap C) \cup (B \cap C)$ 
+		\end{itemize}
+	\item Morgansche Regeln:
+		\begin{itemize}
+			\item $\overline{A \cap B}= \overline{A}\cup \overline{B}$
+			\item $\overline{A \cup B}= \overline{A}\cap \overline{B}$ 
+		\end{itemize}
+		
+	\item ebenfalls gilt:
+		\begin{itemize}
+		\item $\overline{\bigcup_{i \in I}A_i}= \bigcap_{i \in I} \overline{A_i}$
+		\item $\overline{\bigcap_{i \in I}A_i} = \bigcup_{i \in I} \overline{A_i}$
+		\item $A \cup \emptyset = A$ und $A \cup \Omega = \Omega$
+		\item $A \cap \emptyset = \emptyset$ und $A \cap \Omega = A$  
+		\end{itemize}
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+Analysis 1
+\end{proof}
+\begin{definition}
+	Sei $\Omega$ eine Ereignismenge. Eine Menge $\mathcal{A}$ von Teilmengen von $\Omega$ heißt $\sigma$-Algebra falls:
+	\begin{enumerate}
+		\item $\Omega \in \mathcal{A}$ 
+		\item $A \in \mathcal{A} \implies \overline{A}\in \mathcal{A}$
+		\item $A_i \in \mathcal{A} \forall_{i \in \N}\implies \bigcup_{i=1}^{\infty} A_i \in \mathcal{A}$
+	\end{enumerate}
+	Das Tupel $(\Omega, \mathcal{A})$ heißt \emph{messbarer Raum}.
+\end{definition}
+\begin{example}
+
+Die Potenzmenge $\mathcal{P}(\Omega)= \{A | A \subset \Omega\} $ ist die "größtmögliche" $\sigma$-Algebra. \\
+Münzwurf: $\Omega= \{0,1\}$. \\
+$\mathcal{P}(\Omega) = \{\emptyset, \{0\} , \{1\} ,\{0,1\} \} $\\
+$\mathcal{A} = \{\emptyset\} \subset \mathcal{P}(\Omega)$ ist keine $\sigma$-Algebra!
+\end{example}
+\begin{corollary}
+	Sei $(\Omega, \mathcal{A})$ ein messbarer Raum. Dann gilt:
+	\begin{enumerate}
+		\item $\emptyset \in \mathcal{A}$
+		\item $A,B \in \mathcal{A} \implies A \setminus B \in \mathcal{A}$
+		\item $A_i \in \mathcal{A}, i \in \N \implies \bigcap_{i=1}^{\infty} A_i \in \mathcal{A}$ 
+	\end{enumerate}
+
+\end{corollary}
+\begin{proof}
+Übungsaufgabe
+\end{proof}
+

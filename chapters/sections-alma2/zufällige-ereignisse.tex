@@ -1,0 +1,26 @@
+\section{Zufällige Ereignisse}
+Die "Zutaten" für ein zufälliges Ereignis sind:
+\begin{itemize}
+	\item Zufallssituation, die (gedanklich) beliebig oft wiederholt werden kann
+	\item Ein Versuch / eine Realisierung einer Zufallssituation
+	\item Eine Menge aller möglichen Ereignisse
+\end{itemize}
+Dabei ist die Annahme, dass das Ergebnis jedes Versuch Element in der Ereignismenge ist.
+\begin{definition}[(zufälliges) Ereignis]
+Sei $\Omega$ eine \emph{Eregnismenge}. Ein \emph{(zufälliges) Ereignis} ist eine Teilmenge $A \subset \Omega$. Für ein Ergebnis eines Versuchs $\omega \in \Omega$ sagt man, dass $A$ eingetreten ist, falls $\omega \in A$.   
+\end{definition}
+\begin{remark}
+$\Omega$ kann Ereignisse enthalten, die nie eintreten! Umgekehrt müssen alle eintretenden Ereignisse Teilmenge von $\Omega$ sein.
+\end{remark}
+\begin{example}
+Typische Alltagssituationen sind Zufallssituationen: 
+\begin{itemize}
+	\item Werfen eines Würfels : $\Omega = \{1,\ldots,6\}$ \\
+		Eine gerade Zahl würfeln: $A = \{2,4,6\}\subset \Omega$
+	\item Lebensdauer eines Elektrogeräts: $\Omega= \{\omega \in \Omega | \omega \ge 0\}$ \\ 
+		Lebensdauer beträgt 3-4 Jahre: $A = \{\omega \in \Omega | 3\le \omega \le 4\}$ 
+	\item Überprüfen der Funktionsfähigkeit von Elektrogeräten: $\Omega= \{(\omega_1,\ldots,\omega_n) \in \Omega | w_i \in \{0,1\} \}$ \\
+		Es funktionieren mindestens $k \in \N$ Geräte davon: 
+		$A = \{(\omega_1,\ldots,\omega_n) \in \Omega | \sum_{i=1}^{n}w_i\ge k\}$ 
+\end{itemize}
+\end{example}
