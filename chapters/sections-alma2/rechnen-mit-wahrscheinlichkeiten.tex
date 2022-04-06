@@ -9,6 +9,7 @@ Sei $(\Omega, \mathcal{A}$ ein messbarer Raum und $A \subset \mathcal{A}$ ein Er
 	\end{itemize}
 \end{definition}
 \begin{theorem}
+	\label{thm:motivation-axiome}
 	Sei $(\Omega, \mathcal{A})$ ein messbarer Raum. Dann gilt:
 	\begin{enumerate}
 		\item $H_n(\Omega) \ge 0$ für alle $A \subset \mathcal{A}, n \in \N$
@@ -17,4 +18,115 @@ Sei $(\Omega, \mathcal{A}$ ein messbarer Raum und $A \subset \mathcal{A}$ ein Er
 	\end{enumerate}
 
 \end{theorem}
+\begin{recall}
+	$(\Omega, \mathcal{A})$ ist ein messbarer Raum. Dabei ist $\Omega$ die Ereignismenge und $\mathcal{A}$ eine $\sigma$-Algebra. Für diese müssen folgende Dinge erfüllt sein:
+	\begin{enumerate}
+		\item $\Omega \in \mathcal{A}$
+		\item $A \in \mathcal{A} \implies \overline{A}\in \mathcal{A}$
+		\item $A_i \in \mathcal{A}, i \in \N \implies \bigcup_{i=1}^{\infty} A_i \in \mathcal{A}$ 
+	\end{enumerate}
+Außerdem haben wir die absolute Häufigkeit $h_n(A)$ und die relative Häufigkeit $H_n(A) = \frac{h_n(A)}{n}$ eingeführt. Die Eigenschaften der relativen Häufigkeit sind:
+\begin{enumerate}[label=\arabic*)]
+	\item $0 \le H_n(A)$
+	\item $H_n(\Omega) = 1$
+	\item $A,B$ unvereinbar $\implies H_n(A \cup B) = H_n(A) + H_n(B)$ 
+\end{enumerate}
+\end{recall}
+\begin{notation}
+Die relative Häufigkeit konvergiert oft für $n \to \infty$ gegen eine feste Zahl.
 
+In diesem Fall schreiben wir $P(A) = \lim_{n \to \infty} H_n(A)$ und sprechen von der Wahrscheinlichkeit von A. 
+\end{notation} 
+Außerdem motiviert Satz \ref{thm:motivation-axiome} zu einer genauen Definition:
+\begin{definition}[Axiomsystem von Kolmogorov]
+	Sei $(\Omega, \mathcal{A}$ ein messbarer Raum, der ein Zufallsexperiment beschreibe. Dann erfülle eine Abbildungen die Axiome:
+	\begin{enumerate}[label=(\roman*)]
+		\item Positivität : $0\le P(A)$ für alle $A \in \mathcal{A}$
+		\item Normierung: $P(\Omega)=1$
+		\item $\sigma$-Additivität: $A_i \in \mathcal{A}, i \in \N: A_i \cap A_j = \emptyset, i\neq j$ dann gilt: $P(\bigcup_{i=1}^{\infty}) = \sum_{i=1}^{\infty}P(A_i)$.  
+	\end{enumerate}
+	Diese Axiome implizieren die Abbildung: $P\colon \mathcal{A}\to [0,1]$. 
+\end{definition}
+\begin{notation}
+Wir nennen:
+\begin{itemize}
+	\item $P$ eine Wahrscheinlichkeitsverteilung
+	\item $P(A)$ als die Wahrscheinlichkeit
+	\item $(\Omega, \mathcal{A}, P)$ einen Wahrscheinlichkeitsraum.
+\end{itemize}
+\end{notation}
+\begin{theorem}Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum dann gilt:
+	\begin{enumerate}[label=\arabic*)]
+		\item $P(\emptyset)=0$
+		\item Für endlich viele Mengen $A_i \in \mathcal{A}, i=1,\ldots,n \in \N$ paarweise unvereinbar gilt:
+				$P(\bigcup_{i=1}^{n} A_i) = \sum_{i=1}^{n}P(A_i)$
+		\item $P(A) = 1- P(\overline{A})$ für alle $A \in \mathcal{A}$
+		\item Für $A,B \in \mathcal{A}$ gilt: $P(A \cup B) = P(A)+P(B) -P(A \cap B)$
+		\item Für $A_i \in \mathcal{A}$, paarweise unvereinbar mit $\bigcup_{i=1}^{\infty} A_i = \Omega$ gilt: $\sum_{i=1}^{\infty}P(A_i)=1$.  
+	\end{enumerate}	
+\end{theorem}
+\begin{proof}
+\begin{enumerate}[label=\arabic*)]
+	\item Setze \[\begin{cases}
+			A_i = \Omega &, \text{falls } i=1 \\
+			A_i = \emptyset &, \text{sonst}
+		\end{cases} \]
+		Daraus folgt, dass $A_i, i \in \N$ paarweise unvereinbar sind.
+		\begin{align*}
+			&\implies 1= P(\Omega) = P(\bigcup_{i=1}^{\infty} A_i) = \sum_{i=1}^{\infty}P(A_i) = 1+ \sum_{i=2}^{\infty}P(\emptyset) \\
+			&\implies P(\emptyset)=0
+		\end{align*}
+	\item Setze $A_i \coloneqq \emptyset$ so folgt dies direkt aus $(iii)$.
+	\item $A \cup \overline{A} = \Omega$ und $A \cap \overline{A}= \emptyset$ nach $(ii), (iii)$ folgt: $1=P(\Omega)= P(A)+P(\overline{A})$ 
+	\item Wir definieren: $D= A \cap B, C= B \setminus A = B \cap \overline{A}$. Dann impliziert $C$m dass $A \cup B = A \cup C$, da $A,C$ unvereinbar sind. Das heißt:\[P(A \cup B) = P(A) + P(C)\]
+	Weiter gilt nun:
+	\begin{align*}
+	&\implies B= C \cup D \\
+	&\implies P(B) =P(C \cup D) = P(C) + P(D) \\
+	&\implies P(B) = P(C) +P(A \cap B) \\
+	&\implies \text{Behauptung}
+	\end{align*}
+
+	\item $1 = P(\Omega) = P( \bigcup_{i=1})^{n} A_i) = \sum_{i=1}^{n} P(A_i)$ 
+\end{enumerate}
+\end{proof}
+\begin{theorem}
+	Sei $(\Omega, \mathcal{A},P) $ ein Wahrscheinlichkeitsraum.
+	\begin{itemize}
+		\item Für eine aufsteigende Familie $A_1 \subset A_2 \subset A_3\subset \ldots\subset A_i \in \mathcal{A}$ gilt:
+			\[
+				\lim_{n \to \infty} P(A_n) = P(\lim_{n \to \infty} A_n) = P\left(\bigcup_{i=1}^{\infty} A_i\right)
+			\]
+		\item Für eine absteigende Familie $A_1 \supset A_2 \ldots \supset A_i \in \mathcal{A} $ gilt:
+			\[
+				\lim_{n \to \infty} P(A_n) = P(\lim_{n \to \infty} A_n) = P\left(\bigcap_{i=1}^{\infty} A_i \right)
+			\]
+	\end{itemize}
+
+\end{theorem}
+\begin{proof}
+Übung.
+\end{proof}
+Die einfachsten Modelle sind Laplace-Modelle:
+\begin{theorem}[Laplace-Experiment]
+	Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum mit $|\Omega|= n \in \N$ und jedes Elementarereignis hat die gleiche Wahrscheinlichkeit: $P(\{\omega\} ) = \frac{1}{n} \forall_{\omega \in \Omega}$. Dann ist:
+	\[
+		P(A) = \frac{m}{n} \text{, für alle } A \in \mathcal{A} \text{ mit }|A|=m \in \N
+	\]
+\end{theorem}
+\begin{proof}
+Elementarereignisse sind unvereinbar. Es gilt:
+\[
+	P(A) = P(\{w \in \mathcal{A}\} ) = \sum_{i=1}^{m}\frac{1}{n}=\frac{m}{n}
+\]
+\end{proof}
+\begin{remark}
+Das Laplace-Modell sagt: $P(A)= \frac{\text{Anzahl Elementarereignisse für A}}{\text{Anzahl aller Elementarereignisse}}$ 
+\end{remark}
+\begin{example}
+Das einmalige Werfen eines Würfels hat den Ereignisraum: $\Omega = \{1,\ldots,5\} $ und ist ein Laplace-Modell.\\ 
+Für $A = \{\text{durch 3 teilbar}\} = \{3,6\} $ gilt:
+\[
+P(A)=\frac{|A|}{|\Omega|}=\frac{2}{6}=\frac{1}{3}
+\]
+\end{example}
