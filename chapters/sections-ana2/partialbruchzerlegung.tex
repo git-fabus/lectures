@@ -1,0 +1,104 @@
+\section{Partialbruchzerlegung}
+\begin{lemma}[Fundamentalsatz der Algebra]
+Eigentlich ein starker Satz in der Algebra, wir verwenden ihn jedoch nur als Hilfssatz.
+
+\begin{itemize}
+	\item Sei $g$ ein Polynom in $\C$  von Grad n. Dann $\exists_{w_1,\ldots,w_k,a \in \C} $ und $v_1,\ldots,v_k \in \N$ sowie $\sum_{l>1}^{k}v_l=n, (w_l \neq w_j)$ mit:
+		\[
+			g(z) = a \prod_{l=1}^{k} (z-w_l)^{v_k}
+		\]
+		Wobei $(z-w_l)$ die Nullstelle und $v_k$ die Vielfachheit ist.   
+	\item Falls Koeffizienten von $g$ reel, dann ist $w_l$ und auch $\overline{w_l}$ eine Nullstelle. 
+\end{itemize}
+$\implies \frac{1}{a}g$ ist Produkt quadratischer Polynome:
+\[
+	(z-w_l)(z-\overline{w_l})= z^2 -2Re(w_l)z + |w_l|^2
+\]
+\end{lemma}
+\begin{lemma}[Abspaltung von Haptteilen]
+Sei $r=\frac{f}{g}$ eine rationale Funktion, wobei $f,g$ Polynome in $\C$, mit n-fachen Pol in $w \in \C$.\\
+Ohne Beschränkung der Allgemeinheit $f(w)\neq 0$ und
+\begin{equation}
+	\label{eqn:abspaltung}
+	r(z) = \frac{f(z)}{(z-w)^n \cdot h(z)}
+\end{equation}
+mit $h(w)\neq 0$. \\rationale Funktion ohne Pol in $w$:
+\[
+	H(z) = \frac{a_n}{(z-w)^n}+ \frac{a_{n-1}}{(z-w)^{n-1}}+\ldots+\frac{a_1}{z-w}
+\]
+mit $a_n\neq 0$. Dabei sind $a_n,\ldots,a_1$ sowie $r_0$ eindeutig. 
+\end{lemma}
+\begin{proof}
+	Aus \eqref{eqn:abspaltung} folgt:
+	\[
+	\frac{f(z)}{h(z)}-\frac{f(w)}{h(w)}=\frac{f(z)h(w)-h(z)f(w)}{h(z)h(w)}= \frac{(z-w)p(z}{h(z)}
+	\]
+	da $z \mapsto f(z)h(w)-h(z)f(w)$ Polynom mit Nullstellen in $w$ ist, $\exists_{\text{Polynom } p}$. 
+Nun können wir \eqref{eqn:abspaltung} verwenden und es folgt:
+\begin{align*}
+	r(z)&= \frac{f(z)}{(z-a)^n \cdot h}= \frac{1}{(z-a)^n}\frac{f(w)}{h(w)}+\frac{1}{(z-w)^{n-1}} \frac{p(z)}{h(z)} \\
+	    &=\frac{a_n}{(z-w)^n} + \frac{p(z)}{(z-w)^{n-1}h(z)}
+\end{align*}
+Nun führen wir einen Induktionsbeweis nach $n$.
+\begin{itemize}
+	\item \underline{IA $n=0$}:
+		\[
+		r=r_0
+		\]
+	\item \underline{IS $n-1 \to n$}:
+		\[
+			\implies r(z) = \frac{a_n}{(z-w)^n}+ \left( \frac{a_{n-1}}{(z-w)^{n+1}}+\ldots + \frac{a_1}{z-w} \right)
+		\]
+		Dies folgt direkt nach Induktionsannahme.
+\end{itemize}
+\end{proof}
+\begin{theorem}[Satz der Partialbruchzerlegung]
+	Sei $r=\frac{f}{g}$ rational mit Polynom $f,g$ und $g(z))= \prod_{l=1}^{k} (z-w_l)^{v_l} $ mit paarweise verschiedenen $w_l \in \C$. Dann gilt:
+	\[
+	r= \sum_{l=1}^{k}H_l +q
+	\]
+mit Hauptteilen $H_l$ in $w_l$ und Polynom $q$.   
+
+\end{theorem}
+\begin{proof}
+Iterative Abspaltung von Hauptteilen liefert:
+\begin{align*}
+	H = H_1+r_1 &= H_1+H_2+r_{2} \\
+	 &= \ldots \\
+	 &= \sum_{l=1}^{k}H_l +r_k
+\end{align*}
+mit $r_k$ rational. Wir wissen:
+\[
+	\{\text{Pole von } r_{l+1}\} \subset \{\text{Pole von }r_l\} \setminus \{w_{l+1}\} 
+\]
+Dies impliziert:
+\begin{itemize}
+	\item $r_k$ hat keinen Pol
+	\item $r_k$ ist Polynom.
+\end{itemize}
+\end{proof}
+\begin{corollary}
+	$\int r dx = \int q dx + \sum_{l=1}^{k}\sum_{j=1}^{v_l}\frac{a_{l,j}}{(x-w_l)^j}dx$ 
+\end{corollary}
+Dabei ist:
+\begin{itemize}
+	\item $\int q dx$ klar. 
+	\item $\int_{s}^{t} \frac{1}{(x-w)^j}dx$ mit $j>1$ gleich: $ -\frac{1}{j-1}\cdot \frac{1}{(x-w)^{j-1}}\big|_{s}^{t}$  
+	\item Nicht trivial: $\int_s^t \frac{a_1}{x-w}dx$. \\
+		Hierbei gilt mit $w$ taucht auch $\overline{w}$ auf (mit Zähler $\overline{a_1}$ ). Das heißt zu berechnen ist:
+\begin{align*}
+	\int_s^t \left[ \frac{a}{x-w}+ \frac{\overline{a}}{x-\overline{w}}\right] dx 
+	&= \int_s^t \frac{2Re(a)x-2Re(a\overline{w}}{x^2 - 2Re(w)x+|w|^2}dx \\
+	&= \int_s^t \frac{Bx+c}{x^2+2bx+c}dx \text{ mit } b^2 <c \\
+	&= \frac{B}{2}\int_s^t \frac{2x+2b}{x^2+2bx+c}dx + (c-Bb) \int_s^t \frac{1}{x^2+2bx+c}dx 
+\end{align*}
+Wir können nun getrennt beide Integrale ausrechnen:
+\[
+= \frac{B}{2}\log(x^2+2bx+c)\big|_s^t + \ldots
+\]
+und das etwas schwierigere Integral:
+\[
+	\int_s^t \frac{1}{x^2+2b+c}dx= \int_{\frac{s+b}{\sqrt[2]{c-b^2}}}^{\frac{t+b}{\sqrt[2]{c-b^2} }} \frac{1}{y^2+1}dy = \frac{1}{\sqrt[2]{c-b^2}} \arctan(y) \big|_{\frac{s+b}{\sqrt[2]{c-b^2} }}^{\frac{t+b}{\sqrt[2]{c-b^2} }}
+\]
+\end{itemize}
+Als Übung kann das Integral vollständig ausgeschrieben werden. Dies sei dem Leser überlassen.
