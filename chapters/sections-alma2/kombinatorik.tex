@@ -1,0 +1,78 @@
+\section{Kombinatorik}
+Wir bleiben bei endlichen Ereignismengen mit $|\Omega|= n \in \N$ Elementen. Solche Zufallsexperimente können als Urnen mit Kugeln (den Ereignissen) aufgefasst werden. Ein Elementarereignis entspricht den ziehen einer Kugel. \\
+\paragraph{Varianten:}
+\begin{itemize}
+	\item Werden die entnommenen Kugeln vor dem nächsten Experiment wieder zurückgelegt?
+	\item Ist die Reihenfolge der entnommenen Kugeln relevant?
+		\begin{itemize}
+			\item Falls ja: Variationen
+			\item Sonst: Kombinationen
+		\end{itemize}
+\end{itemize}
+\begin{theorem}
+	Sei $\Omega$ eine Menge mit $|\Omega| = n \in \N$.
+	\begin{enumerate}[label=\arabic*)]
+		\item Die Anzahl aller Kombinationen der Länge $m$ mit zurücklegen ist:
+			\[
+				| \{\{\omega_1,\ldots,\omega_n\}| \omega_1,\ldots, \omega_n \in \Omega \}| = {n+m-1 \choose m} 
+			\]
+			wobei ${n \choose k} = \frac{n!}{(n-m)!m!}$ für $n \in \N, 0\le k <n$.
+		\item Die Anzahl aller Kombinationen der Länge $m\le n$ ohne Zurücklegen ist:
+			\[
+				| \{\{\omega_1,\ldots,\omega_n\} | \omega_1, \ldots, \omega_n \in \Omega\} = {n \choose m}
+			\]
+	\end{enumerate}
+
+\end{theorem}
+\begin{proof}
+Ohne Beschränkung der Allgemeinheit: Nehme an, dass die Elemente in $\Omega$ von 1 bis n durchnummeriert sind.Zähle Elemente in 
+\[
+\{(a_1,\ldots,a_n) | 1\le a_1\le a_2 \le \ldots \le a_m \le n\} = A 
+\]
+Definiere $b_i = a_i + i-1, i = 1, \ldots, m$. Dies definiert eine Bijektion auf $A$ mit Bild:
+\[
+\{(b_1,\ldots,b_m) | 1\le b_1\le \ldots\le b_m\le n+m-1\}=B 
+\]
+Zähle nun Elemente in B. Bei der Vernachlässigung der Sortierung sind das
+\[
+	\frac{(n+m-1)!}{(n-1)!}
+\]
+Elemente. Es interessiert uns nur eines dieser $m!$ Möglichkeiten, daraus folgt die Behauptung. \\
+Der zweite Teil erfolgt Analog zu 1.
+\end{proof}
+\begin{example}[Geburtenparadoxon]
+Bestimme die Wahrscheinlichkeit, dass zwei Personen im selben Raum am gleichen Tag Geburtstag haben. Dazu sei dies der Modellrahmen:
+\begin{itemize}
+	\item $n \in \N$ die Personen im Raum
+	\item keine Geburtstage am 29. Februar
+	\item Alle restlichen 365 Tage im Jahr sind als Geburtstage alle gleich wahrscheinlich.
+\end{itemize}
+Demnach handelt es sich um ein La-Place Modell. \\
+Betrachtetes Ereignis:
+\[
+A = \{\text{mindesten 2 Personen haben am gleichen Tag Geburtstag}\} 
+\]
+Um diese Wahrscheinlichkeit zu bestimmen, betrachte man das Komplementärereignis:
+\[
+\overline{A}= \{\text{alle Personen haben an verschiedenen Tagen Geburtstag}\} 
+\]
+Wir können dies wie folgt bestimmen:
+\[
+P(\overline{A})=\frac{\text{Anzahl günstiger Ergebnisse}}{\text{Anzahl möglicher Ergebnisse}}
+\]
+Wir bestimmen nun das richtige "Urnenmodell":
+\begin{itemize}
+	\item Für $\overline{A}$ : Ziehen ohne zurücklegen und Beachtung der Reihenfolge.
+	\item Für $\Omega$ : Ziehen mit zurücklegen und Beachtung der Reihenfolge.
+\end{itemize}
+Daraus ergibt sich:
+\[
+P(A)-P(\overline{A}) = 1- \frac{365\cdot 364\cdot \ldots\cdot (365-n+1)}{365^n}
+\]
+Wir betrachten ein paar Beispielwerte:
+\begin{align*}
+	n=23 &\implies P(A) \approx 0,507 \\
+	n=70 &\implies P(A) \approx 0,999 \\
+	n=160 &\implies P(A) \approx 1
+\end{align*}
+\end{example}

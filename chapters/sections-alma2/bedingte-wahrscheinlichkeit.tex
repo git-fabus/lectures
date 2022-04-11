@@ -1,0 +1,83 @@
+\section{Bedingte Wahrscheinlichkeit}
+Betrachte die Ereignisse $A,B, A \cap B$. \\
+Absolute Häufigkeit: $h_n(A)$ \\
+Relative Häufigkeit: $H_n(A)= \frac{h_n(A)}{n}$ \\
+Wie oft tritt A ein, unter Bedingung, dass B schon eingetreten ist?
+\begin{notation}
+Wir schreiben $A|B$ für "A gegeben B"
+\[
+H_n(A|B) = \frac{h_n(A \cap B)}{h_n(B)} = \frac{H_n(A \cap B)}{H_n(B)}
+\]
+\end{notation}
+\begin{definition}[bedingte Wahrscheinlichkeit]
+	Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und $A,B \in \mathcal{A}$ mit $P(B)>0$. Die \emph{bedingte Wahrscheinlichkeit} von $A$ gegeben $B$ ist definiert als :
+	\[
+		P(A|B)= \frac{P(A \cap B)}{P(B)}
+	\]
+\end{definition}
+\begin{example}
+Würfle zwei mal mit einem idealisierten Würfel und betrachte die Ereignisse:
+\begin{align*}
+	A &= \{\text{Beim ersten Wurf wird eine 6 gewürfelt}\} \\
+	B &= \{\text{die Summe beider Würfel ist 8}\} 
+\end{align*}
+Betrachte dazu die Tabelle:
+\[
+\implies P(B) = \frac{5}{36}, P(A \cap B)= \frac{1}{36}, P(A|B)= \frac{1}{5}
+\]
+Dies ist Konsistent zur Definition. 
+\end{example}
+Faustregel: Die Rechenregel für bedingte Wahrscheinlichkeit sind die für Wahrscheinlichkeit, falls das zweite Argument fest gelassen wird.
+\begin{theorem}
+	Sei $( \Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und $A,B,C \in \mathcal{A}$ mit $P(C) > 0$ Dann gilt:
+	\begin{enumerate}
+		\item $P(C|C)=1$
+		\item $P(A|C)=1-P(\overline{A}|C)$
+		\item $P(A \cup B |C)= P(A|C) + P(B|C) -P(A \cap B| C)$ 
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+Wir zeigen:
+\begin{enumerate}
+	\item $P(C|C)= \frac{P(C \cap C)}{P(C)}= \frac{P(C)}{P(C)}= 1$
+	\item Beobachte: $A \cup \overline{A}= \Omega \implies A, \overline{A}$ unvereinbar.
+		\[
+		\implies (A \cap C) \cup (\overline{A} \cap C)=C
+		\]
+	Ebenfalls unvereinbar.
+	\begin{align*}
+		\implies 1 = \frac{P(C)}{P(C)} &= \frac{P((A \cap C) \cup (\overline{A} \cap C)}{P(C)} \\
+					       &= \frac{P(A \cap C) + P(\overline{A}+C)}{P(C)} \\
+					       &= P(A|C)+ P(\overline{A}|C)	
+	\end{align*}
+\item \begin{align*}
+		P(A \cup B| C) &= \frac{P((A \cup B) \cap C)}{P(C)} \\
+			       &= \frac{P((A \cap C) \cup (B \cap C)) \cup}{P(C)} \\
+			       &= \frac{P(A \cap C) + P(B \cap C) - P((A \cap C) \cap (B \cap C))}{P(C)} \\
+			       &= P(A |C ) + P(B|C) - P(A \cap B |C)
+\end{align*}
+\end{enumerate}
+\end{proof}
+\begin{example}[Stapelsuchproblem]
+Durchsuche 7 gleich große Bücherstapel nach einem Buch. Die Wahrscheinlichkeit, dass das Buch überhaupt in den Stapeln ist, ist $0.8$.\\
+Angenommen wir haben die ersten 6 Stapel durchsucht und das Buch nicht gefunden. Wie groß ist die Wahrscheinlichkeit, dass das Buch im letzten Stapel ist? \\
+Ereignisse:
+\[
+A_i = \{\text{Buch ist im i-ten Stapel}\}, i = 1,\ldots,7 
+\]
+mit $P(A_i)=p \in (0,1)$ unbekannt. \\
+Wir wissen: 
+\begin{align*}
+	0.8&= P(A_1 \cup \ldots \cup A_7) \\
+	   &= P(A_1)+ \ldots + P(A_7) \\
+	   &= 7p \\
+	   &\implies p = \frac{0.8}{7} \approx 0.114 \\
+\end{align*}
+\begin{align*}
+	P(A_7| \overline{A_1 \cup \ldots \cup A_6)}&= P(A_7 | \overline{A_1} \cap \ldots \cap \overline{A_6}) \\
+						   &= \frac{P(A_7}{1-P(A_1 \cup \ldots \cup A_6} \\
+						   &= \frac{p}{1-6p} \\
+						   &\approx 0.3636
+\end{align*}
+\end{example}
+

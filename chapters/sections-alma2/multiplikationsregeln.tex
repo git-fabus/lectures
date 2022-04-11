@@ -1,0 +1,39 @@
+\section{Multiplikationsregeln}
+Umstellen der Definition der bedingten Wahrscheinlichkeit liefert:
+\[
+P(A \cap B) = \begin{cases}
+	P(A|B) \cdot P(B) \\
+	P(B|A) \cdot P(A)
+\end{cases}
+\]
+\begin{example}[Notenverteilung]
+Es sei:
+\begin{itemize}
+	\item 70 Prozent aller Studierenden haben eine Note, die besser als 3 ist
+	\item Davon sind 25 Prozent, die eine bessere Note als 2 haben.
+\end{itemize}
+Berechne die Wahrscheinlichkeit, dass eine beliebige Person in der Menge mit einer besseren Note als 2 abschließt. Ereignisse:
+\begin{align*}
+	A&= \{\text{Note} \le 2\} \\
+	B&= \{\text{Note} \le 3\} 
+\end{align*}
+Nach der Multiplikationsregel:
+\[
+P(A)= P(A \cap B) = P(A|B) \cdot P(B) = 0.175
+\]
+\end{example}
+\begin{theorem}[erweiterte Multiplikationsregel]
+	Sei $(\Omega, \mathcal{A}, P$ ein Wahrscheinlichkeitsraum und $A_1,\ldots,A_n \in \mathcal{A}$ mit $P(A_1 \cap \ldots \cap A_{n-1}>0$. Dann giltː
+	\[
+		P(A_1 \cap \ldots \cap A_n) = P(A_1)\cdot P(A_2 |A_1)\cdot  P(A_3| A_1 \cap A_2) \ldots P(A_n| A_1 \cap \ldots \cap A_{n-1})
+	\]
+\end{theorem}
+\begin{proof}
+Induktion. % Seite 24 in V1G6
+\end{proof}
+Die erweiterte Multiplikationsregel erlaubt die Darstellung eines mehrstufigen Zufallsexperiment als Baumdiagramm.
+\begin{example}[Ziegenproblem]
+	Wähle eine aus drei Türen. Hinter einer der Türen befindet sich ein Auto, hinter den anderen beiden nur Ziegen. Nun öffnet ein anderer eine der Türen, in dem das Auto nicht steht. \\
+	Man darf sich nun erneut entscheiden. Ist dies Vorteilhaft?
+% Fancy Diagramme Seite 25 in V1G6
+\end{example}
