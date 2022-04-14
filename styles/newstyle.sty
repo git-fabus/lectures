@@ -1,0 +1,264 @@
+% all the packages
+\usepackage{appendix}   % for the appendix
+\usepackage{amsmath, amssymb, amsthm, mathtools}      % general math stuff
+\usepackage{stmaryrd}   % \mapsfrom
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}           % better interplay with bm
+\usepackage{extarrows}  % \xlongequal
+\usepackage{fontspec}   % for font stuff
+\usepackage{hyperref}   % for internal (and external) links
+\usepackage{enumitem}   % more control over enumerates
+\usepackage[automark, headsepline]{scrlayer-scrpage}  %for headers
+\usepackage{csquotes}   % for proper quotation marks
+\usepackage{microtype}  % for typography
+\usepackage[backend=biber,style=alphabetic]{biblatex} %for bibliography
+\usepackage{multirow}   % for multicolumn
+\usepackage{bm}         % for bold math symbols
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[german,onelanguage,lined,algonl,boxed]{algorithm2e}
+% fonts for titlepage
+% \setkomafont{titlehead}{\ttfamily}
+% \setkomafont{subject}{\Large}
+% \setkomafont{author}{\Large}
+% \setkomafont{date}{\Large}
+\setkomafont{publishers}{\normalsize}
+
+
+% settings for scrlayer-scrpage
+\pagestyle{scrheadings}
+\automark{section}
+
+
+% table of contents
+\setcounter{tocdepth}{1}        % no subsections in the toc
+\renewcommand{\@pnumwidth}{2em} % more space for page numbers, default is 1.55
+
+
+% no unplaned surprises with \cite
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+
+% colours for young tableaux
+\definecolor{light-gray}{gray}{0.9}
+
+
+% colours for hyperref
+\hypersetup{
+    colorlinks,
+    linkcolor={red!35!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+
+% prevents breaking inline math around binary or relationship symbols
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+
+\newcounter{everything}[chapter]
+
+
+% don't reset section counter
+\counterwithout{section}{chapter}
+% reset equation counters between sections
+\counterwithin*{equation}{section}
+\counterwithin{section}{part}
+
+% printing of counters
+\renewcommand{\theeverything}{\thesection.\arabic{everything}}
+\renewcommand{\theclaim}{\arabic{claim}}
+
+
+
+
+% how counters are printed
+\renewcommand{\thepart}{\Roman{part}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\renewcommand{\theeverything}{\thesection.\arabic{everything}}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand*{\partformat}{\partname~\thepart}
+
+
+% settings for list like environments
+\setlist[enumerate, 1]{leftmargin=*, align=left, label=\alph*)}
+\setlist[enumerate, 2]{leftmargin=*, align=left, label=\arabic*)}
+\setlist[description, 1]{leftmargin=\labelwidth, font=\normalfont}
+\setlist[description, 2]{leftmargin=\labelwidth, font=\normalfont}
+\setlist[itemize, 1]{leftmargin=*}
+\setlist[itemize, 2]{leftmargin=*, label={\textopenbullet}}
+\setlist[itemize, 3]{leftmargin=*}
+
+
+
+
+
+% tikz
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows}
+\usetikzlibrary{intersections, angles, quotes, calc, positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.13}
+
+
+\tikzset{
+    force/.style={thick, {Circle[length=2pt]}-stealth, shorten <=-1pt}
+}
+
+% theorems
+\makeatother
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em}
+
+
+\theoremstyle{definition}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{ForestGreen!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=ForestGreen, backgroundcolor=ForestGreen!5,
+    }
+]{thmgreenbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue, backgroundcolor=NavyBlue!5,
+    }
+]{thmbluebox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue
+    }
+]{thmblueline}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{RawSienna!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=RawSienna, backgroundcolor=RawSienna!5,
+    }
+]{thmredbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{RawSienna!70!black}, bodyfont=\normalfont,
+    numbered=no,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=RawSienna, backgroundcolor=RawSienna!1,
+    },
+    qed=\qedsymbol
+]{thmproofbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    numbered=no,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue, backgroundcolor=NavyBlue!1,
+    },
+]{thmexplanationbox}
+
+
+
+% \declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+% \declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+% \declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+% \declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+% \declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+% \declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[style=thmbluebox, numbered=no, name=Beispiel]{example}
+\declaretheorem[style=thmredbox, name=Proposition]{prop}
+\declaretheorem[style=thmredbox, name=Satz]{theorem}
+\declaretheorem[style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[style=thmredbox, numbered=no, name=Korollar]{corollary}
+
+\declaretheorem[style=thmproofbox, name=Proof]{replacementproof}
+\renewenvironment{proof}[1][\proofname]{\vspace{-10pt}\begin{replacementproof}}{\end{replacementproof}}
+
+
+\declaretheorem[style=thmexplanationbox, name=Proof]{tmpexplanation}
+\newenvironment{explanation}[1][]{\vspace{-10pt}\begin{tmpexplanation}}{\end{tmpexplanation}}
+
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+\declaretheorem[style=thmblueline, numbered=no, name=Wiederholung]{recall}
+\newtheorem*{notation}{Notation}
+\newtheorem*{problem}{Problem}
+
+
+
+
+
+
+
+
+
+
+% dotcup for disjoint unions
+\newcommand{\dotcup}{\ensuremath{\mathrel{\mathaccent\cdot\cup}}}
+\newcommand{\bigdotcup}{\charfusion[\mathop]{\bigcup}{\cdot}}
+
+
+% technical stuff for \bigdotcup
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+
+% copied from https://tex.stackexchange.com/questions/198771/align-in-substack
+\makeatletter
+\newcommand{\subalign}[1]{%
+  \vcenter{%
+    \Let@ \restore@math@cr \default@tag
+    \baselineskip\fontdimen10 \scriptfont\tw@
+    \advance\baselineskip\fontdimen12 \scriptfont\tw@
+    \lineskip\thr@@\fontdimen8 \scriptfont\thr@@
+    \lineskiplimit\lineskip
+    \ialign{\hfil$\m@th\scriptstyle##$&$\m@th\scriptstyle{}##$\crcr
+      #1\crcr
+    }%
+  }
+}
+\makeatother
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\newcommand\K{\ensuremath{\mathbb{K}}}
+
+\RequirePackage{hyperref}
+\RequirePackage[
+	capitalise,
+	noabbrev,
+	nameinlink
+]{cleveref}
