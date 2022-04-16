@@ -1,0 +1,152 @@
+\section{Vertauschen von Limes-Bildung mit Integration und Differentiation}
+\begin{definition}
+Sei $K$ eine Menge und $f,f_n \colon K \to \C$. Dann konvergiert $f_n$ gleichmäßig gegen $f$ genau dann wenn:
+\begin{itemize}
+\item $\forall_{\varepsilon>0}\exists_{N}\forall_{n\ge N}\forall_{x \in K}: |f_n(x)-f(x)| < \varepsilon    $ 
+\item $\|f_n -f\|_K \to 0$ für $n \to \infty$  mit Supremumsnorm $\|g\|_K \coloneqq sup \{|g(x)| : x \in K\} $ 
+\end{itemize}
+\end{definition}
+\begin{remark}
+Sollte die Norm eindeutig sein lassen wir das $_K$ weg. 
+\end{remark}
+\begin{corollary}
+$f_n \to f$ gleichmäßig auf $K \implies f_n \to f$ punktweise auf $K$. Die Umkehrung gilt nicht!  
+\end{corollary}
+\begin{theorem}
+	\label{thm:satz1}
+	$f,f_n \colon K \to \C , K \subset \C$. Falls $f_n$ stetig, $f_n \to f$ gleichmäßig konvergent $\implies f$  stetig.
+\end{theorem}
+\begin{proof}
+Sei $x \in K, \varepsilon>0$.
+\[
+\implies \exists_{N}\forall_{n \ge N}: |f_N(z)- f(z)| < \varepsilon \forall_{z \in K}   
+\]
+Stetigkeit von $f_N: \exists_{\delta >0}\forall_{y} $ mit $|x-y| < \delta$:
+\[
+	|f_N(x) -f_N(y)| < \varepsilon
+\]
+Daraus folgt:
+\begin{align*}
+	|f(x)-f(y)| &\le  | f(x)-f_N(x)| + |f_N(x)-f_N(y)| + | f_N(y)-f(y)| \\
+	&\le 3 \varepsilon
+\end{align*}
+\end{proof}
+\begin{remark}
+Gilt nicht, wenn man gleichmäßig durch punktweise ersetzt.
+\end{remark}
+\begin{theorem}
+	\label{thm:satz2}
+	Für $K=[a,b] \subset \R$ und $f_n \colon K \to \R $ gilt: Falls $f_n$ integrierbar und $f_n \to f$ gleichmäßig konvergent dann ist $f$ integrierbar und:
+	\[
+	\int_a^b f_n dx \to \int_a^b f dx
+	\]
+\end{theorem}
+\begin{proof}
+Wir bemerken:
+\begin{itemize}
+	\item $\forall_{\varepsilon>0}: \exists_{n}: |f_n-f| \le \varepsilon$ auf $K$
+	\item $\exists_{\varphi, \psi \in T_{a,b}} $ mit $\varphi \le f_n \le \psi$ und $\int_a^b(\psi - \varphi) \le \varepsilon$ \\
+		Wir definieren:
+		\begin{align*}
+			\tilde{\psi} &\coloneqq \psi + \varepsilon \\
+			\tilde{\varphi} &\coloneqq \varphi - \varepsilon \\
+					&\implies \tilde{\varphi} \le f \le \tilde{\psi} \\
+					&\implies \int_a^b(\tilde{\psi} - \tilde{\varphi})dx \le \varepsilon + 2 \varepsilon(b-a) = \tilde{\varepsilon}
+		\end{align*}
+Damit ist $f$ integrierbar.
+Außerdem gilt: 
+\begin{align*}
+	\left| \int_a^b f dx - \int_a^b f_n dx \right| &\le \int_a^b |f-f_n| dx \\
+						       &\le \varepsilon \cdot (b-a)
+\end{align*}		
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+	Wir betrachten Satz \ref{thm:satz2}:
+	\begin{itemize}
+		\item Diese Folgerung gilt nicht bei punktweiser Konvergenz $f_n \to f$ 
+		\item Das gleiche gilt für uneigentlichen Integralen allerdings auf unbeschränkten Intervallen.
+		\item Es gilt insbesonders: $f_n$ stetig $\implies f_n$ integrierbar.
+
+	\end{itemize}
+\end{remark}
+\begin{theorem}
+	Seien $f_n \colon [a,b] \to \R $ stetig differenzierbar $f_n \to f$ punktweise konvergent und $f_n'$ konvergieren gleichmäßig (gegen ein $g$ ) Dann gilt: $f$ stetig differenzierbar und $f'= \lim_{n \to \infty} f_n'$ 
+\end{theorem}
+\begin{proof}
+	Nach Satz \ref{thm:satz1} : Aus $f_n' \to g$ gleichmäßig und Stetigkeit auf $f_n'$ folgt: $g$ ist stetig. \\
+	Nach dem Hauptsatz der Differential und Integralrechnung folgt: $f_n(x) =f_n(a) + \int_a^x f_n'(y) dy$. Nach Satz \ref{thm:satz2} folgt weiter: $f(x)=f(a) + \int_a^x g(y) dy$. Nach erneuten Verwendung des HDI gilt: $f'=g$   
+\end{proof}
+\begin{example}
+Wir betrachten:
+$f_n(x) = \frac{1}{n}\sin(nx)$ auf $\R$. Die Funktionenfolge $f_n \to 0$ ist gleichmäßig konvergent auf $\R$, aber $f_n'(x) = \cos(nx)$ konvergiert nicht (insbesonders nicht gegen $f'=0$.   
+\end{example}
+\begin{theorem}[Weierstraß Kriterium]
+	\label{thm:satz4}
+	Seien $f_n \colon K \to \C $ mit $\sum_{n=1}^{\infty}\|f_n\|_K < \infty$ dann konvergiert $\sum_{n=1}^{\infty}f_n$ absolut und gleichmäßig auf $K$ gegen eine Funktion $F \colon K \to \C $ 
+\end{theorem}
+\begin{proof}
+Es gilt:
+\begin{itemize}
+	\item $\forall_{x \in K}: F_n(x) \coloneqq \sum_{l=1}^{n}f_l(x) $ konvergiert absolut gegen $\sum_{l=1}^{\infty}f_l(x)$ nach dm Majoranten-Kriterium, da:
+		\[
+		\sum_{l=1}^{n}|f_l(x)| \le \sum_{l=1}^{n}\|f_l\|_K \le \sum_{l=1}^{\infty}\|f_l\|_K
+		\]
+	\item $\forall_{\varepsilon>0}:\exists_{N}: \sum_{l=1}^{\infty}\|f_l\|_K <\varepsilon  $.
+		\begin{align*}
+		&\implies \forall_{x \in K}, \forall_{n \ge N}: |F(x) -F_n(x)| \ge \sum_{l=nN+1}^{\infty}|f_l(x)| \le \sum_{l=N+1}^{\infty}\|f_l\|_K < \varepsilon \\
+		&\implies F_n-F \text{ gleichmäßig auf K}
+		\end{align*}
+\end{itemize}
+\end{proof}
+\begin{example}
+ Sei	$f_n(x)= \frac{\cos(nx)}{n^2}$ dann gilt: $\sum_{n=1}^{\infty}f_n$ konvergiert absolut und gleichmäßig auf $\R$ denn $\sum_{n=1}^{\infty} \|f_n\|= \sum_{n=1}^{\infty}	\frac{1}{n^2}<\infty$ 
+\end{example}
+\subsection{Potenzreihen}
+\begin{definition}[Potenzreihen]
+	Sei $a,c_n \in \C (\forall_{n \in \N)} $. Die Reihe $f(z)=\sum_{n=1}^{\infty}c_n(z-a)^{n}$ heißt \emph{Potenzreihe zum Entwicklungspunkt $a \in \C$} mit Koeffizienten $c_n$. \\
+	Dabei heißt $R \coloneqq sup \{|z-a| : \sum_{n=0}^{\infty}c_n(z-a)^{n} \text{ konvergent}\} \in [0,\infty]$ \emph{Konvergenzradius} der Potenzreihe.
+\end{definition}
+\begin{theorem}
+	\label{thm:satz5}
+	Es gilt:
+	\begin{itemize}
+		\item Die Potenzreihe $f(z) = \sum_{n=1}^{\infty}c_n(z-a)^n$ konvergiert für jedes $r \in (0,R)$ absolut und gleichmäßig im abgeschlossenen Kreis $K_r(a) \coloneqq \{z \in \C : |z-a| \le r\} $ 
+		\item Die Potenzreihe konvergiert im offenen Kreis $B_R(a)\coloneqq \{z \in \C : |z-a| <R \} $ und definiert dort eine stetige Funktion $f \colon B_R(a) \to \C $
+		\item die Hadmardsche Formel $R =(\limsup_{n \to \infty} |c_n|^{\frac{1}{n})^{-1}}$ (mit $0^{-1}\coloneqq \infty$ und $\infty^{-1}\coloneqq_0$)   
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	Wir zeigen:
+\begin{itemize}
+	\item Zu gegebenen $r<R$ wähle $z_1 \in \C$ mit $r < |z_1-a|$ und $f_n(z)\coloneqq \sum_{l=0}^{n}c_l(z-a)^{l}$ konvergiert für $n \to \infty$.
+		\begin{align*}
+		&\implies \exists_{M \in \R}: | c_l (z_1-a)^{l}|\le M \\
+		&\implies \forall_{z \in K_r(a)}: | c_l(z-a)^{l}\le |c_l(z_1-a)^{l}|\cdot |\frac{za}{z_1a}|^{l} \le  M \cdot \upsilon 
+		\end{align*}
+		wobei $0< \upsilon <1$. \\
+		Vergleich mit geometrischer Reihe impliziert, dass $\sum_{l=1}^{\infty}c_l(z-a)^{l}$ absolut konvergiert für jedes $z \in K_r(a)$ sowie (nach dem Weierstraß-Kriterium \ref{thm:satz4}) auch gleichmäßig in $K_r(a)$ ist.
+	\item $\forall_{z \in B_R(a)}:\exists_{r \in (0,R)}: z \in K_r(a) \implies f_n \to f  $ gleichmäßig in $K_r(a)$. Daraus folgt mit Satz \ref{thm:satz1}: Limes $f$ ist stetig in $K_r(a)$ und $f$ ist stetig in $B_R(a)$
+	\item Setze $R_* \coloneqq (\limsup_{n \to \infty} |c_n|^{\frac{1}{n}})^{-1}$. Dann gilt mit dem Wurzelkriterium:
+		\[
+		|z-a| < R_* \implies \limsup_{n \to \infty} |c_n(z-a)^n|^{\frac{1}{n}}<1
+		\]
+		Dies impliziert die Konvergenz von $\sum_{n=1}^{\infty}c_n(z-a)^{n}$ und demnach ist $R=R_*$.  
+\end{itemize}
+\end{proof}
+\begin{remark}
+In jeden Punkt des Komplements des abgeschlossenen Kreises $K_R(a)$ divergiert die Reihe. AU der Kreislinie $\delta K_R(a) = \{z \in \C :| z-a|=R\} $ können Punkte liegen in denen die Reihe konvergiert oder divergiert. 
+\end{remark}
+\begin{example}
+Für:
+\begin{itemize}
+	\item $c_n=n^{n} \implies R=0$
+	\item
+		\begin{itemize}
+			\item $f(z) = \sum_{n=0}^{\infty}z^{n} \implies R=1$. \\Für $|z|<1:f(z)=\frac{1}{1-z}$
+			\item $f(z)= \frac{1}{2}\sum_{n=0}^{\infty}\left( \frac{1+z}{2} \right)^n \implies R=2$. \\
+				Für $|z+1| <2 : f(z)= \frac{1}{2}\left( \frac{1}{1-\frac{1+z}{2}} \right)= \frac{1}{1-z}$ 
+		\end{itemize}
+\end{itemize}
+\end{example}
