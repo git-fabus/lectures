@@ -1,0 +1,104 @@
+\section{Uneigentliche Riemann Integrale}
+Wir wollen die Definition von den uns bekannten Integralen erweitern, sodass $a \vee b \not\in \R$ oder $f$ nicht definiert in $a$ oder $b$ ist.
+\begin{definition}
+	Wir definieren:
+	\begin{itemize}
+		\item 
+	Sei $I = [a,b)$ mit $a \in \R, b \in \R \cup \{+\infty\}$ und $f \colon I \to \R $ mit $f[a,\beta] \to \R$ integrierbar für alle $\beta < b$. Falls 
+	\[
+	\lim_{\beta \to b} \int_a^b f(x) dx
+	\]
+	existiert in $\R$ so heißt f \emph{uneigentliche Riemannintegrierbar auf $I$ } und man schreibt:
+	\[
+		\int_a^b f(x) dx = \lim_{\beta \to b} \int_a^{\beta} f(x) dx
+	\]
+\item Analog für $I = (a,b]$ mit $a \in \R \cup \{-\infty\} , b \in \R$
+\item Für $I = (a,b)$ mit $a \in [-\infty,\infty), b \in (-\infty,\infty]$ schreibt man:
+	\[
+		\int_a^b f(x) dx = \lim_{\beta \to b} \int_c^{\beta} f(x) dx + \lim_{\alpha \to a} \int_{\alpha}^c f(x) dx
+	\]
+	falls für ein $c \in (a,b)$ diese Limiten existieren.
+\end{itemize}
+\end{definition}
+\begin{example}
+Wir betrachten die uns aus der Analysis 1 schon bekannte Riemannsche Zeta-Funktion als eine Abwandlung eines Integrals:
+\begin{enumerate}
+	\item 
+\begin{itemize}
+	\item \underline{Für $s > 1$}: \begin{align*}
+			\int_1^{\infty} \frac{1}{x^s}dx &= \lim_{\beta \to \infty} \int_1^{\beta} \frac{1}{x^s}dx \\
+							&= \lim_{\beta \to \infty} \left[ \frac{1}{1-s} x^{1-s} \right]_1^{\beta} \\
+							&= \lim_{\beta \to \infty} \frac{1}{1-s} (-1+\beta^{1-s})=\frac{1}{s-1}
+	\end{align*}
+\item \underline{Für $s\le 1$}:
+	\[
+		\int_1^{\beta} \frac{1}{x^s}dx \underset{\beta \to \infty}{\to} \infty
+	\]
+\end{itemize}
+\item \begin{itemize}
+
+\item \underline{Für $s<1$}:
+	\[
+		\int_{\alpha}^1 \frac{1}{x^s} dx = \lim_{\alpha \to 0} \frac{1}{x^s} = \frac{1}{1-s}
+	\]
+\item \underline{Für $s \ge 1$}:
+	\[
+		\int_{\alpha}^1 \frac{1}{x^s}dx \to \infty
+	\]
+\end{itemize}
+\item \underline{Sei $c >0$}:
+	\[
+		\int_a^{\infty} e^{-cx} dx = \lim_{\beta \to \infty} \left[ \frac{1}{-c}e^{-cx} \right]_0^{\beta} = \frac{1}{c}
+	\]
+
+\item Gamma-Funktion (Euler 1729):
+	\[
+		\Gamma (x)= \int_0^{\infty} t^{x-1} e^{-t} dt , x>0
+	\]
+	Dieses Integral existiert $\forall_{x>0}$, denn:
+	\begin{itemize}
+		\item  in $(0,1]$ ist $0\le t^{x-1}e^{-t} \le t^{x-1}$
+		\item in $[1,\infty)$ ist $0 \le t^{x-1}e^{-t} \le  c \cdot e^{-\frac{t}{2}}$ mit $c \coloneqq c(x)$ 
+	\end{itemize}
+	und aus den vorherigen Beispielen wissen wir, dass beide Integrale in $\R$ existieren.
+\end{enumerate}
+\end{example}
+\begin{theorem}[Eigenschaften der $\Gamma$-Funktion]
+	Es gilt:
+	\begin{itemize}
+		\item $\Gamma(x-1)= x \Gamma(x) \forall_{x>0} $
+		\item $\Gamma(1)=1$
+		\item $\Gamma(n)= (n-1)! \forall_{n \in \N} $ 
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+Wir zeigen die erste Eigenschaft mittels Partieller Integration:
+\[
+	\int_{\alpha}^{\beta} t^x e^{-t} dt = \left[ -t^c e^{-t} \right]_{\alpha}^{\beta} + \int_{\alpha}^{\beta} xt^{x-1} e^{-t} dt
+\]
+Daraus folgt die Aussage direkt. Nach Beispiel 3 folgt auch die Eigenschaft, dass $\Gamma(1) = 1$ ist. Die letzte Eigenschaft zeige man mit Induktion nach n mit 2 als Anfang und 1 als Schritt. 
+\end{proof}
+\begin{theorem}[Integralvergleichs Kriterium]
+	Sei $f[1,\infty) \to \R_+$ monoton fallend. Dann gilt:
+	\[
+		\int_1^{\infty} f(x) dx \iff \sum_{n=1}^{\infty}f(n) < \infty
+	\]
+
+\end{theorem}
+\begin{proof}
+Definiere: $\varphi, \psi \colon [1,\infty) \to \R $ als Treppenfunktion. \\
+$\psi(x) = f(n)$  und $\varphi (x) = f(n+1)$ für $x \in [n,n+1)$. Da die Funktion monoton fallend ist folgt:
+\[
+\varphi \le f \le \psi
+\]
+und $\forall_{N \in \N }$:
+\[
+\sum_{n=2}^{N}f(n) = \int_1^n \varphi(x)dx \le \int_1^N f(x) dx \le \int_1^N \psi (x) dx = \sum_{n=1}^{N-1}f(n)
+\]
+Demnach falls $\int_1^{\infty} f(x) dx$ oder $\sum_{k=1}^{\infty} f(n)$ konvergent ist das jeweilige andere ebenfalls konvergent.
+\end{proof}
+\begin{example}
+\[
+	\sum_{n=1}^{\infty}\frac{1}{n^s} < \infty \iff s>1 \iff \int_1^{\infty} \frac{1}{x^s}dx < \infty
+\]
+\end{example}
