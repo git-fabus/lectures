@@ -37,3 +37,66 @@ Die erweiterte Multiplikationsregel erlaubt die Darstellung eines mehrstufigen Z
 	Man darf sich nun erneut entscheiden. Ist dies Vorteilhaft?
 % Fancy Diagramme Seite 25 in V1G6
 \end{example}
+
+\begin{theorem}[Satz von der totalen Wahrscheinlichkeit]
+    \label{thm:totale_wahrscheinlichkeit}
+    Sei $(\Omega, \mc{A},P)$ ein Wahrscheinlichkeitsraum und $B_1,B_2,\ldots$ $A$ eine Zerlegung von $\Omega$ das heißt \[
+        \bigcup_{i=1}^{\infty}B_{i} \Omega \text{ mit } B_i \cap B_j , i\neq j
+    .\]    
+    Dann gilt für ein beliebiges Ereignis $A \in \mc{A}$, dass \[
+    P(A)=\sum_{i=1}^{\infty} P(A |B_i)P(B_i)
+    .\]  
+    Dabei werden alle Terme mit $P(B_i)=0$ weggelassen.
+\end{theorem}
+\begin{proof}
+Rechne: \[
+    A = A \cap \Omega = A \cap  (\bigcup_{i=1}^{\infty}B_i)= \bigcup_{i=1}^{\infty} (A \cap B_i)
+.\]
+Es gilt weiter:
+\begin{align*}
+    P(A)= P(\bigcup_{i=1}^{\infty}) &= \sum_{i=1}^{\infty} P(A \cap B_i) \\
+                                    &= \sum_{i=1}^{\infty} P(A|B_i) P(B_i)
+.\end{align*}
+\end{proof}
+
+
+\begin{theorem}
+    [Bayesche Formel] Mit den gleichen Voraussetzungen wie in Satz \ref{thm:totale_wahrscheinlichkeit} gilt die Bayesche Formel: \[
+    P(B_j|A)= \frac{P(A|B_j) P(B_j)}{P(A)}= \frac{P(A|B_j)P(B_j)}{\sum_{i=1}^{\infty} P(A|B_i)P(B_i)},j \in \N
+    .\] 
+\end{theorem}
+\begin{proof}
+Mittels der Multiplikationsregeln und dem Satz der totalen Wahrscheinlichkeit folgt die Behauptung direkt.
+\end{proof}
+
+\begin{example}
+Betrachte die Statisk einer Netzbetreibers für Störungen innerhalb eines Jahres:
+\begin{itemize}
+    \item 50 \% aller Störungen sind an Switches 
+    \item 30 \% aller Störungen sind an Routern 
+    \item 20 \% aller Störungen sind nicht klar zugeordnet
+\end{itemize}
+Kurzfristig können gelöst werden:
+\begin{itemize}
+    \item 50 \% der Störungen an Switches 
+    \item 30 \% der Störungen an Routern 
+    \item 5 \% der Störungen von den nicht klar zugeordneten Störungen.
+\end{itemize}
+\paragraph{Wie viel Prozent aller Störungen können spontan gelöst werden?}
+Wir betrachten die Ereignisse: 
+\begin{align*}
+    B_1 &= \{ \text{Störung an einem Switch}\} \\
+    B_2 &= \{\text{ Störungen an einem Router }\} \\
+    B_3 &= \{\text{sonstige Störung}\} 
+.\end{align*}
+Die Wahrscheinlichkeiten dazu sind:
+\begin{align*}
+    P(B_1)&= 0.5\\ P(B_2)&=0.3 \\ P(B_3)&=0.2
+\end{align*} mit $B_1 \cup B_2 \cup B_3 = \Omega$. Außerdem ist $A = \{\text{Störung konnte spontan behoben werden}\} $. Nach dem Satz der totalen Wahrscheinlichkeit gilt:
+\begin{align*}
+    P(A) &= P(A|B_1)P(B_1)+P(A|B_2)P(B_2)+P(A|B_3)P(B_3)\\
+         &= 0.5 \cdot 0.5 + 0.3 \cdot 0.3 + 0.05\cdot 0.2 \\
+         &\implies 35 \text{\% aller Störungen konnten spontan Behoben werden}
+.\end{align*}%Zweites Beispiel hinzufügen Seite 31
+\end{example}
+
