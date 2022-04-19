@@ -1,1 +1,40 @@
 \section{Punktexperimente}
+\paragraph{Frage:}
+Wie können wir das Hintereinanderausführen von Zufallsexperimenten beschreiben? Betrachte Wahrscheinlichkeitsräume $(\Omega_i,\mc{A}_i,P_i)$, $i=1,\ldots,n$.
+
+\paragraph{Idee:}
+Kopple die Wahrscheinlichkeitsräume stochastisch unabhängig $\implies \Omega = \Omega_1 \times \ldots\times \Omega_n$ 
+\paragraph{Frage:}
+Wie sieht eine passende $\sigma$-Algebra aus?. Der kanonische Kanditat \[
+    Q = \{A_1\times \ldots \times A_n | A_i \in \mc{A}, i=1,\ldots,n\}
+\]  
+ist keine $\sigma$-Algebra. 
+
+\begin{theorem}
+    Sei $\Omega$ eine Ereignismenge und $S \subset \mc{P}(\Omega)$. Dann ist $\sigma(S)= \bigcap_{S \subset A \subset \mc{P}}\mc{A}$ die kleinste $\sigma$-Algebra mit $S \subset \sigma(S)$. Sie wird die von S erzeugte $\sigma$-Algebra genannt.     
+\end{theorem}
+\begin{proof}
+Betrachte \[
+    M=\{S \subset \mc{A} \subset \mc{P} | \mc{A} \text{ ist  } \sigma \text{-Algebra}\} 
+.\] 
+Dann ist $\sigma(S)$ wohldefiniert.
+Überprüfe die Bedingungen einer $\sigma$-Algebra :
+\begin{enumerate}
+    \item $\Omega \in \mc{A} \forall_{A \in M} \implies \Omega \in  \sigma(S)$ 
+    \item \begin{align*}
+        A \in \sigma(S) &\implies A \in \mc{A}, \forall_{A \in M} \\
+                        &\implies \overline{A}\in \mc{A} \\
+        &\implies \overline{A}\in \sigma(S)
+    \end{align*}
+\item Sei $A_i \in \sigma(S), i \in \N$.
+    \begin{align*}
+        &\implies A_i \in \mc{A} \\
+        &\implies \bigcup_{i=1}^{\infty} A_i \in \mc{A} \\
+        &\implies \bigcup_{i=1}^{\infty} A_i \in \sigma(S)
+    \end{align*}
+\end{enumerate}
+Daraus folgt, dass $\sigma(S)$ eine $\sigma$-Algebra ist. Nach Definition sogar die kleinste. 
+\end{proof}
+
+
+%Seite 37 abwärts fehlt
