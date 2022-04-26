@@ -72,6 +72,7 @@ Außerdem gilt:
 	\end{itemize}
 \end{remark}
 \begin{theorem}
+    \label{thm:satz3}
 	Seien $f_n \colon [a,b] \to \R $ stetig differenzierbar $f_n \to f$ punktweise konvergent und $f_n'$ konvergieren gleichmäßig (gegen ein $g$ ) Dann gilt: $f$ stetig differenzierbar und $f'= \lim_{n \to \infty} f_n'$ 
 \end{theorem}
 \begin{proof}
@@ -103,7 +104,7 @@ Es gilt:
 \begin{example}
  Sei	$f_n(x)= \frac{\cos(nx)}{n^2}$ dann gilt: $\sum_{n=1}^{\infty}f_n$ konvergiert absolut und gleichmäßig auf $\R$ denn $\sum_{n=1}^{\infty} \|f_n\|= \sum_{n=1}^{\infty}	\frac{1}{n^2}<\infty$ 
 \end{example}
-\subsection{Potenzreihen}
+\section{Potenzreihen}
 \begin{definition}[Potenzreihen]
 	Sei $a,c_n \in \C (\forall_{n \in \N)} $. Die Reihe $f(z)=\sum_{n=1}^{\infty}c_n(z-a)^{n}$ heißt \emph{Potenzreihe zum Entwicklungspunkt $a \in \C$} mit Koeffizienten $c_n$. \\
 	Dabei heißt $R \coloneqq sup \{|z-a| : \sum_{n=0}^{\infty}c_n(z-a)^{n} \text{ konvergent}\} \in [0,\infty]$ \emph{Konvergenzradius} der Potenzreihe.
@@ -150,3 +151,32 @@ Für:
 		\end{itemize}
 \end{itemize}
 \end{example}
+\begin{remark}
+Betrachtet man die Potenzreihe $\sum_{n=1}^{\infty} c_n(z-a)^{n}$ eingeschränkt auf $z \in \R$, so gilt:
+\begin{itemize}
+    \item die Reihe konvergiert im Intervall $(a-R,a+R)$ 
+    \item die Reihe divergiert auf $\R \setminus [a-R,a+R]$     
+\end{itemize}
+\end{remark}
+\begin{theorem}
+Sei $f(x)=\sum_{n=0}^{\infty} c_n(x-a)^n$ mit $c_n,a \in \R$ eine Potenzreihe mit Konvergenzradius $R>0$
+\begin{itemize}
+    \item Dann ist $f \in \mc{C}^{\infty}((a-R,a+R))$ beliebig oft differenzierbar. 
+    \item Es gilt: \[
+    f'(x) = \sum_{n=1}^{\infty} nc_n(x-a)^{n-1}
+    \]
+    wobei diese Reihe in $(a-R,a+R)$ absolut konvergiert und für jedes $r<R$ auch gleichmäßig in $(a-r,a+r)$ ist. \\ 
+    Allgemein $\forall_{k \in  \N}: f^{(k)}(x) = \sum_{n=k}^{\infty} n(n-1)\ldots(n-k+1)c_n(x-a)^{n-k}$
+\item Insbesonders: $c_k = \frac{1}{k!}f^{(k)}(a)$ 
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Zunächst: (ii) für $k=1$: Absolute Konvergenz der Reihe $\sum_{n=1}^{\infty} nc_n(x-a)^{n-1}$ für $(x-a) < R$ folgt aus Wurzelkriterium:
+\[
+\limsup_{n \to \infty} |nc_n(x-a)^{n-1}|^{\frac{1}{n}} \le \limsup_{n \to \infty} \left| \frac{n}{|x-a|} \right|^{\frac{1}{n}}\cdot \limsup_{n \to \infty} |c_n(x-a)^{n}|^{\frac{1}{n}}
+.\]% Der erste limsup ist 1 der andere <1. 
+
+Mit  Satz $\ref{thm:satz3}$: $f$ ist differnzierbar und $f'(x)= \sum_{n=1}^{\infty} nc_n(x-a)^{n-1}$. Iteration bezüglich $k: f \in \mc{C}^{\infty}, f^{(k)}= \ldots$ 
+Die dritte Aussage folgt direkt aus der zweiten mit $x=a$ 
+\end{proof}
+
