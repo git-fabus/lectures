@@ -1,0 +1,32 @@
+\section{Konvergente Folgen}
+\begin{definition}
+    Sei $(x_{n})_{n \in \N}$ eine Folge in $X$ metrischer Raum und $x \in X$. Dann konvergiert $(x_{n})_n$ gegen $x$ genau dann wenn:
+    \[
+        \forall_{\varepsilon > 0 } \exists_{n_0}: \forall_{n\ge n_0}: x_{n} \in B_{\varepsilon}(x)
+    .\] 
+    Analog heißt es: $\forall $ Umgebungen $U$ von $x: \exists_{n_0} : \forall_{n\ge n_0}: x_n \in U$. Wir schreiben:
+    \[
+    \lim_{n \to \infty} x_{n}=x
+    .\] 
+\end{definition}
+\begin{definition}
+    $(x_{n}) $ heißt \emph{Cauchy-Folge} in $X$ genau dann wenn:
+    \[
+        \forall_{\varepsilon >0} \exists_{n_0} \forall_{n,k \ge n_0} : d(x_{n},x) < \varepsilon
+    .\] 
+\end{definition}
+\begin{definition}
+$(X,d) $ heißt vollständig $\iff$ jede Cauchy-Folge in $X$ konvergiert.
+\end{definition}
+\begin{remark}
+Jede konvergente Folge ist Cauchy-Folge
+\end{remark}
+\begin{example}
+    $X= \R^n, d$ euklidsch. \\ $x_{n}= (x_{n}^{(1)}, \ldots, x_{n}^{(n)} )$ so ist $x = (x^(1),\ldots, x^{(n)})$ Dann:
+    \[
+    \lim_{n \to \infty} x_{n}= x \in X \iff \forall i=1,\ldots, n : \lim_{n \to \infty} x_{n}^{(i)} = x^{(i)} \in \R
+    .\]
+    \begin{proof}
+    Trivial
+    \end{proof}
+\end{example}

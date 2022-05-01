@@ -1,0 +1,134 @@
+\section{metrische Räume}
+\begin{definition}
+    Ein metrischer Raum ist ein Paar $(X,d)$ bestehend aus einer Menge $X$ und einer Abbildung $d \colon X \times X \to \R$ mit $\forall_{x,y,z}:$
+    \begin{itemize}
+        \item $d(x,y)= 0 \iff x=y$
+        \item $d(x,y) = d(y,x)$ 
+        \item $d(x,z) \le  d(x,y)+ d(y,z)$ 
+    \end{itemize}
+\end{definition}
+\begin{remark}
+$0 = d(x,x) \le d(x,y) + d(y,x) = 2 \cdot d(x,y)$ 
+\end{remark}
+\begin{example}
+    Einige Beispiel:
+\begin{itemize}
+    \item $X= \R, \quad d(x,y) = |x-y|$
+    \item $X= \R^{n}, \quad d(x,y) = \left(\sum_{k=1}^{n} |x_k -y_k|^2 \right)^{\frac{1}{2}} = \|x-y\|_2$ 
+    \item $X = \R^{n}, \quad d(x,y) = \left(\sum_{k=1}^{n} |x_k-y_k|^{p}\right)^{\frac{1}{p}} = \|x-y\|_p$
+    \item 
+\end{itemize}
+\end{example}
+\begin{definition}
+    Sei $(X,d)$ ein metrischer Raum, $x \in X$ und $r \in \R_{\ge 0}$ Dann heißt
+    \[
+    B_r(x) \coloneqq \{y \in X | d(x,) <r\} 
+    \]
+    \emph{(offene) Kugel} um $x$ mit Radius $r$. 
+\end{definition}
+\begin{definition}
+    Eine Menge $U \subset X$ heißt \emph{Umgebung} von $x$, falls $\exists_{r>0}: B_r(x) \subset U$ 
+\end{definition}
+\begin{definition}
+Eine Menge $U\subset X$ heißt offen, falls für jedes $x \in U$ ein $r>0$ mit $B_r(x)\subset U$. 
+\end{definition}
+\begin{definition}
+Eine Menge $A\subset X$ heißt abgeschlossen falls ihr Komplement $X \setminus A$ offen ist.
+\end{definition}
+\paragraph{Achtung: } $\exists_{A \subset X}$, die weder offen noch abgeschlossen sind. Zum Beispiel: $[a,b) \subset \R$
+\begin{example}
+\begin{enumerate}
+    \item $X= \R, \quad a,b \in \R, a<b$ 
+        \begin{itemize}
+            \item $(a,b)$ offen, $[a,b]$ abeschlossen. 
+            \item $(a,b], [a,b)$ weder offen noch abgeschlossen.
+            \item $(a,\infty)$ offen, $[a,\infty)$ abgeschlossen 
+        \end{itemize}
+    \item $X$ metrischer Raum, $x \in X, r \in R_{>0}$. Es folgt dann: $B_r(x)$ ist Umgebung von $x$. Ferner ist $B_r(x)$ offen. Denn: Sei $y \in B_r(x)$
+        \begin{align*}
+            &\implies d(x,y) < r, \text{ sei  } \varepsilon = r-d(x,y) >0 \\
+            &\implies B_{\varepsilon}(y) \subset B_r(x) \\
+            &\implies B_r(x) \text{ ist offen }
+        .\end{align*}
+\end{enumerate}
+\end{example}
+\begin{theorem}
+Fpr jeden metrischen Raum $(X,d)$ gilt: 
+\begin{itemize}
+    \item $\O, X$ sind offen.
+    \item Mit $U$ und $V$ ist auch $U \cap V$ offen.
+    \item Ist $U_i, i \in I$ eine beliebige Familie offener Mengen so ist auch $V \coloneqq \bigcup_{i \in I} U_i$ offen.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+    \item $X$ ist Umgebung für jedes $x$. Für $U= \O$ gibt es nichts zuverifizieren. 
+    \item $x \in U \cap V \implies \exists_{r,s >0 }: B_r(x) \subset U, B_s(x) \subset V$ Es folgt:
+        $t \coloneqq r \vee s >0 : B_t(x) \subset U \cap V$
+    \item $\forall_{x \in \bigcup_{i \in I} U_i} \exists_{j \in I} : x \in U_i$. Es folgt: $ \exists_{r>0}: B_r(x) \subset U_j$ weiter folgt: $B_r(x) \subset \bigcup_{i \in I} U_i$   
+\end{itemize}
+\end{proof}
+\begin{example}
+    $U_n \coloneqq (-1-\frac{1}{n}, 1+ \frac{1}{n}) \forall_n \implies \bigcap_{n \in \N} U_n = [-1,1]$ abgeschlossen (nicht offen). 
+\end{example}
+\begin{definition}
+    Ein Paar $(X,U)$ heißt \emph{topologischer Raum}, falls:
+    \begin{itemize}
+        \item $X$ beliebige Menge
+        \item $U$ Teilmenge der Potenzmenge, sodass:
+            \begin{enumerate}
+                \item $\O, X \subset U$
+                \item $U,V \in U \implies U \cap V \in U$
+                \item $U_i \in U, i \in I \implies \bigcup_{i \in I} U_i \in U$ 
+            \end{enumerate}
+    \end{itemize}
+    Elemente von $U$ heißen \emph{offene Mengen} 
+\end{definition}
+\begin{remark}
+    Punkt (b) gilt auch für endliche Durchschnitte. Mit $U_1, \ldots, U_n \in U \implies \bigcap_{i =1}^n U_i \in U$. Allerdings ist es falsch für beliebige Durchschnitte. 
+\end{remark}
+\begin{proposition}
+Sei $(X,d)$ ein metrischer Raum und $M \subset X $ beliebig.
+\begin{itemize}
+    \item Dann ist $\overset{\circ}{M} \coloneqq$ Vereinigung aller offenen $U \subset M$ eine offene Menge. Sie heißt \emph{Inneres von $M$} 
+    \item Analog: $\overline{M} \coloneqq $ Durschnitt aller abgeschlossenen Mengen $M \subset A$ impliziert, dass $\overline{M}$ abgeschlossen ist. Und hier \emph{Abschluss} von M heißt.
+    \item $\sigma M = \overline{M} \setminus \overset{\circ}{M}$ heißt \emph{Rand}. 
+\end{itemize}
+\end{proposition}
+\begin{remark}
+\begin{enumerate}
+    \item Stets $\overset{\circ}{M} \subset M \subset \overline{M}$ 
+    \item $M$ ist offen $\iff M = \overset{\circ}{M} \iff M \cap \sigma M = \O$ \\
+        $M$ ist abgeschlossen $\iff M = \overline{M} \iff \sigma M \subset M$
+    \item Für $x \in X $ gilt:
+        \begin{itemize}
+            \item $x \in \overset{\circ}{M} \iff \exists \text{Umgebung von x, die in M enthalten ist.}$
+            \item $x \in \overline{M} \iff $ jede Umgebung von $x$ enthält Punkt von $M$.
+            \item $x \in \sigma M \iff$ jede Umgebung von $x$ enthält Punkte von $M$ als auch Punkte von $X \setminus M$  
+        \end{itemize}
+\end{enumerate}
+\end{remark}
+\begin{example}
+\begin{enumerate}
+    \item $X = \R^n, d $ ist euklidisch. 
+        \begin{itemize}
+            \item $M= B, (x) = \overset{\circ}{M}$
+            \item $\sigma M = S, (x) = \{y \in \R^n : \|1-y\|= r\}$ 
+            \item $\overline{M}= \{y \in \R^n : \|x-y\|\le r\}$ 
+        \end{itemize}
+    \item $X = \R^n, d(x,y) = \|x-y\| \vee 1$ 
+\begin{itemize}
+    \item $M= B, (x)$ 
+    \item Für $r <1:$ siehe oben.
+    \item Für $r>1: M = \R^n$
+    \item Für $r=1: \overline{M}= \{y \in \R^n : \|x-y\| \ge 1\} \subset \R^n = \{y \in \R^n : d(x,y) \le 1\}  $ 
+\end{itemize}
+\item $X \in \R, M = \Q$ 
+    \begin{itemize}
+        \item $\sigma M = \R$ 
+        \item $\overline{M}=\R$
+        \item $\overset{\circ}{M}= \O$
+    \end{itemize}
+\item $X$ beliebig, $d$ diskrete Metrik.
+\end{enumerate}
+\end{example}

@@ -1,0 +1,131 @@
+\section{Taylorreihen}
+Sei $I \subset \R$ Interall mit mehr als 1 Punkt. 
+
+\begin{theorem}
+    Gegeben sei $f \in \mc{C}^{(n+1)}(I), a \in I \implies \forall_{x \in I}$ 
+    \begin{itemize}
+        \item $f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^{k}+ R_{n+1}(x)$ mit $R_{n+1}(x)= \frac{1}{n!} \int_a^x (x-t)^{n}\cdot f^{(n+1)}(t)dt$ 
+        \item $\exists_{\zeta}$ zwischen $a$ und $x$: $R_{n+1}(x) = f^{(n+1)}(\zeta) \cdot  \frac{(x-a)^{+1}}{(n+1)!}$  
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    (ii) folgt aus (i) mit dem Mittelwertsatz der Integralrechnung. \\
+    Ohne Beschränkung der Allgemeinheit: $a<x$ Dann $\exists_{\zeta \in [a,x]}$:
+    \begin{align*}
+        \frac{1}{n!}\int_a^x (x-t)^{n}\cdot f^{(n+1)}(t)dt &= f^{(n+1)}(\zeta) \cdot \frac{1}{n!}\int_a^x (x-t)^{n}dt \\
+                                                           &=f^{(n+1)}(\zeta) \cdot \frac{1}{(n+1)}\cdot (x-a)^{n+1}
+    .\end{align*}
+    (i) Induktion nach $n$.
+    \begin{itemize}[label=$\lozenge$, itemsep=2ex]  
+        \item \underline{IA $n=0$:} \\
+            \[
+            f(x)=f(a)+\int_a^x f'(t)dt 
+            \] gilt nach Hauptsatz der Differential und Integralrechnung.
+        \item \underline{IS $n-1 \to n$:} \\
+            \begin{align*}
+                R_n(x)&= \frac{1}{(n-1)!}\int_a^x (x-a)^{n-1}\cdot f^{(n)}(t)dt \\
+                      &= \frac{1}{n!} \int_a^x (x-t)^{n}\cdot f^{(n+1)}(t) - \left[\frac{1}{n!}(x-t)^{n}\cdot f^{(n)}\right]_a^x \\
+                      &= R_{n-1}(x) + \frac{1}{n!}(x-a)^{n} \cdot  f^{(n)}(a)
+            .\end{align*}
+            Nach der Induktionsannahme gilt:
+            \begin{align*}
+                f(x) &= \sum_{k=0}^{n-1} \frac{1}{k!}(x-a)^{k}\cdot f^{(k)}(a)+ R_n(x) \\
+                     &= \sum_{k=0}^{n} \frac{1}{k!}(x-a)^{k} f^{(k)}(n) + R_{n+1}
+            .\end{align*}
+    \end{itemize}
+\end{proof}
+
+\begin{definition}
+    Gegeben $f \in \mc{C}^{\infty}(I), a \in I$ Dann heißt
+    \[
+    T_f(x)= \sum_{n=0}^{\infty} f^{(n)}(a) \frac{(x-a)^{n}}{n!}
+    \]
+    Taylorreihe von $f$ mit Entwicklungspunkt $a$. 
+\end{definition}
+\paragraph{Achuntg:}
+\begin{itemize}
+    \item Konvergenzradius $R$ kann $0$ sein.
+    \item selbst wenn $R=\infty$ kann $T_f$ von $f$ verschieden sein.
+\end{itemize}
+\begin{example}
+Eine typische \underline{Klausuraufgabe}:
+\begin{itemize}
+    \item $f(x)= \begin{cases}
+            e^{\frac{1}{x^2}} &, x>0 \\
+            0 &, x\le 0
+        \end{cases}\implies f \in \mc{C}^{\infty}(\R)$. Es gilt: $\forall_{k \in \N_0}: f^{(k)}(0)=0$. Es folgt daher: $T_f(x)=0$   
+    \item $f(x)= \frac{1}{1+x^2} \in \mc{C}^{\infty}(\R)$. Die Taylorreihe \[
+    T_f(x) = \sum_{n=0}^{\infty} (-1)^{n}x^{2n}
+\] hat den Konvergenzradius $1$. Für $x \in (-1,1)$ entspricht die Funktion dem Taylorpolynom: $f=T_f$, sonst jedoch nicht. \paragraph{Erklärung: } $\frac{1}{1+z^2}$ hat Pole in $z \pm i$ demnach divergiert das Taylorpolynom $T_f$.   
+\end{itemize}
+\end{example}
+\begin{corollary}
+Sei $f(x)= \sum_{n=0}^{\infty} c_n(x-a)^{n}$ eine Potenzreihe mit Konvergenzradius $R>0$. Dann gilt in $(a-R,a+R): T_f =f$. Mit adneren Worten: $\sum_{n=0}^{N} f^{(n)}(a) \cdot \frac{1}{n!} \cdot  (x-a)^{n} \to f(x) $ für $N \to \infty$ 
+\end{corollary}
+\begin{proof}
+$c_n= f^{(n)}(a)\cdot \frac{1}{n!}$ 
+\end{proof}
+\begin{example}
+$\exp, \sin, \cos \ldots$ sind Talyorreihen.
+\end{example}
+\begin{lemma}[Abelscher Grenzwertsatz]
+Seien $c_n \in \R$ mit $\sum_{n=0}^{\infty} c_n$ konvergent. Dann folgt:
+\[
+    \forall_{x \in [0,1]}: \sum_{n=0}^{\infty} c_nx^{n} \text{ konvergiert }
+\] und definiert auf $[0,1]$ eine stetige Funktion.
+\end{lemma}
+
+\begin{proof}
+    Wir wissen bereits: Konvergenz für $x=1$ impliziert die Konvergenz für $x \in (-1,1]$. Betrachte
+    \[
+        S_k=(x)= \sum_{n=k}^{\infty} c_nx^{n} \to 0 \text{ für  } k \to \infty
+    .\]
+    Zu zeigen: Es konvergiert gleichmäßig gegen $0$ . \\
+    Setze $s_k= S_k(1) \quad s_k \to 0$ für $k \to \infty$ also ist $s_k$ beschränkt. Dahr konvergiert $\sum_{n=0}^{\infty} s_nx^{n}$ für $|x| <1$ (nach Majorantenkriterium). Aus $-c_n = s_{n+1}-s_n$ folgt:
+\begin{align*}
+    \sum_{n=k}^{l} c_nx_n &= -\sum_{n=k}^{l} s_{n+1}x^{n}+ \sum_{n=k}^{l} S_n x^{n} \\
+                          &= -s_{l+1} x^{l}+ s_k x^k - \sum_{n=k}^{l-1} s_n x^{n}\cdot (1-x)
+.\end{align*}
+Daher für $l \to \infty$ und $x \in [0,1]$: 
+\[
+S_k(x) \le  |s_k| + sup_{n\ge k}(s_n) \cdot \sum_{n=k}^{\infty} x^{n}\cdot (1-x) \to 0
+.\] 
+Es folgt also:
+\[
+    \|S_k\| \to 0 \text{ für  } k \to \infty
+.\]
+Demnach ist $S_k(x) \to 0$ gleichmä0gi in $x \in [0,1]$ sowie $\sum_{n=1}^{\infty} c_kx^{n}$ gleichmäßug und limes stetig. 
+\end{proof}
+\begin{theorem}
+\[
+    \forall_{x \in (-1,1]}: \log(1+x) = x-\frac{x^2}{2}+ \frac{x^3}{3}+ \ldots = \sum_{n=1}^{\infty} (-1)^{n+1}\frac{x^{n)}}{n}
+.\]
+Insbesondere: \[
+\log(2)= 1-\frac{1}{2}+ \frac{1}{3} - \frac{1}{4} \ldots
+.\] 
+\end{theorem}
+\begin{proof}
+    Für $t \in (-1,1)$ ist $\frac{1}{1+t}= \sum_{n=0}^{\infty} (-1)t^n$ gleichmäßig und absolut konvergent in $[-r,r]$ für jedes $r<1$.
+    Für $x \in (-1,1):$
+    \begin{align*}
+        \log(1+x) = \int_0^x \frac{1}{1+t}dt &= \int_0^x \left[ \sum_{n=0}^{\infty} (-1)^{n}t^n\right ] dt \\
+                                             &= \sum_{n=0}^{\infty} \int_0^x (-1)^{n}t^n dt \\
+                                             &= \sum_{n=0}^{\infty} (-1)^{n}\cdot x^{n}\cdot \frac{x^{n+1}}{n+1}
+    .\end{align*}
+    Ferner konvergiert die Reihe für $x=1$ nach dem Leibnizkriterium. Mit dem Abelschen Grenzwertsatz folgt die Behauptung.
+\end{proof}
+\begin{theorem}
+\[
+\forall_{x \in [-1,1]}: \arctan(x) = x- \frac{x^3}{3}+ \frac{x^5}{5} \ldots = \sum_{n=0}^{\infty} (-1)^{n}\frac{x^{2n+1}}{2n+1}
+.\] Insbesonders: \[
+\arctan(1)= \frac{\pi}{4}
+.\] 
+\end{theorem}
+\begin{proof}
+\begin{align*}
+    \arctan(x) &= \int_0^x \frac{1}{1+t^2}dt &= \int_0^x \sum_{n=0}^{\infty} (-1)^{n}\text{2n}dt \\
+               &= \sum_{n=0}^{\infty} (-1)^{n}\text{2n}dt \\
+               &= \sum_{n=0}^{\infty} (-1)^{n}\frac{x^{2n+1}}{2n+1}
+.\end{align*}
+Für $x= \pm 1$ mit Abelschergrenzwertsatz + Stetigkeit $\arctan$ 
+\end{proof}
